@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
+				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+				x:Class="XFGlossSample.Views.AboutPage"
+		 		Title="XFGloss Sample App" Padding="10"
+				>
+	
+	<StackLayout HorizontalOptions="Center" VerticalOptions="FillAndExpand">
+		<Image Source="xfgloss.png" WidthRequest="200"/>
+		<Label FontSize="Large" Text="XFGloss" HorizontalTextAlignment="Center" />
+		<Label Text="Visual gloss for Xamarin.Forms"  HorizontalTextAlignment="Center" />
+		<Label />
+		<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsClippedToBounds="true">
+			<StackLayout>
+				<Label FontSize="Small" Text="XFGloss adds new properties to existing XF controls. Have you ever wanted to set a
+table or list view cell's background color? Now you can. How about tinting Switch controls or SwitchCells, even with
+different on and off colors? Its no problem with XFGloss. Want to hide cells on the fly? XFGloss makes it easy!" />
+				<Label FontSize="Small" Text="You can also attach XFGloss properties to custom classes that derive from existing XF
+control classes without modifying their source code. Tap the menu button to view examples." />
+			</StackLayout>
+		</ScrollView>
+	</StackLayout>
+
+</ContentPage>

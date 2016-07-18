@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms" 
+				  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+				  xmlns:xfGloss="clr-namespace:XFGloss.Views;assembly=XFGloss"
+				  xmlns:vm="clr-namespace:XFGlossSample.ViewModels;assembly=XFGlossSample"
+				  xmlns:views="clr-namespace:XFGlossSample.Views;assembly=XFGlossSample"
+				  x:Class="XFGlossSample.AppMenu"
+				  >
+	
+	<MasterDetailPage.Master>
+		<ContentPage Icon="settings.png" Title="XFGloss Samples App Menu" BackgroundColor="#fae5ff">
+			<StackLayout HorizontalOptions="Center" Spacing="0">
+				<!-- Menu Header -->
+				<StackLayout Padding="10,20,10,10" Spacing="20" Orientation="Horizontal" 
+							 HorizontalOptions="StartAndExpand" VerticalOptions="Center"
+
+							 >
+					<Image Source="xfgloss.png" WidthRequest="100"/>
+					<StackLayout VerticalOptions="Center" Spacing="0">
+						<Label Text="XFGloss:" />
+						<Label FontSize="Micro" Text="Visual gloss for" />
+						<Label FontSize="Micro" Text="Xamarin.Forms" />
+						<Button HorizontalOptions="Start" Text="About" TextColor="Red" BackgroundColor="Transparent" Clicked="ShowAbout" />
+					</StackLayout>
+				</StackLayout>
+				<!-- Menu Items -->
+				<ListView x:Name="MenuItemsList" ItemsSource="{x:Static vm:AppMenuViewModel.MenuItems}" 
+						  GroupDisplayBinding="{Binding Title}" IsGroupingEnabled="true"
+						  BackgroundColor="#fae5ff">
+					<ListView.GroupHeaderTemplate>
+						<DataTemplate>
+							<TextCell Text="{Binding Title}" xfGloss:Cell.BackgroundColor="Red" TextColor="White" />
+						</DataTemplate>
+					</ListView.GroupHeaderTemplate>
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<TextCell Text="{Binding Title}" TextColor="Red" Tapped="ShowPage"
+									  xfGloss:Cell.BackgroundColor="#FFE6E6" xfGloss:Cell.IsVisible="{Binding IsVisible}" />
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackLayout>
+		</ContentPage>
+	</MasterDetailPage.Master>
+	
+	<MasterDetailPage.Detail>
+		<NavigationPage>
+			<x:Arguments>
+				<views:AboutPage />
+			</x:Arguments>
+		</NavigationPage>
+	</MasterDetailPage.Detail>
+	
+</MasterDetailPage>
