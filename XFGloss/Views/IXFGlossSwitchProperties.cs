@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace XFGloss.Views.Switch
+namespace XFGloss.Views
 {
 	public interface IXFGlossSwitchProperties
 	{

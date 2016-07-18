@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace XFGlossSample.Examples.Views.Xaml
 {
-	public partial class XamlThumbTintColorPage : ContentPage
+	public partial class ThumbTintColorPage : ContentPage
 	{
-		public XamlThumbTintColorPage()
+		public ThumbTintColorPage()
 		{
 			InitializeComponent();
 		}

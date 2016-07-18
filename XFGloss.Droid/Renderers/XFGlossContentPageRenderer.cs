@@ -6,11 +6,11 @@ using XFGloss.Droid.Drawables;
 using XFGloss.Models;
 
 //[assembly: ExportRenderer(typeof(MasterDetailPage), typeof(MasterDetailRenderer))]
-[assembly: ExportRenderer(typeof(ContentPage), typeof(XFGloss.Droid.Renderers.XFGlossPageRenderer))]
+[assembly: ExportRenderer(typeof(ContentPage), typeof(XFGloss.Droid.Renderers.XFGlossContentPageRenderer))]
 
 namespace XFGloss.Droid.Renderers
 {
-	public class XFGlossPageRenderer : PageRenderer
+	public class XFGlossContentPageRenderer : PageRenderer
 	{
 		protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
 		{
@@ -38,20 +38,22 @@ namespace XFGloss.Droid.Renderers
 			// Initialize/update the painter and shader as needed if a gradient is assigned
 			if (bkgrndGradient != null)
 			{
-				if (ViewGroup.Background is XFGlossPaintDrawable)
+				SetBackgroundColor(Color.Transparent.ToAndroid());
+
+				if (Background is XFGlossPaintDrawable)
 				{
-					(ViewGroup.Background as XFGlossPaintDrawable).UpdateXFGlossGradient(bkgrndGradient);
-					ViewGroup.Invalidate();
+					(Background as XFGlossPaintDrawable).UpdateXFGlossGradient(bkgrndGradient);
+					Invalidate();
 				}
 				else
 				{
-					ViewGroup.Background = new XFGlossPaintDrawable(bkgrndGradient);
+					Background = new XFGlossPaintDrawable(bkgrndGradient);
 				}
 			}
-			else if (ViewGroup.Background is XFGlossPaintDrawable)
+			else if (Background is XFGlossPaintDrawable)
 			{
-				ViewGroup.Background?.Dispose();
-				ViewGroup.Background = null;
+				Background.Dispose();
+				Background = null;
 			}
 		}
 	}

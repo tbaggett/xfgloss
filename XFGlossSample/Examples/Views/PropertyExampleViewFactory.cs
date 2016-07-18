@@ -3,20 +3,21 @@ using Xamarin.Forms;
 using XFGlossSample.Examples.ViewModels;
 using XFGlossSample.Examples.Views;
 
-namespace XFGlossSample.Views
+namespace XFGlossSample.Examples.Views
 {
 	// This class receives the name of a desired page type, uses runtime reflection to locate the needed views and, 
 	// if found, constructs and returns a tabbed page that contains an info page and Xaml/C# example implementations.
 
 	public static class PropertyExampleViewFactory
 	{
-		const string vmNamespace = "XFGlossSample.Examples.ViewModels.";
-		const string xamlViewNamespace = "XFGlossSample.Examples.Views.Xaml.";
-		const string cSharpViewNamespace = "XFGlossSample.Examples.Views.CSharp.";
+		const string rootNamespace = "XFGlossSample.Examples.";
+		const string vmNamespace = rootNamespace + "ViewModels.";
+		const string xamlViewNamespace = rootNamespace + "Views.Xaml.";
+		const string cSharpViewNamespace = rootNamespace + "Views.CSharp.";
 		const string pageName = "Page";
 		const string vmName = "ViewModel";
 
-		public static Page CreateExampleView(string propertyName)
+		public static Page CreateExampleView(string propertyName, string pageTitle = null)
 		{
 			try
 			{
@@ -24,21 +25,36 @@ namespace XFGlossSample.Views
 				// view's binding context.
 				IExamplesViewModel examplesVM =
 					(IExamplesViewModel)Activator.CreateInstance(Type.GetType(vmNamespace + propertyName + vmName));
+				
 				Page infoPage = new InfoPage();
 				infoPage.BindingContext = examplesVM;
+				infoPage.Title = pageTitle;
 
 				Page xamlPage = 
 					(Page)Activator.CreateInstance(Type.GetType(xamlViewNamespace + propertyName + pageName));
 				xamlPage.BindingContext = examplesVM;
+				xamlPage.Title = pageTitle;
 
 				Page cSharpPage = 
 					(Page)Activator.CreateInstance(Type.GetType(cSharpViewNamespace + propertyName + pageName));
 				cSharpPage.BindingContext = examplesVM;
+				cSharpPage.Title = pageTitle;
 
 				TabbedPage exampleView = new TabbedPage();
-				exampleView.Children.Add(new NavigationPage(infoPage));
-				exampleView.Children.Add(new NavigationPage(xamlPage));
-				exampleView.Children.Add(new NavigationPage(cSharpPage));
+
+				// Assign icons (iOS only) and titles to be used by each of the tabs to the navigation pages
+				if (Device.OS == TargetPlatform.iOS)
+				{
+					exampleView.Children.Add(new NavigationPage(infoPage) { Title = "Info", Icon = "infocircle.png" });
+					exampleView.Children.Add(new NavigationPage(xamlPage) { Title = "Xaml", Icon = "xamlcode.png" });
+					exampleView.Children.Add(new NavigationPage(cSharpPage) { Title = "C#", Icon = "csharp.png" });
+				}
+				else
+				{
+					exampleView.Children.Add(new NavigationPage(infoPage) { Title = "Info" });
+					exampleView.Children.Add(new NavigationPage(xamlPage) { Title = "Xaml" });
+					exampleView.Children.Add(new NavigationPage(cSharpPage) { Title = "C#" });
+				}
 
 				return exampleView;
 			}

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XFGloss.iOS
+namespace XFGloss.Droid
 {
 	public class Library
 	{

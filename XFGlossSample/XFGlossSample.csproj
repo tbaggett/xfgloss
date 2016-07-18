@@ -21,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -28,19 +29,125 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml" />
-    <EmbeddedResource Include="XFGlossSamplePage.xaml" />
+    <EmbeddedResource Include="Views\AboutPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AppMenu.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Examples\Views\Xaml\AccessoryTypePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Examples\Views\Xaml\BackgroundColorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Examples\Views\Xaml\OnTintColorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Examples\Views\Xaml\ThumbOnTintColorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Examples\Views\Xaml\ThumbTintColorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Examples\Views\Xaml\TintColorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Examples\Views\InfoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Examples\Views\Xaml\BackgroundGradientPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="XFGlossSamplePage.xaml.cs">
-      <DependentUpon>XFGlossSamplePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AppMenuViewModel.cs" />
+    <Compile Include="Views\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppMenu.xaml.cs">
+      <DependentUpon>AppMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\Views\CSharp\AccessoryTypePage.cs" />
+    <Compile Include="Examples\Views\CSharp\BackgroundColorPage.cs" />
+    <Compile Include="Examples\Views\CSharp\OnTintColorPage.cs" />
+    <Compile Include="Examples\Views\CSharp\ThumbOnTintColorPage.cs" />
+    <Compile Include="Examples\Views\CSharp\ThumbTintColorPage.cs" />
+    <Compile Include="Examples\Views\CSharp\TintColorPage.cs" />
+    <Compile Include="Examples\Views\Xaml\AccessoryTypePage.xaml.cs">
+      <DependentUpon>AccessoryTypePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\Views\Xaml\BackgroundColorPage.xaml.cs">
+      <DependentUpon>BackgroundColorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\Views\Xaml\OnTintColorPage.xaml.cs">
+      <DependentUpon>OnTintColorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\Views\Xaml\ThumbOnTintColorPage.xaml.cs">
+      <DependentUpon>ThumbOnTintColorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\Views\Xaml\ThumbTintColorPage.xaml.cs">
+      <DependentUpon>ThumbTintColorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\Views\Xaml\TintColorPage.xaml.cs">
+      <DependentUpon>TintColorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\ViewModels\IExamplesViewModel.cs" />
+    <Compile Include="Examples\Views\InfoPage.xaml.cs">
+      <DependentUpon>InfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\Views\PropertyExampleViewFactory.cs" />
+    <Compile Include="Examples\ViewModels\AccessoryTypeViewModel.cs" />
+    <Compile Include="Examples\ViewModels\BackgroundColorViewModel.cs" />
+    <Compile Include="Examples\ViewModels\OnTintColorViewModel.cs" />
+    <Compile Include="Examples\ViewModels\ThumbOnTintColorViewModel.cs" />
+    <Compile Include="Examples\ViewModels\ThumbTintColorViewModel.cs" />
+    <Compile Include="Examples\ViewModels\TintColorViewModel.cs" />
+    <Compile Include="Examples\ViewModels\BackgroundGradientViewModel.cs" />
+    <Compile Include="Examples\Views\CSharp\BackgroundGradientPage.cs" />
+    <Compile Include="Examples\Views\Xaml\BackgroundGradientPage.xaml.cs">
+      <DependentUpon>BackgroundGradientPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Timer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XFGloss\XFGloss.csproj">
+      <Project>{11CF9A53-400F-45D3-AD6E-07F03C79F658}</Project>
+      <Name>XFGloss</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\packages\Xamarin.Forms.2.3.0.107\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\packages\Xamarin.Forms.2.3.0.107\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform">
+      <HintPath>..\packages\Xamarin.Forms.2.3.0.107\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Examples\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\" />
+    <Folder Include="Examples\Views\" />
+    <Folder Include="Examples\Views\CSharp\" />
+    <Folder Include="Examples\Views\Xaml\" />
+    <Folder Include="Examples\ViewModels\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
 </Project>

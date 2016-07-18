@@ -1,11 +1,11 @@
 ﻿using System;
+
 namespace XFGloss.iOS
 {
-	public class XFGlossInit
+	public class Library
 	{
-		public XFGlossInit()
+		public static void Init()
 		{
 		}
 	}
 }
-

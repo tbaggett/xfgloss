@@ -4,15 +4,13 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
-namespace XFGlossSample.ViewModels
+namespace XFGloss.Models
 {
-	// This is a basic implementation of the notification needs for a view model for demo purposes.
-	// It was borrowed from the Xamarin Forms Labs' ObservableObject class.
-	// You should consider one of the many great MVVM frameworks available for real production apps.
+	// This class was duplicated from the Xamarin Forms Labs project. Thanks!
 
-	public class ViewModelBase : INotifyPropertyChanged
+	public class ObservableObject : INotifyPropertyChanged
 	{
-		public ViewModelBase()
+		public ObservableObject()
 		{
 		}
 
@@ -67,4 +65,3 @@ namespace XFGlossSample.ViewModels
 		}
 	}
 }
-

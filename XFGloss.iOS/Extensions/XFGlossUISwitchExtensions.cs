@@ -8,10 +8,15 @@ using XFGloss.Views;
 
 namespace XFGloss.iOS.Extensions
 {
-	public static class XFGlossSwitchExtensions
+	public static class XFGlossUISwitchExtensions
 	{
 		public static void UpdateColorProperty(this UISwitch control, IXFGlossSwitchProperties properties, string propertyName)
 		{
+			if (control == null || properties == null)
+			{
+				return;
+			}
+
 			// TintColor property
 			if (propertyName == null ||
 				propertyName == XFGlossPropertyNames.TintColor)

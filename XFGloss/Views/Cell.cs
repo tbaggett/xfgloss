@@ -6,29 +6,46 @@ using XFGloss.Models;
 
 namespace XFGloss.Views
 {
-	public class XFGlossCellProperties
+	public class Cell
 	{
-		#region Accessory
+		#region AccessoryType
 
 		public static readonly BindableProperty AccessoryTypeProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.AccessoryType, typeof(XFGlossCellAccessoryType), typeof(Cell), XFGlossCellAccessoryType.None);
+			BindableProperty.CreateAttached(XFGlossPropertyNames.AccessoryType, typeof(CellAccessoryType), typeof(Xamarin.Forms.Cell), CellAccessoryType.None);
 
-		public static XFGlossCellAccessoryType GetAccessoryType(BindableObject bindable)
+		public static CellAccessoryType GetAccessoryType(BindableObject bindable)
 		{
-			return (XFGlossCellAccessoryType)bindable.GetValue(AccessoryTypeProperty);
+			return (CellAccessoryType)bindable.GetValue(AccessoryTypeProperty);
 		}
 
-		public static void SetAccessoryType(BindableObject bindable, XFGlossCellAccessoryType value)
+		public static void SetAccessoryType(BindableObject bindable, CellAccessoryType value)
 		{
 			bindable.SetValue(AccessoryTypeProperty, value);
 		}
+
+		#region AccessoryDetailAction
+
+		public static readonly BindableProperty AccessoryDetailActionProperty =
+			BindableProperty.CreateAttached(XFGlossPropertyNames.AccessoryDetailAction, typeof(Action<Cell>), typeof(Xamarin.Forms.Cell), null);
+
+		public static Action<Cell> GetAccessoryDetailAction(BindableObject bindable)
+		{
+			return (Action<Cell>)bindable.GetValue(AccessoryDetailActionProperty);
+		}
+
+		public static void SetAccessoryDetailAction(BindableObject bindable, Action<Cell> value)
+		{
+			bindable.SetValue(AccessoryDetailActionProperty, value);
+		}
+
+		#endregion
 
 		#endregion
 
 		#region BackgroundColor
 
 		public static readonly BindableProperty BackgroundColorProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.BackgroundColor, typeof(Color), typeof(Cell), Color.Default);
+			BindableProperty.CreateAttached(XFGlossPropertyNames.BackgroundColor, typeof(Color), typeof(Xamarin.Forms.Cell), Color.Default);
 
 		public static Color GetBackgroundColor(BindableObject bindable)
 		{
@@ -42,19 +59,19 @@ namespace XFGloss.Views
 
 		#endregion
 
-		#region IsVisible
+		#region BackgroundGradient
 
-		public static readonly BindableProperty IsVisibleProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.IsVisible, typeof(bool), typeof(Cell), true);
+		public static readonly BindableProperty BackgroundGradientProperty =
+			BindableProperty.CreateAttached(XFGlossPropertyNames.BackgroundGradient, typeof(Gradient), typeof(Xamarin.Forms.Cell), null);
 
-		public static bool GetIsVisible(BindableObject bindable)
+		public static Gradient GetBackgroundGradient(BindableObject bindable)
 		{
-			return (bool)bindable.GetValue(IsVisibleProperty);
+			return (Gradient)bindable.GetValue(BackgroundGradientProperty);
 		}
 
-		public static void SetIsVisible(BindableObject bindable, bool value)
+		public static void SetBackgroundGradient(BindableObject bindable, Gradient value)
 		{
-			bindable.SetValue(IsVisibleProperty, value);
+			bindable.SetValue(BackgroundGradientProperty, value);
 		}
 
 		#endregion
@@ -62,7 +79,7 @@ namespace XFGloss.Views
 		#region TintColor
 
 		public static readonly BindableProperty TintColorProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.TintColor, typeof(Color), typeof(Cell), Color.Default);
+			BindableProperty.CreateAttached(XFGlossPropertyNames.TintColor, typeof(Color), typeof(Xamarin.Forms.Cell), Color.Default);
 
 		public static Color GetTintColor(BindableObject bindable)
 		{
@@ -80,7 +97,7 @@ namespace XFGloss.Views
 
 		WeakReference<BindableObject> _bindable;
 
-		public XFGlossCellProperties(BindableObject bindable)
+		public Cell(BindableObject bindable)
 		{
 			_bindable = new WeakReference<BindableObject>(bindable);
 		}
@@ -104,12 +121,12 @@ namespace XFGloss.Views
 			}
 		}
 
-		public XFGlossCellAccessoryType AccessoryType
+		public CellAccessoryType AccessoryType
 		{
 			get
 			{
 				var bindable = Bindable;
-				return (bindable == null) ? XFGlossCellAccessoryType.None : GetAccessoryType(bindable);
+				return (bindable == null) ? CellAccessoryType.None : GetAccessoryType(bindable);
 			}
 
 			set
@@ -118,6 +135,24 @@ namespace XFGloss.Views
 				if (bindable != null)
 				{
 					SetAccessoryType(bindable, value);
+				}
+			}
+		}
+
+		public Action<Cell> AccessoryDetailAction
+		{
+			get
+			{
+				var bindable = Bindable;
+				return (bindable == null) ? null : GetAccessoryDetailAction(bindable);
+			}
+
+			set
+			{
+				var bindable = Bindable;
+				if (bindable != null)
+				{
+					SetAccessoryDetailAction(bindable, value);
 				}
 			}
 		}
@@ -140,12 +175,12 @@ namespace XFGloss.Views
 			}
 		}
 
-		public bool IsVisible
+		public Gradient BackgroundGradient
 		{
 			get
 			{
 				var bindable = Bindable;
-				return (bindable == null) ? true : GetIsVisible(bindable);
+				return (bindable == null) ? null : GetBackgroundGradient(bindable);
 			}
 
 			set
@@ -153,7 +188,7 @@ namespace XFGloss.Views
 				var bindable = Bindable;
 				if (bindable != null)
 				{
-					SetIsVisible(bindable, value);
+					SetBackgroundGradient(bindable, value);
 				}
 			}
 		}

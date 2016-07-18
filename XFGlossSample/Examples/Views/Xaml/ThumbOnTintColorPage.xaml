@@ -1,8 +1,57 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
 				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+				xmlns:xfGloss="clr-namespace:XFGloss.Views;assembly=XFGloss"
 				x:Class="XFGlossSample.Examples.Views.Xaml.ThumbOnTintColorPage">
-	<ContentPage.Content>
-		<Label HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Text="XamlThumbOnTintColorPage" />
-	</ContentPage.Content>
+
+	<ScrollView>
+		<StackLayout>
+			<!-- This is a bit of a hack. Android's renderer for TableView always adds an empty header for a 
+				 TableSection declaration, while iOS doesn't. To compensate, I'm using a Label to display info text
+				 on iOS, and the TableSection on Android since there is no easy way to get rid of it. This is a 
+				 long-standing bug in the XF TableView on Android.
+				(https://forums.xamarin.com/discussion/18037/tablesection-w-out-header)
+			-->
+			<Label Text="SwitchCell ThumbOnTintColor values set in Xaml:" Margin="10">
+				<Label.IsVisible>
+					<OnPlatform x:TypeArguments="x:Boolean" iOS="true" Android="false" />
+				</Label.IsVisible>
+			</Label>
+			<TableView Intent="Data">
+				<TableView.HeightRequest>
+					<!-- Having to make table view big enough on Android to see all four rows plus the unwanted header -->
+					<OnPlatform x:TypeArguments="x:Double" iOS="132" Android="190" />
+				</TableView.HeightRequest>
+				<TableView.Root>
+					<TableSection>
+						<!-- 
+							 Yet another hack related to the TableSection. We want the title to be empty on iOS (so there
+							 won't be a header created) but set on Android (since a header is always created - might as 
+							 well make use of it!
+						-->
+						<TableSection.Title>
+							<OnPlatform x:TypeArguments="x:String" iOS="" Android="SwitchCell ThumbOnTintColor values set in Xaml:" />
+						</TableSection.Title>
+						<SwitchCell Text="Red" xfGloss:SwitchCell.ThumbOnTintColor="Red" />
+						<SwitchCell Text="Green" xfGloss:SwitchCell.ThumbOnTintColor="Green" />
+						<SwitchCell Text="Blue" xfGloss:SwitchCell.ThumbOnTintColor="Blue" />
+					</TableSection>
+				</TableView.Root>
+			</TableView>
+			<Label Text="Switch ThumbOnTintColor values set in Xaml:" Margin="10"/>
+			<StackLayout Orientation="Horizontal" Padding="10">
+				<Label Text="Red" HorizontalOptions="StartAndExpand" />
+				<Switch xfGloss:Switch.ThumbOnTintColor="Red" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" Padding="10">
+				<Label Text="Green" HorizontalOptions="StartAndExpand" />
+				<Switch xfGloss:Switch.ThumbOnTintColor="Green" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" Padding="10">
+				<Label Text="Blue" HorizontalOptions="StartAndExpand" />
+				<Switch xfGloss:Switch.ThumbOnTintColor="Blue" />
+			</StackLayout>
+		</StackLayout>
+	</ScrollView>
+
 </ContentPage>

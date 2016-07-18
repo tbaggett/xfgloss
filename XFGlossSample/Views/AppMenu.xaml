@@ -35,7 +35,7 @@
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<TextCell Text="{Binding Title}" TextColor="Red" Tapped="ShowPage"
-									  xfGloss:Cell.BackgroundColor="#FFE6E6" xfGloss:Cell.IsVisible="{Binding IsVisible}" />
+									  xfGloss:Cell.BackgroundColor="#FFE6E6" />
 						</DataTemplate>
 					</ListView.ItemTemplate>
 				</ListView>

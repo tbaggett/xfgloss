@@ -51,7 +51,7 @@ namespace XFGloss.Models
 		}
 	}
 
-	public class XFGlossGradient : ObservableObject
+	public class Gradient : ObservableObject, IDisposable
 	{
 		public List<GradientStep> Steps { get; private set; }
 
@@ -158,6 +158,8 @@ namespace XFGloss.Models
 					{
 						NotifyPropertyChanged(nameof(IsReverseVertical));
 					}
+
+					NotifyPropertyChanged("");
 				}
 			}
 		}
@@ -176,6 +178,12 @@ namespace XFGloss.Models
 					{
 						Steps[0].StepColor = value;
 						NotifyPropertyChanged(nameof(Steps));
+					}
+
+					// Verify angle has been set
+					if (Angle == UNDEFINED_ANGLE)
+					{
+						Angle = DEFAULT_ANGLE;
 					}
 				}
 				else
@@ -210,6 +218,12 @@ namespace XFGloss.Models
 					}
 					Steps.Add(new GradientStep(value, 1));
 					NotifyPropertyChanged(nameof(Steps));
+				}
+
+				// Verify angle has been set
+				if (Angle == UNDEFINED_ANGLE)
+				{
+					Angle = DEFAULT_ANGLE;
 				}
 			}
 		}
@@ -251,18 +265,26 @@ namespace XFGloss.Models
 		}
 
 		// Default initialization. Properties will need to be explicitly set.
-		public XFGlossGradient()
+		public Gradient()
 		{
 			init();
 		}
 
-		public XFGlossGradient(bool isHorizontal)
+		public Gradient(Gradient other)
+		{
+			_angle = other.Angle;
+			_startPoint = other.StartPoint;
+			_endPoint = other.EndPoint;
+			this.Steps = new List<GradientStep>(other.Steps);
+		}
+
+		public Gradient(bool isHorizontal)
 			: this(isHorizontal ? HORIZONTAL_ANGLE : VERTICAL_ANGLE)
 		{
 		}
 
 		// Convenience initializer to set gradient angle with GradientStep instances manually added
-		public XFGlossGradient(int gradientAngle)
+		public Gradient(int gradientAngle)
 		{
 			init();
 
@@ -270,14 +292,14 @@ namespace XFGloss.Models
 		}
 
 		// Convenience initializer to create a simple two color horizontal or vertical gradient
-		public XFGlossGradient(Color startColor, Color endColor, bool isHorizontal = false)
+		public Gradient(Color startColor, Color endColor, bool isHorizontal = false)
 			: this(startColor, endColor, isHorizontal ? HORIZONTAL_ANGLE : VERTICAL_ANGLE)
 		{
 		}
 
 		// Convenience initializer to create a simple two color gradient at the specified angle.
 		// Gradient origin is assumed to be in the view center.
-		public XFGlossGradient(Color startColor, Color endColor, int gradientAngle)
+		public Gradient(Color startColor, Color endColor, int gradientAngle)
 		{
 			init();
 
@@ -306,6 +328,12 @@ namespace XFGloss.Models
 		void init()
 		{
 			Steps = new List<GradientStep>();
+		}
+
+		public void Dispose()
+		{
+			Steps.Clear();
+			Steps = null;
 		}
 
 		// Helper class used to convert from an angle in degrees to start and end point X/Y values between 0.0 and 1.0

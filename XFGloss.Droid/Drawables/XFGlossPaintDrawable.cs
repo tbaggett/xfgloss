@@ -7,63 +7,54 @@ using Android.Views;
 using XFGloss.Droid.Extensions;
 using XFGloss.Models;
 
-namespace XFGloss.Droid.Shaders
+namespace XFGloss.Droid.Drawables
 {
 	internal class XFGlossPaintDrawable : PaintDrawable
 	{
-		public XFGlossPaintDrawable(XFGlossGradient xfgGradient)
+		public XFGlossPaintDrawable(Gradient xfgGradient)
 		{
+			Paint.Dither = true;
 			Shape = new RectShape();
 			UpdateXFGlossGradient(xfgGradient);
 		}
 
-		public void UpdateXFGlossGradient(XFGlossGradient xfgGradient)
+		public void UpdateXFGlossGradient(Gradient xfgGradient)
 		{
-			SetShaderFactory(new XFGlossShaderFactory(xfgGradient));
+			var sf = GetShaderFactory();
+			sf?.Dispose();
+
+			sf = new XFGlossShaderFactory(xfgGradient);
+			SetShaderFactory(sf);
+
+			Paint.Shader?.Dispose();
+			Paint.SetShader(sf.Resize(Bounds.Width(), Bounds.Height()));
 		}
 	}
 
 	internal class XFGlossShaderFactory : ShapeDrawable.ShaderFactory
 	{
-		XFGlossGradient _xfgGradient;
+		WeakReference<Gradient> _xfgGradient;
 
-		public XFGlossShaderFactory(XFGlossGradient xfgGradient)
+		public XFGlossShaderFactory(Gradient xfgGradient)
 		{
-			_xfgGradient = xfgGradient;
+			_xfgGradient = new WeakReference<Gradient>(xfgGradient);
 		}
 
 		public override Shader Resize(int width, int height)
 		{
-			return new XFGlossLinearGradient(width, height, _xfgGradient);
-		}
-	}
+			Gradient xfgGradient;
+			if (_xfgGradient.TryGetTarget(out xfgGradient))
+			{
+				return new LinearGradient((float)(width * xfgGradient.StartPoint.X),
+										  (float)(height * xfgGradient.StartPoint.Y),
+										  (float)(width * xfgGradient.EndPoint.X),
+										  (float)(height * xfgGradient.EndPoint.Y),
+										  xfgGradient.ToAndroidColorValues(),
+										  xfgGradient.ToAndroidPercentages(),
+										  Shader.TileMode.Clamp);
+			}
 
-	internal class XFGlossLinearGradient : LinearGradient
-	{
-		public XFGlossLinearGradient(int width, int height, XFGlossGradient xfgGradient)
-			: base((float)(width * xfgGradient.StartPoint.X),
-				   (float)(height * xfgGradient.StartPoint.Y),
-				   (float)(width * xfgGradient.EndPoint.X),
-				   (float)(height * xfgGradient.EndPoint.Y),
-				   xfgGradient.ToAndroidColorValues(),
-				   xfgGradient.ToAndroidPercentages(),
-				   TileMode.Mirror)
-		{
-		}
-
-		protected XFGlossLinearGradient(IntPtr javaReference, JniHandleOwnership transfer)
-			: base(javaReference, transfer)
-		{
-		}
-
-		public XFGlossLinearGradient(float x0, float y0, float x1, float y1, Color color0, Color color1, Shader.TileMode tile)
-			: base(x0, y0, x1, y1, color0, color1, tile)
-		{
-		}
-
-		public XFGlossLinearGradient(float x0, float y0, float x1, float y1, int[] colors, float[] positions, Shader.TileMode tile)
-			: base(x0, y0, x1, y1, colors, positions, tile)
-		{
+			return null;
 		}
 	}
 }

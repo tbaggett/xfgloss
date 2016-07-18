@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace XFGlossSample.Examples.Views.Xaml
 {
-	public partial class XamlBackgroundColorPage : ContentPage
+	public partial class BackgroundColorPage : ContentPage
 	{
-		public XamlBackgroundColorPage()
+		public BackgroundColorPage()
 		{
 			InitializeComponent();
 		}

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 
-namespace XFGlossSample.Views
+namespace XFGlossSample.Examples.Views.Xaml
 {
-	public partial class XamlAccessoryTypePage : ContentPage
+	public partial class AccessoryTypePage : ContentPage
 	{
-		public XamlAccessoryTypePage()
+		public AccessoryTypePage()
 		{
 			InitializeComponent();
 		}

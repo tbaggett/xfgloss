@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace XFGlossSample.Examples.Views.Xaml
 {
-	public partial class XamlTintColorPage : ContentPage
+	public partial class TintColorPage : ContentPage
 	{
-		public XamlTintColorPage()
+		public TintColorPage()
 		{
 			InitializeComponent();
 		}

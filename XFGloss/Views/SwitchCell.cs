@@ -4,13 +4,13 @@ using XFGloss.Models;
 
 namespace XFGloss.Views
 {
-	public class XFGlossSwitchCellProperties : Cell, IXFGlossSwitchProperties
+	public class SwitchCell : Cell, IXFGlossSwitchProperties
 	{
 		#region OnTintColor
 
 		public static readonly BindableProperty OnTintColorProperty =
 			BindableProperty.CreateAttached(XFGlossPropertyNames.OnTintColor,
-											typeof(Color), typeof(SwitchCell), Color.Default);
+											typeof(Color), typeof(Xamarin.Forms.SwitchCell), Color.Default);
 
 		public static Color GetOnTintColor(BindableObject bindable)
 		{
@@ -28,7 +28,7 @@ namespace XFGloss.Views
 
 		public static readonly BindableProperty ThumbTintColorProperty =
 			BindableProperty.CreateAttached(XFGlossPropertyNames.ThumbTintColor,
-											typeof(Color), typeof(SwitchCell), Color.Default);
+											typeof(Color), typeof(Xamarin.Forms.SwitchCell), Color.Default);
 
 		public static Color GetThumbTintColor(BindableObject bindable)
 		{
@@ -46,7 +46,7 @@ namespace XFGloss.Views
 
 		public static readonly BindableProperty ThumbOnTintColorProperty =
 			BindableProperty.CreateAttached(XFGlossPropertyNames.ThumbOnTintColor,
-											typeof(Color), typeof(SwitchCell), Color.Default);
+											typeof(Color), typeof(Xamarin.Forms.SwitchCell), Color.Default);
 
 		public static Color GetThumbOnTintColor(BindableObject bindable)
 		{
@@ -62,7 +62,7 @@ namespace XFGloss.Views
 
 		#region Interface implementation
 
-		public XFGlossSwitchCellProperties(BindableObject bindable) : base(bindable)
+		public SwitchCell(BindableObject bindable) : base(bindable)
 		{
 		}
 

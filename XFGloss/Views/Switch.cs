@@ -4,13 +4,13 @@ using XFGloss.Models;
 
 namespace XFGloss.Views
 {
-	public class XFGlossSwitchProperties : IXFGlossSwitchProperties
+	public class Switch : IXFGlossSwitchProperties
 	{
 		#region TintColor
 
 		public static readonly BindableProperty TintColorProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.TintColor,
-												typeof(Color), typeof(Switch), Color.Default);
+            BindableProperty.CreateAttached(XFGlossPropertyNames.TintColor,
+												typeof(Color), typeof(Xamarin.Forms.Switch), Color.Default);
 
 		public static Color GetTintColor(BindableObject bindable)
 		{
@@ -27,8 +27,8 @@ namespace XFGloss.Views
 		#region OnTintColor
 
 		public static readonly BindableProperty OnTintColorProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.OnTintColor,
-											typeof(Color), typeof(Switch), Color.Default);
+            BindableProperty.CreateAttached(XFGlossPropertyNames.OnTintColor,
+											typeof(Color), typeof(Xamarin.Forms.Switch), Color.Default);
 
 		public static Color GetOnTintColor(BindableObject bindable)
 		{
@@ -45,8 +45,8 @@ namespace XFGloss.Views
 		#region ThumbTintColor
 
 		public static readonly BindableProperty ThumbTintColorProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.ThumbTintColor,
-											typeof(Color), typeof(Switch), Color.Default);
+            BindableProperty.CreateAttached(XFGlossPropertyNames.ThumbTintColor,
+											typeof(Color), typeof(Xamarin.Forms.Switch), Color.Default);
 
 		public static Color GetThumbTintColor(BindableObject bindable)
 		{
@@ -63,8 +63,8 @@ namespace XFGloss.Views
 		#region ThumbOnTintColor
 
 		public static readonly BindableProperty ThumbOnTintColorProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.ThumbOnTintColor,
-											typeof(Color), typeof(Switch), Color.Default);
+            BindableProperty.CreateAttached(XFGlossPropertyNames.ThumbOnTintColor,
+											typeof(Color), typeof(Xamarin.Forms.Switch), Color.Default);
 
 		public static Color GetThumbOnTintColor(BindableObject bindable)
 		{
@@ -82,7 +82,7 @@ namespace XFGloss.Views
 
 		WeakReference<BindableObject> _bindable;
 
-		public XFGlossSwitchProperties(BindableObject bindable)
+		public Switch(BindableObject bindable)
 		{
 			_bindable = new WeakReference<BindableObject>(bindable);
 		}
@@ -110,7 +110,7 @@ namespace XFGloss.Views
 			get
 			{
 				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : XFGlossSwitchProperties.GetTintColor(bindable);
+				return (bindable == null) ? Color.Default : Switch.GetTintColor(bindable);
 			}
 
 			set
@@ -118,7 +118,7 @@ namespace XFGloss.Views
 				var bindable = Bindable;
 				if (bindable != null)
 				{
-					XFGlossSwitchProperties.SetTintColor(bindable, value);
+					Switch.SetTintColor(bindable, value);
 				}
 			}
 		}
@@ -128,7 +128,7 @@ namespace XFGloss.Views
 			get
 			{
 				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : XFGlossSwitchProperties.GetOnTintColor(bindable);
+				return (bindable == null) ? Color.Default : Switch.GetOnTintColor(bindable);
 			}
 
 			set
@@ -136,7 +136,7 @@ namespace XFGloss.Views
 				var bindable = Bindable;
 				if (bindable != null)
 				{
-					XFGlossSwitchProperties.SetOnTintColor(bindable, value);
+					Switch.SetOnTintColor(bindable, value);
 				}
 			}
 		}
@@ -146,7 +146,7 @@ namespace XFGloss.Views
 			get
 			{
 				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : XFGlossSwitchProperties.GetThumbTintColor(bindable);
+				return (bindable == null) ? Color.Default : Switch.GetThumbTintColor(bindable);
 			}
 
 			set
@@ -154,7 +154,7 @@ namespace XFGloss.Views
 				var bindable = Bindable;
 				if (bindable != null)
 				{
-					XFGlossSwitchProperties.SetThumbTintColor(bindable, value);
+					Switch.SetThumbTintColor(bindable, value);
 				}
 			}
 		}
@@ -164,7 +164,7 @@ namespace XFGloss.Views
 			get
 			{
 				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : XFGlossSwitchProperties.GetThumbOnTintColor(bindable);
+				return (bindable == null) ? Color.Default : Switch.GetThumbOnTintColor(bindable);
 			}
 
 			set
@@ -172,7 +172,7 @@ namespace XFGloss.Views
 				var bindable = Bindable;
 				if (bindable != null)
 				{
-					XFGlossSwitchProperties.SetThumbOnTintColor(bindable, value);
+					Switch.SetThumbOnTintColor(bindable, value);
 				}
 			}
 		}

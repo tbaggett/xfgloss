@@ -1,15 +1,18 @@
 ﻿using System;
 using System.ComponentModel;
+using CoreAnimation;
 using CoreGraphics;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XFGloss.iOS.Extensions;
+using XFGloss.iOS.Views;
 using XFGloss.Models;
+using XFGloss.Trackers;
 using XFGloss.Views;
 
 [assembly: ExportRenderer(typeof(EntryCell), typeof(XFGloss.iOS.Renderers.XFGlossEntryCellRenderer))]
-[assembly: ExportRenderer(typeof(SwitchCell), typeof(XFGloss.iOS.Renderers.XFGlossSwitchCellRenderer))]
+[assembly: ExportRenderer(typeof(Xamarin.Forms.SwitchCell), typeof(XFGloss.iOS.Renderers.XFGlossSwitchCellRenderer))]
 [assembly: ExportRenderer(typeof(TextCell), typeof(XFGloss.iOS.Renderers.XFGlossTextCellRenderer))]
 [assembly: ExportRenderer(typeof(ImageCell), typeof(XFGloss.iOS.Renderers.XFGlossImageCellRenderer))]
 [assembly: ExportRenderer(typeof(ViewCell), typeof(XFGloss.iOS.Renderers.XFGlossViewCellRenderer))]
@@ -17,11 +20,12 @@ using XFGloss.Views;
 namespace XFGloss.iOS.Renderers
 {
 	#region iOSXFGlossCellTracker
+
 	internal class iOSXFGlossCellTracker : XFGlossCellTracker<UITableViewCell>
 	{
-		WeakReference<UIView> _backgroundView;
+		Color _lastBkgrndColor = Color.Default;
 
-		public static void Apply(Cell cell, UITableViewCell nativeCell)
+		public static void Apply(Xamarin.Forms.Cell cell, UITableViewCell nativeCell)
 		{
 			Apply(cell, nativeCell, () => new iOSXFGlossCellTracker());
 		}
@@ -30,6 +34,7 @@ namespace XFGloss.iOS.Renderers
 		{
 			// Check all the properties that this implementation supports for changes
 			if (args.PropertyName == XFGlossPropertyNames.BackgroundColor ||
+			    args.PropertyName == XFGlossPropertyNames.BackgroundGradient ||
 				args.PropertyName == XFGlossPropertyNames.TintColor)
 			{
 				Reapply(args.PropertyName);
@@ -38,7 +43,7 @@ namespace XFGloss.iOS.Renderers
 
 		protected override void Reapply(string propertyName = null)
 		{
-			Cell cell;
+			Xamarin.Forms.Cell cell;
 			UITableViewCell nativeCell;
 
 			if (Reapply(out cell, out nativeCell))
@@ -47,13 +52,13 @@ namespace XFGloss.iOS.Renderers
 			}
 		}
 
-		protected virtual void ReapplyProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
+		protected virtual void ReapplyProperties(Xamarin.Forms.Cell cell, UITableViewCell nativeCell, string propertyName)
 		{
 			// TintColor property - to be passed to CreateEditIndicatorAccessoryView and possibly others in the future
 			if (propertyName == null ||
 				propertyName == XFGlossPropertyNames.TintColor)
 			{
-				Color tintColor = (Color)cell.GetValue(XFGlossCellProperties.TintColorProperty);
+				Color tintColor = (Color)cell.GetValue(XFGloss.Views.Cell.TintColorProperty);
 				if (tintColor != Color.Default)
 				{
 					nativeCell.TintColor = tintColor.ToUIColor();
@@ -65,76 +70,66 @@ namespace XFGloss.iOS.Renderers
 				}
 			}
 
-			// BackgroundColor property - can't check propertyName here due to needing to dispose of any
-			// unneeded background view
-			Color backgroundColor = (Color)cell.GetValue(XFGlossCellProperties.BackgroundColorProperty);
-			if (backgroundColor != Color.Default)
+			// BackgroundColor and BackgroundGradient properties
+			// We shouldn't apply BOTH a background gradient and solid color. The gradient takes preference.
+			if (propertyName == null || propertyName == XFGlossPropertyNames.BackgroundGradient)
 			{
-				UIColor uiColor = backgroundColor.ToUIColor();
-
-				UIView backgroundView = new UIView(CGRect.Empty);
-				backgroundView.BackgroundColor = uiColor;
-
-				_backgroundView = new WeakReference<UIView>(backgroundView);
-
-				nativeCell.BackgroundView = backgroundView;
-			}
-			else if (_backgroundView != null)
-			{
-				UIView backgroundView;
-				if (_backgroundView.TryGetTarget(out backgroundView))
+				Gradient backgroundGradient = (Gradient)cell.GetValue(XFGloss.Views.Cell.BackgroundGradientProperty);
+				if (backgroundGradient != null)
 				{
-					backgroundView.Dispose();
-					_backgroundView = null;
+					if (nativeCell.BackgroundView is UIBackgroundGradientView)
+					{
+						XFGlossGradientLayer.UpdateGradientLayer(nativeCell.BackgroundView, backgroundGradient);
+					}
+					else
+					{
+						DisposeBackgroundView(nativeCell);
+						nativeCell.BackgroundView = new UIBackgroundGradientView(CGRect.Empty, backgroundGradient);
+					}
+
+					// We don't need to handle BackgroundColor if a BackgroundGradient is assigned
+					return;
+				}
+				else
+				{
+					DisposeBackgroundView(nativeCell);
+				}
+			}
+
+			if (propertyName == null || propertyName == XFGlossPropertyNames.BackgroundColor)
+			{
+				Color bkgrndColor = (Color)cell.GetValue(XFGloss.Views.Cell.BackgroundColorProperty);
+
+				if (bkgrndColor != Color.Default)
+				{
+					if (bkgrndColor != _lastBkgrndColor)
+					{
+						_lastBkgrndColor = bkgrndColor;
+
+						UIColor uiColor = bkgrndColor.ToUIColor();
+
+						DisposeBackgroundView(nativeCell);
+
+						UIView bkgrndView = new UIView(CGRect.Empty);
+						bkgrndView.BackgroundColor = uiColor;
+
+						nativeCell.BackgroundView = bkgrndView;
+					}
+				}
+				else
+				{
+					DisposeBackgroundView(nativeCell);
 				}
 			}
 		}
-	}
-	#endregion
 
-	#region iOSXFGlossSwitchCellTracker
-	internal class iOSXFGlossSwitchCellTracker : iOSXFGlossCellTracker
-	{
-		XFGlossSwitchCellProperties _properties;
-
-		public iOSXFGlossSwitchCellTracker(BindableObject bindable)
+		void DisposeBackgroundView(UITableViewCell nativeCell)
 		{
-			_properties = new XFGlossSwitchCellProperties(bindable);
-		}
-
-		new public static void Apply(Cell cell, UITableViewCell nativeCell)
-		{
-			Apply(cell, nativeCell, () => new iOSXFGlossSwitchCellTracker(cell));
-		}
-
-		protected override void CellPropertyChanged(object sender, PropertyChangedEventArgs args)
-		{
-			// Check all the properties that this implementation supports for changes
-			if (args.PropertyName == XFGlossPropertyNames.OnTintColor ||
-				args.PropertyName == XFGlossPropertyNames.ThumbTintColor ||
-				args.PropertyName == XFGlossPropertyNames.ThumbOnTintColor)
+			if (nativeCell?.BackgroundView != null)
 			{
-				Reapply(args.PropertyName);
+				nativeCell.BackgroundView.Dispose();
+				nativeCell.BackgroundView = null;
 			}
-
-			// Special handling of state change to make XF Switch and Switch property names consistent
-			if (args.PropertyName == SwitchCell.OnProperty.PropertyName)
-			{
-				Reapply(XFGlossPropertyNames.ValueChanged);
-			}
-
-			base.CellPropertyChanged(sender, args);
-		}
-
-		protected override void ReapplyProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
-		{
-			if (nativeCell.AccessoryView is UISwitch)
-			{
-				var uiSwitch = nativeCell.AccessoryView as UISwitch;
-				uiSwitch.UpdateColorProperty(_properties, propertyName);
-			}
-
-			base.ReapplyProperties(cell, nativeCell, propertyName);
 		}
 	}
 	#endregion
@@ -144,7 +139,7 @@ namespace XFGloss.iOS.Renderers
 	{
 		WeakReference<UIView> _accessoryView;
 
-		new public static void Apply(Cell cell, UITableViewCell nativeCell)
+		new public static void Apply(Xamarin.Forms.Cell cell, UITableViewCell nativeCell)
 		{
 			Apply(cell, nativeCell, () => new iOSXFGlossAccessoryCellTracker());
 		}
@@ -160,13 +155,13 @@ namespace XFGloss.iOS.Renderers
 			base.CellPropertyChanged(sender, args);
 		}
 
-		protected override void ReapplyProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
+		protected override void ReapplyProperties(Xamarin.Forms.Cell cell, UITableViewCell nativeCell, string propertyName)
 		{
 			// AccessoryType property
 			if (propertyName == null ||
 				propertyName == XFGlossPropertyNames.AccessoryType)
 			{
-				var accessoryType = (XFGlossCellAccessoryTypes)cell.GetValue(XFGlossAccessoryCellProperties.AccessoryTypeProperty);
+				var accessoryType = (CellAccessoryType)cell.GetValue(XFGloss.Views.Cell.AccessoryTypeProperty);
 				UIView accView;
 				if (_accessoryView != null && _accessoryView.TryGetTarget(out accView))
 				{
@@ -177,31 +172,35 @@ namespace XFGloss.iOS.Renderers
 
 				switch (accessoryType)
 				{
-					case XFGlossCellAccessoryTypes.None:
+					case CellAccessoryType.None:
 						nativeCell.Accessory = UITableViewCellAccessory.None;
 						nativeCell.AccessoryView = new UIView(new CGRect(0, 0, 20, 40));
 						_accessoryView = new WeakReference<UIView>(nativeCell.AccessoryView);
 						break;
 
-					case XFGlossCellAccessoryTypes.Checkmark:
+					case CellAccessoryType.Checkmark:
 						nativeCell.Accessory = UITableViewCellAccessory.Checkmark;
 						break;
 
-					case XFGlossCellAccessoryTypes.DetailButton:
+					// Disabled until we can access the detail button tapped method in the table view source
+					// for both the ListView (currently not possible) and TableView (currently possible) classes.
+					/*
+					case CellAccessoryType.DetailButton:
 						nativeCell.Accessory = UITableViewCellAccessory.DetailButton;
 						break;
 
-					case XFGlossCellAccessoryTypes.DetailDisclosureButton:
+					case CellAccessoryType.DetailDisclosureButton:
 						nativeCell.Accessory = UITableViewCellAccessory.DetailDisclosureButton;
 						break;
+					*/
 
-					case XFGlossCellAccessoryTypes.DisclosureIndicator:
+					case CellAccessoryType.DisclosureIndicator:
 						nativeCell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
 						break;
 
-					case XFGlossCellAccessoryTypes.EditIndicator:
+					case CellAccessoryType.EditIndicator:
 						nativeCell.Accessory = UITableViewCellAccessory.None;
-						nativeCell.AccessoryView = CreateEditIndicatorAccessoryView((Color)cell.GetValue(XFGlossCellProperties.TintColorProperty));
+						nativeCell.AccessoryView = CreateEditIndicatorAccessoryView((Color)cell.GetValue(XFGloss.Views.Cell.TintColorProperty));
 						_accessoryView = new WeakReference<UIView>(nativeCell.AccessoryView);
 						break;
 				}
@@ -222,9 +221,59 @@ namespace XFGloss.iOS.Renderers
 			}
 
 			UIImageView view = new UIImageView(image);
-			view.TintColor = tintColor.ToUIColor();
+			if (tintColor != Color.Default)
+			{
+				view.TintColor = tintColor.ToUIColor();
+			}
 
 			return view;
+		}
+	}
+	#endregion
+
+	#region iOSXFGlossSwitchCellTracker
+	internal class iOSXFGlossSwitchCellTracker : iOSXFGlossCellTracker
+	{
+		XFGloss.Views.SwitchCell _properties;
+
+		public iOSXFGlossSwitchCellTracker(BindableObject bindable)
+		{
+			_properties = new XFGloss.Views.SwitchCell(bindable);
+		}
+
+		new public static void Apply(Xamarin.Forms.Cell cell, UITableViewCell nativeCell)
+		{
+			Apply(cell, nativeCell, () => new iOSXFGlossSwitchCellTracker(cell));
+		}
+
+		protected override void CellPropertyChanged(object sender, PropertyChangedEventArgs args)
+		{
+			// Check all the properties that this implementation supports for changes
+			if (args.PropertyName == XFGlossPropertyNames.OnTintColor ||
+				args.PropertyName == XFGlossPropertyNames.ThumbTintColor ||
+				args.PropertyName == XFGlossPropertyNames.ThumbOnTintColor)
+			{
+				Reapply(args.PropertyName);
+			}
+
+			// Special handling of state change to make XF Switch and Switch property names consistent
+			if (args.PropertyName == Xamarin.Forms.SwitchCell.OnProperty.PropertyName)
+			{
+				base.Reapply(XFGlossPropertyNames.ValueChanged);
+			}
+
+			base.CellPropertyChanged(sender, args);
+		}
+
+		protected override void ReapplyProperties(Xamarin.Forms.Cell cell, UITableViewCell nativeCell, string propertyName)
+		{
+			if (nativeCell.AccessoryView is UISwitch)
+			{
+				var uiSwitch = nativeCell.AccessoryView as UISwitch;
+				uiSwitch.UpdateColorProperty(_properties, propertyName);
+			}
+
+			base.ReapplyProperties(cell, nativeCell, propertyName);
 		}
 	}
 	#endregion
@@ -232,7 +281,7 @@ namespace XFGloss.iOS.Renderers
 	#region renderers
 	public class XFGlossEntryCellRenderer : EntryCellRenderer
 	{
-		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
+		public override UITableViewCell GetCell(Xamarin.Forms.Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var cell = base.GetCell(item, reusableCell, tv);
 			iOSXFGlossAccessoryCellTracker.Apply(item, cell);
@@ -243,7 +292,7 @@ namespace XFGloss.iOS.Renderers
 
 	public class XFGlossSwitchCellRenderer : SwitchCellRenderer
 	{
-		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
+		public override UITableViewCell GetCell(Xamarin.Forms.Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var cell = base.GetCell(item, reusableCell, tv);
 			iOSXFGlossSwitchCellTracker.Apply(item, cell);
@@ -253,7 +302,7 @@ namespace XFGloss.iOS.Renderers
 
 	public class XFGlossTextCellRenderer : TextCellRenderer
 	{
-		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
+		public override UITableViewCell GetCell(Xamarin.Forms.Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var cell = base.GetCell(item, reusableCell, tv);
 			iOSXFGlossAccessoryCellTracker.Apply(item, cell);
@@ -263,7 +312,7 @@ namespace XFGloss.iOS.Renderers
 
 	public class XFGlossImageCellRenderer : ImageCellRenderer
 	{
-		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
+		public override UITableViewCell GetCell(Xamarin.Forms.Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var cell = base.GetCell(item, reusableCell, tv);
 			iOSXFGlossAccessoryCellTracker.Apply(item, cell);
@@ -273,34 +322,11 @@ namespace XFGloss.iOS.Renderers
 
 	public class XFGlossViewCellRenderer : ViewCellRenderer
 	{
-		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
+		public override UITableViewCell GetCell(Xamarin.Forms.Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var cell = base.GetCell(item, reusableCell, tv);
 			iOSXFGlossAccessoryCellTracker.Apply(item, cell);
 			return cell;
-		}
-	}
-	#endregion
-
-	#region Effects for adding to existing customized Cell-derived classes
-	public class XFGlossEntryCellEffect : PlatformEffect
-	{
-
-		protected override void OnAttached()
-		{
-		}
-
-		protected override void OnDetached()
-		{
-		}
-
-		protected override void OnElementPropertyChanged(PropertyChangedEventArgs args)
-		{
-			if (args.PropertyName == BindableObject.BindingContextProperty.PropertyName)
-			{
-			}
-
-			base.OnElementPropertyChanged(args);
 		}
 	}
 	#endregion
