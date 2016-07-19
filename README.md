@@ -69,7 +69,7 @@ You can also instantiate an XFGloss instance to make multiple assignments easier
 
 The XFGloss solution provided in this repository also includes the "XFGlossSample" Xamarin.Forms-based app. It demonstrates all the XFGloss properties being applied in both Xaml and C# code.
 
-## Adding XFGloss to Your Xamarin.Forms Project
+# Adding XFGloss to Your Xamarin.Forms Project
 
 Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects like so:
 
@@ -118,7 +118,7 @@ Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet
     	}
     }
     
-## Using XFGloss with Custom UI Components
+# Using XFGloss with Other Custom Components
 
 XFGloss should also work with existing custom components provided that the renderer is assigned to the custom component instead of a native XF component. Your **ExportRenderer** assembly attribute should look like this:
 
@@ -182,7 +182,7 @@ Here's a complete list of the XF renderers that are customized by XFGloss:
 	</tr>
 </table>
 
-## XFGloss Properties
+# XFGloss Properties
 
 Some of the properties added by XFGloss already exist on some XF components. For example, the **BackgroundColor** property is available on many XF components. In such cases, XFGloss adds those properties to other XF components that didn't previously offer them. Other properties like the **BackgroundGradient** property are completely new to the XF environment.
 
@@ -267,13 +267,13 @@ Here's a code example taken from the verified issue that will fail when Xaml com
         	</Grid.Row>
         </Button>
         
-## Future Enhancements
+# Future Enhancements
 I plan to add support for other properties that aren't offered by the Xamarin.Forms components as my schedule allows. PRs, especially those that add support for other XF-supported platforms, are always welcomed!
 
-## Credits
+# Credits
 XFGloss was inspired by and based on the code presented in "[Lighting Up Native Platform Features In Xamarin Forms](http://www.wintellect.com/devcenter/krome/lighting-up-native-platform-features-in-xamarin-forms-part-1)." Thanks to the series' author, Keith Rome, for the inspiration and starting point for XFGloss.
 
-## About the Author
+# About the Author
 I am a Xamarin Certified Mobile Developer focused on Android, iOS and tvOS application development using Microsoft tools and C#, and Apple tools and Swift.  I have 25+ years of professional software development experience and have successfully telecommuted on a variety of projects since 2008.
 
 I am looking for opportunities to be part of a great team building great mobile apps! You can learn more about me on my [website](http://tommyb.com/) or [LinkedIn page](https://www.linkedin.com/in/tommybaggett).
