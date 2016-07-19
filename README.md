@@ -73,7 +73,7 @@ The XFGloss solution provided in this repository also includes the "XFGlossSampl
 
 # Adding XFGloss to Your Xamarin.Forms-Based App
 
-Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects like so:
+Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet package to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects, like so:
 
 **Android MainActivity.cs:**
 
