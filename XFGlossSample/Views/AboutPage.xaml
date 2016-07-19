@@ -1,10 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
 				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+				xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
 				x:Class="XFGlossSample.Views.AboutPage"
 		 		Title="XFGloss Sample App" Padding="10"
 				>
-	
+
+	<xfg:ContentPageGloss.BackgroundGradient>
+		<!-- 
+		Just want a basic 2 color vertical gradient? This does it. You can also add
+		IsHorizontal="true", IsReverseHorizontal="true" or IsReverseVertical="true" to
+		change the gradient direction.
+
+		<xfg:GlossGradient StartColor="White" EndColor="Red"/>
+		-->
+		<!-- In this case, I want to limit the gradient to the bottom half of the page and also angle it -->
+		<xfg:GlossGradient Angle="150">
+			<xfg:GlossGradient.Steps>
+				<xfg:GlossGradientStep StepColor="White" StepPercentage="0" />
+				<xfg:GlossGradientStep StepColor="White" StepPercentage=".5" />
+				<xfg:GlossGradientStep StepColor="#ccd9ff" StepPercentage="1" />
+			</xfg:GlossGradient.Steps>
+		</xfg:GlossGradient>
+	</xfg:ContentPageGloss.BackgroundGradient>
+
 	<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 		<StackLayout HorizontalOptions="Center" VerticalOptions="FillAndExpand">
 			<Image Source="xfgloss.png" WidthRequest="200"/>

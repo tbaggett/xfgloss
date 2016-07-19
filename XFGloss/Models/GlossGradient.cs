@@ -281,6 +281,8 @@ namespace XFGloss
 		void init()
 		{
 			Steps = new List<GlossGradientStep>();
+
+			Angle = DEFAULT_ANGLE;
 		}
 
 		public void Dispose()
