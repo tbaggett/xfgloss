@@ -1,52 +1,53 @@
+![XFGloss icon](images/XFGlossIcon.png)
+
 # XFGloss: Xamarin.Forms UI Enhancements
----
-**XFGloss** adds new properties to Xamarin.Forms standard UI components on the Android and iOS platforms. The new properties can also be used with custom UI components that derive from standard XF UI components without modifying their source code.
+
+**XFGloss** adds new bindable properties to Xamarin.Forms standard UI components on the Android and iOS platforms.
 
 XFGloss accomplishes its goals using a combination of:
 
- - Attached bindable properties for Xaml support
+ - Attached bindable properties
  - Static and per-instance getters/setters 
- - Replacement custom renderers for the standard Xamarin.Forms UI components being enhanced
- - Effects that can be easily added to custom UI components on a per-instance basis
+ - Enhanced custom renderers for the supported Xamarin.Forms UI components
 
-replacement custom renderers for the 
-
-_Note: PRs, especially to add support to other Xamarin.Forms-supported platforms, are welcomed!_
-
-(TODO: Add pics here)
+_Note: PRs, especially to add support to other platforms supported by Xamarin.Forms, are welcomed!_
 
 ---
-## New Properties
+## New Bindable Properties
 
-**AccessoryType (iOS only):** XFGlossCellAccessoryTypes enum value
-_Added to cell classes (EntryCell, ImageCell, SwitchCell, TextCell, ViewCell)_
+**AccessoryType (iOS only):** XFGloss.CellAccessoryType enum value  
+_Added to EntryCell, ImageCell, TextCell and ViewCell_
 
-Allows specifying the accessory type to be shown on the right side of the cell. Possible values are _None_, _DisclosureIndicator_, _DetailDisclosureButton_, _Checkmark_, _DetailButton_ and _EditIndicator_.
+Allows specifying the accessory type to be shown on the right side of the cell. Possible values are _None_, _DisclosureIndicator_, _Checkmark_ and _EditIndicator_. 
 
-**BackgroundColor:** Xamarin.Forms Color
-_Added to cell classes (EntryCell, ImageCell, SwitchCell, TextCell, ViewCell)_
+The Android platform doesn't offer accessory types as part of its standard UI, so this property isn't supported on Android devices.
 
-Allows a color value to be specified as a cell&#39;s background color. Possible values are either named colors or numeric color values.
+The iOS _DetailButton_ and _DetailDisclosureButton_ accessory types aren't currently supported due to Xamarin.Forms not providing the external access needed to react to the user tapping the Details button.
 
-**TintColor:** Xamarin.Forms Color
-_Added to all cell classes&#39; accessory views (iOS only), Switch, SwitchCell_
+**BackgroundColor:** Xamarin.Forms Color  
+_Added to EntryCell, ImageCell, SwitchCell, TextCell and ViewCell_
 
-Allows a color value to be specified as the Switch control&#39;s track color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes, and for the accessory view on iOS. Possible values are either named colors or numeric color values.
+Allows a color value to be specified as a cell's background color. Possible values are either named colors or numeric color values.
 
-**OnTintColor:** Xamarin.Forms Color
+**TintColor:** Xamarin.Forms Color  
+_Added to all cell classes' accessory views (iOS only), Switch and SwitchCell_
+
+Allows a color value to be specified as the Switch control's track color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes, and for the accessory view on iOS. Possible values are either named colors or numeric color values.
+
+**OnTintColor:** Xamarin.Forms Color  
 _Added to Switch, SwitchCell_
 
-Allows a color value to be specified as the Switch control&#39;s track color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
+Allows a color value to be specified as the Switch control's track color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
-**ThumbTintColor:** Xamarin.Forms Color
+**ThumbTintColor:** Xamarin.Forms Color  
 _Added to Switch, SwitchCell_
 
-Allows a color value to be specified as the Switch control&#39;s thumb color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
+Allows a color value to be specified as the Switch control's thumb color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
-**ThumbOnTintColor:** Xamarin.Forms Color
+**ThumbOnTintColor:** Xamarin.Forms Color  
 _Added to Switch, SwitchCell_
 
-Allows a color value to be specified as the Switch control&#39;s thumb color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
+Allows a color value to be specified as the Switch control's thumb color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
 ---
 ## Using the New Properties with Xamarin.Forms UI Components
@@ -57,7 +58,9 @@ Allows a color value to be specified as the Switch control&#39;s thumb color whe
 ---
 #Known Issues
 
- - OnPlatform won't assign value to attached property when declared in Xaml if Xaml compilation is enabled ([verified issue by Xamarin](https://bugzilla.xamarin.com/show_bug.cgi?id=37371)). An example can be seen in the sample app's AppMenu.xaml file.
+ - The XF EntryCell layout on iOS doesn't take the UITableViewCell.AccessoryView into account when positioning/sizing the text entry field. I plan to submit a PR that corrects this issue.
+
+ - OnPlatform won't assign a value to an attached property when the binding is declared in Xaml **if Xaml compilation is enabled** ([verified issue by Xamarin](https://bugzilla.xamarin.com/show_bug.cgi?id=37371)). An example can be seen in the sample app's AppMenu.xaml file. The workaround for this issue is to disable Xaml compilation for the Xaml files where you want to specify a binding for one of XFGloss's attached properties.
 
 ---
 ## About the Author
