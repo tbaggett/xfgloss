@@ -1,4 +1,4 @@
-[XFGloss icon](images/XFGlossIcon.png)
+![XFGloss icon](images/XFGlossIcon.png)
 
 # XFGloss: Xamarin.Forms UI Enhancements
 
