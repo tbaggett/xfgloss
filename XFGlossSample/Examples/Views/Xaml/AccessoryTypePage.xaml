@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
 				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-				xmlns:xfGloss="clr-namespace:XFGloss.Views;assembly=XFGloss"
+				xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
 				x:Class="XFGlossSample.Examples.Views.Xaml.AccessoryTypePage"
 				Title="Xaml Accessory Types"
 				>
@@ -17,12 +17,12 @@
 		<TableView>
 			<TableView.Root>
 				<TableSection>
-					<TextCell Text="None" xfGloss:Cell.AccessoryType="None" />
-					<TextCell Text="DisclosureIndicator" xfGloss:Cell.AccessoryType="DisclosureIndicator" />
-					<!-- <TextCell Text="DetailDisclosureButton" xfGloss:Cell.AccessoryType="DetailDisclosureButton" /> -->
-					<TextCell Text="Checkmark" xfGloss:Cell.AccessoryType="Checkmark" />
-					<!-- <TextCell Text="DetailButton" xfGloss:Cell.AccessoryType="DetailButton" /> -->
-					<EntryCell Label="EditIndicator" Placeholder="Optional" HorizontalTextAlignment="End" xfGloss:Cell.AccessoryType="EditIndicator" />
+					<TextCell Text="None" xfg:CellGloss.AccessoryType="None" />
+					<TextCell Text="DisclosureIndicator" xfg:CellGloss.AccessoryType="DisclosureIndicator" />
+					<!-- <TextCell Text="DetailDisclosureButton" xfg:CellGloss.AccessoryType="DetailDisclosureButton" /> -->
+					<TextCell Text="Checkmark" xfg:CellGloss.AccessoryType="Checkmark" />
+					<!-- <TextCell Text="DetailButton" xfg:CellGloss.AccessoryType="DetailButton" /> -->
+					<EntryCell Label="EditIndicator" Placeholder="Optional" HorizontalTextAlignment="End" xfg:CellGloss.AccessoryType="EditIndicator" />
 				</TableSection>
 			</TableView.Root>
 		</TableView>

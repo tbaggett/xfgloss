@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Xamarin.Forms;
+using XFGloss;
 
 namespace XFGlossSample.Examples.Views.CSharp
 {
@@ -64,7 +65,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 				cell.TextColor = Color.White;
 
 				// Assign our gloss properties - You can use the standard static setter...
-				XFGloss.Views.Cell.SetBackgroundColor(cell, colors[colorName]);
+				CellGloss.SetBackgroundColor(cell, colors[colorName]);
 
 				// ...or instantiate an instance of the Gloss properties you want to assign values to
 				//	var gloss = new XFGloss.Views.Cell(cell);

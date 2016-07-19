@@ -3,14 +3,12 @@ using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using XFGloss.Models;
-using XFGloss.Views;
 
 namespace XFGloss.iOS.Extensions
 {
 	public static class XFGlossUISwitchExtensions
 	{
-		public static void UpdateColorProperty(this UISwitch control, IXFGlossSwitchProperties properties, string propertyName)
+		public static void UpdateColorProperty(this UISwitch control, ISwitchGloss properties, string propertyName)
 		{
 			if (control == null || properties == null)
 			{
@@ -19,7 +17,7 @@ namespace XFGloss.iOS.Extensions
 
 			// TintColor property
 			if (propertyName == null ||
-				propertyName == XFGlossPropertyNames.TintColor)
+			    propertyName == SwitchGloss.TintColorProperty.PropertyName)
 			{
 				var tintColor = properties.TintColor;
 				if (tintColor != Color.Default)
@@ -30,7 +28,7 @@ namespace XFGloss.iOS.Extensions
 
 			// OnTintColor property
 			if (propertyName == null ||
-				propertyName == XFGlossPropertyNames.OnTintColor)
+			    propertyName == SwitchGloss.OnTintColorProperty.PropertyName)
 			{
 				var onTintColor = properties.OnTintColor;
 				if (onTintColor != Color.Default)
@@ -46,7 +44,7 @@ namespace XFGloss.iOS.Extensions
 
 			// Special handling of switch value changing - delay applying property changes until
 			// switch state change animation has completed
-			if (propertyName == XFGlossPropertyNames.ValueChanged)
+			if (propertyName == Switch.IsToggledProperty.PropertyName)
 			{
 				// Create a weak reference to the UISwitch control to avoid capturing a strong reference in the Task lambda
 				WeakReference<UISwitch> controlRef = new WeakReference<UISwitch>(control);

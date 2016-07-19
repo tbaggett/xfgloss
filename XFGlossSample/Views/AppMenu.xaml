@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms" 
 				  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-				  xmlns:xfGloss="clr-namespace:XFGloss.Views;assembly=XFGloss"
+				  xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
 				  xmlns:vm="clr-namespace:XFGlossSample.ViewModels;assembly=XFGlossSample"
 				  xmlns:views="clr-namespace:XFGlossSample.Views;assembly=XFGlossSample"
 				  x:Class="XFGlossSample.AppMenu"
@@ -29,13 +29,13 @@
 						  BackgroundColor="#fae5ff">
 					<ListView.GroupHeaderTemplate>
 						<DataTemplate>
-							<TextCell Text="{Binding Title}" xfGloss:Cell.BackgroundColor="Red" TextColor="White" />
+							<TextCell Text="{Binding Title}" xfg:CellGloss.BackgroundColor="Red" TextColor="White" />
 						</DataTemplate>
 					</ListView.GroupHeaderTemplate>
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<TextCell Text="{Binding Title}" TextColor="Red" Tapped="ShowPage"
-									  xfGloss:Cell.BackgroundColor="#FFE6E6" />
+									  xfg:CellGloss.BackgroundColor="#FFE6E6" />
 						</DataTemplate>
 					</ListView.ItemTemplate>
 				</ListView>

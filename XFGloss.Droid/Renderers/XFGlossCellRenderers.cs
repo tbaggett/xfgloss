@@ -1,18 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
-using Android.Graphics.Drawables;
-using Android.Graphics.Drawables.Shapes;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using XFGloss.Droid.Extensions;
 using XFGloss.Droid.Drawables;
-using XFGloss.Models;
-using XFGloss.Trackers;
-using AGraphics = Android.Graphics;
 using AView = Android.Views.View;
 
 [assembly: ExportRenderer(typeof(EntryCell), typeof(XFGloss.Droid.Renderers.XFGlossEntryCellRenderer))]
-[assembly: ExportRenderer(typeof(Xamarin.Forms.SwitchCell), typeof(XFGloss.Droid.Renderers.XFGlossSwitchCellRenderer))]
+[assembly: ExportRenderer(typeof(SwitchCell), typeof(XFGloss.Droid.Renderers.XFGlossSwitchCellRenderer))]
 [assembly: ExportRenderer(typeof(TextCell), typeof(XFGloss.Droid.Renderers.XFGlossTextCellRenderer))]
 [assembly: ExportRenderer(typeof(ImageCell), typeof(XFGloss.Droid.Renderers.XFGlossImageCellRenderer))]
 [assembly: ExportRenderer(typeof(ViewCell), typeof(XFGloss.Droid.Renderers.XFGlossViewCellRenderer))]
@@ -29,8 +24,8 @@ namespace XFGloss.Droid.Renderers
 		protected override void CellPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			// Check all the properties that this implementation supports for changes
-			if (args.PropertyName == XFGlossPropertyNames.BackgroundColor ||
-			    args.PropertyName == XFGlossPropertyNames.BackgroundGradient)
+			if (args.PropertyName == CellGloss.BackgroundColorProperty.PropertyName ||
+			    args.PropertyName == CellGloss.BackgroundGradientProperty.PropertyName)
 			{
 				Reapply(args.PropertyName);
 			}
@@ -49,9 +44,9 @@ namespace XFGloss.Droid.Renderers
 
 		protected virtual void ReapplyProperties(Xamarin.Forms.Cell cell, AView nativeCell, string propertyName)
 		{
-			if (propertyName == null || propertyName == XFGlossPropertyNames.BackgroundGradient)
+			if (propertyName == null || propertyName == CellGloss.BackgroundGradientProperty.PropertyName)
 			{
-				Gradient bkgrndGradient = (Gradient)cell.GetValue(Views.Cell.BackgroundGradientProperty);
+				GlossGradient bkgrndGradient = (GlossGradient)cell.GetValue(CellGloss.BackgroundGradientProperty);
 				// Initialize/update the painter and shader as needed if a gradient is assigned
 				if (bkgrndGradient != null)
 				{
@@ -76,9 +71,9 @@ namespace XFGloss.Droid.Renderers
 			}
 
 			// BackgroundColor property
-			if (propertyName == null || propertyName == XFGlossPropertyNames.BackgroundColor)
+			if (propertyName == null || propertyName == CellGloss.BackgroundColorProperty.PropertyName)
 			{
-				Color bkgrndColor = (Color)cell.GetValue(Views.Cell.BackgroundColorProperty);
+				Color bkgrndColor = (Color)cell.GetValue(CellGloss.BackgroundColorProperty);
 				nativeCell.SetBackgroundColor((bkgrndColor != Color.Default)
 											  ? bkgrndColor.ToAndroid() : Android.Graphics.Color.Transparent);
 			}
@@ -87,11 +82,11 @@ namespace XFGloss.Droid.Renderers
 
 	internal class DroidXFGlossSwitchCellTracker : DroidXFGlossCellTracker
 	{
-		Views.SwitchCell _properties;
+		SwitchCellGloss _properties;
 
 		public DroidXFGlossSwitchCellTracker(BindableObject bindable)
 		{
-			_properties = new Views.SwitchCell(bindable);
+			_properties = new SwitchCellGloss(bindable);
 		}
 
 		new public static void Apply(Xamarin.Forms.Cell cell, AView nativeCell)
@@ -102,10 +97,10 @@ namespace XFGloss.Droid.Renderers
 		protected override void CellPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			// Check all the properties that this implementation supports for changes
-			if (args.PropertyName == XFGlossPropertyNames.TintColor ||
-			    args.PropertyName == XFGlossPropertyNames.OnTintColor ||
-			    args.PropertyName == XFGlossPropertyNames.ThumbTintColor ||
-			    args.PropertyName == XFGlossPropertyNames.ThumbOnTintColor)
+			if (args.PropertyName == CellGloss.TintColorProperty.PropertyName ||
+			    args.PropertyName == SwitchCellGloss.OnTintColorProperty.PropertyName ||
+			    args.PropertyName == SwitchCellGloss.ThumbTintColorProperty.PropertyName ||
+			    args.PropertyName == SwitchCellGloss.ThumbOnTintColorProperty.PropertyName)
 			{
 				Reapply(args.PropertyName);
 			}

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
+using XFGloss;
 
 namespace XFGlossSample.Examples.Views.CSharp
 {
@@ -63,7 +62,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 				result.Text = colorName;
 
 				// Assign our gloss properties - You can use the standard static setter...
-				XFGloss.Views.SwitchCell.SetOnTintColor(result, colorValue);
+				SwitchCellGloss.SetOnTintColor(result, colorValue);
 
 				// ...or instantiate an instance of the Gloss properties you want to assign values to
 				//	var gloss = new XFGloss.Views.SwitchCell(result);
@@ -91,7 +90,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			};
 
 			var control = new Switch();
-			XFGloss.Views.Switch.SetOnTintColor(control, colorValue);
+			SwitchGloss.SetOnTintColor(control, colorValue);
 
 			result.Children.Add(control);
 

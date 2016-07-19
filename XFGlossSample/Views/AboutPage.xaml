@@ -13,7 +13,8 @@
 			<Label />
 			<Label FontSize="Small" Text="XFGloss adds new properties to existing Xamarin.Forms components.
 Have you ever wanted to set a table or list view cell's background color to a solid color or multi-color gradient? Now
-you can. How about tinting Switch controls or SwitchCells, even with different on and off colors? XFGloss makes it easy."
+you can. How about tinting Switch controls or SwitchCells, even with different on and off colors? XFGloss makes that
+easy as well!"
 			/>
 		</StackLayout>
 	</ScrollView>

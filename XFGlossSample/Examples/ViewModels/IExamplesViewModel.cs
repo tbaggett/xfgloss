@@ -1,5 +1,5 @@
 ﻿using System;
-using XFGloss.Models;
+using XFGloss;
 
 namespace XFGlossSample.Examples.ViewModels
 {

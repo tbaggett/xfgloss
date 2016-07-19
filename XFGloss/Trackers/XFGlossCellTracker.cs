@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
 
-namespace XFGloss.Trackers
+namespace XFGloss
 {
 	#region XFGlossCellTracker base class (derived from in platform projects)
 	public class XFGlossCellTracker

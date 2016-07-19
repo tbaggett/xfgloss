@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using XFGloss.Models;
 using Xamarin.Forms.Platform.Android;
 
 namespace XFGloss.Droid.Extensions
 {
 	public static class XFGlossGradientExtensions
 	{
-		static public int[] ToAndroidColorValues(this Gradient self)
+		static public int[] ToAndroidColorValues(this GlossGradient self)
 		{
 			List<int> result = new List<int>();
 
-			foreach (GradientStep step in self.Steps)
+			foreach (GlossGradientStep step in self.Steps)
 			{
 				result.Add(step.StepColor.ToAndroid());
 			}
@@ -19,12 +18,12 @@ namespace XFGloss.Droid.Extensions
 			return result.ToArray();
 		}
 
-		static public float[] ToAndroidPercentages(this Gradient self)
+		static public float[] ToAndroidPercentages(this GlossGradient self)
 		{
 			List<float> result = new List<float>();
 
 			float lastStep = float.MinValue;
-			foreach (GradientStep step in self.Steps)
+			foreach (GlossGradientStep step in self.Steps)
 			{
 				if (lastStep > step.StepPercentage)
 				{

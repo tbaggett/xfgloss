@@ -1,22 +1,21 @@
 ﻿using System;
 using Xamarin.Forms;
-using XFGloss.Models;
 
-namespace XFGloss.Views
+namespace XFGloss
 {
-	public class Page
+	public class ContentPageGloss
 	{
 		#region BackgroundGradient
 
 		public static readonly BindableProperty BackgroundGradientProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.BackgroundGradient, typeof(Gradient), typeof(Xamarin.Forms.Page), null);
+			BindableProperty.CreateAttached("BackgroundGradient", typeof(GlossGradient), typeof(Xamarin.Forms.Page), null);
 
-		public static Gradient GetBackgroundGradient(BindableObject bindable)
+		public static GlossGradient GetBackgroundGradient(BindableObject bindable)
 		{
-			return (Gradient)bindable.GetValue(BackgroundGradientProperty);
+			return (GlossGradient)bindable.GetValue(BackgroundGradientProperty);
 		}
 
-		public static void SetBackgroundGradient(BindableObject bindable, Gradient value)
+		public static void SetBackgroundGradient(BindableObject bindable, GlossGradient value)
 		{
 			bindable.SetValue(BackgroundGradientProperty, value);
 		}
@@ -27,7 +26,7 @@ namespace XFGloss.Views
 
 		WeakReference<BindableObject> _bindable;
 
-		public Page(BindableObject bindable)
+		public ContentPageGloss(BindableObject bindable)
 		{
 			_bindable = new WeakReference<BindableObject>(bindable);
 		}
@@ -51,7 +50,7 @@ namespace XFGloss.Views
 			}
 		}
 
-		public Gradient BackgroundGradient
+		public GlossGradient BackgroundGradient
 		{
 			get
 			{

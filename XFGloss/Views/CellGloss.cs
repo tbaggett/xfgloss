@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using XFGloss.Models;
 
-namespace XFGloss.Views
+namespace XFGloss
 {
-	public class Cell
+	public class CellGloss
 	{
 		#region AccessoryType
 
 		public static readonly BindableProperty AccessoryTypeProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.AccessoryType, typeof(CellAccessoryType), typeof(Xamarin.Forms.Cell), CellAccessoryType.None);
+			BindableProperty.CreateAttached("AccessoryType", typeof(CellGlossAccessoryType), typeof(Xamarin.Forms.Cell), CellGlossAccessoryType.None);
 
-		public static CellAccessoryType GetAccessoryType(BindableObject bindable)
+		public static CellGlossAccessoryType GetAccessoryType(BindableObject bindable)
 		{
-			return (CellAccessoryType)bindable.GetValue(AccessoryTypeProperty);
+			return (CellGlossAccessoryType)bindable.GetValue(AccessoryTypeProperty);
 		}
 
-		public static void SetAccessoryType(BindableObject bindable, CellAccessoryType value)
+		public static void SetAccessoryType(BindableObject bindable, CellGlossAccessoryType value)
 		{
 			bindable.SetValue(AccessoryTypeProperty, value);
 		}
@@ -26,14 +23,14 @@ namespace XFGloss.Views
 		#region AccessoryDetailAction
 
 		public static readonly BindableProperty AccessoryDetailActionProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.AccessoryDetailAction, typeof(Action<Cell>), typeof(Xamarin.Forms.Cell), null);
+			BindableProperty.CreateAttached("AccessoryDetailAction", typeof(Action<CellGloss>), typeof(Xamarin.Forms.Cell), null);
 
-		public static Action<Cell> GetAccessoryDetailAction(BindableObject bindable)
+		public static Action<CellGloss> GetAccessoryDetailAction(BindableObject bindable)
 		{
-			return (Action<Cell>)bindable.GetValue(AccessoryDetailActionProperty);
+			return (Action<CellGloss>)bindable.GetValue(AccessoryDetailActionProperty);
 		}
 
-		public static void SetAccessoryDetailAction(BindableObject bindable, Action<Cell> value)
+		public static void SetAccessoryDetailAction(BindableObject bindable, Action<CellGloss> value)
 		{
 			bindable.SetValue(AccessoryDetailActionProperty, value);
 		}
@@ -45,7 +42,7 @@ namespace XFGloss.Views
 		#region BackgroundColor
 
 		public static readonly BindableProperty BackgroundColorProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.BackgroundColor, typeof(Color), typeof(Xamarin.Forms.Cell), Color.Default);
+			BindableProperty.CreateAttached("BackgroundColor", typeof(Color), typeof(Xamarin.Forms.Cell), Color.Default);
 
 		public static Color GetBackgroundColor(BindableObject bindable)
 		{
@@ -62,14 +59,14 @@ namespace XFGloss.Views
 		#region BackgroundGradient
 
 		public static readonly BindableProperty BackgroundGradientProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.BackgroundGradient, typeof(Gradient), typeof(Xamarin.Forms.Cell), null);
+			BindableProperty.CreateAttached("BackgroundGradient", typeof(GlossGradient), typeof(Xamarin.Forms.Cell), null);
 
-		public static Gradient GetBackgroundGradient(BindableObject bindable)
+		public static GlossGradient GetBackgroundGradient(BindableObject bindable)
 		{
-			return (Gradient)bindable.GetValue(BackgroundGradientProperty);
+			return (GlossGradient)bindable.GetValue(BackgroundGradientProperty);
 		}
 
-		public static void SetBackgroundGradient(BindableObject bindable, Gradient value)
+		public static void SetBackgroundGradient(BindableObject bindable, GlossGradient value)
 		{
 			bindable.SetValue(BackgroundGradientProperty, value);
 		}
@@ -79,7 +76,7 @@ namespace XFGloss.Views
 		#region TintColor
 
 		public static readonly BindableProperty TintColorProperty =
-			BindableProperty.CreateAttached(XFGlossPropertyNames.TintColor, typeof(Color), typeof(Xamarin.Forms.Cell), Color.Default);
+			BindableProperty.CreateAttached("TintColor", typeof(Color), typeof(Xamarin.Forms.Cell), Color.Default);
 
 		public static Color GetTintColor(BindableObject bindable)
 		{
@@ -97,7 +94,7 @@ namespace XFGloss.Views
 
 		WeakReference<BindableObject> _bindable;
 
-		public Cell(BindableObject bindable)
+		public CellGloss(BindableObject bindable)
 		{
 			_bindable = new WeakReference<BindableObject>(bindable);
 		}
@@ -121,12 +118,12 @@ namespace XFGloss.Views
 			}
 		}
 
-		public CellAccessoryType AccessoryType
+		public CellGlossAccessoryType AccessoryType
 		{
 			get
 			{
 				var bindable = Bindable;
-				return (bindable == null) ? CellAccessoryType.None : GetAccessoryType(bindable);
+				return (bindable == null) ? CellGlossAccessoryType.None : GetAccessoryType(bindable);
 			}
 
 			set
@@ -139,7 +136,7 @@ namespace XFGloss.Views
 			}
 		}
 
-		public Action<Cell> AccessoryDetailAction
+		public Action<CellGloss> AccessoryDetailAction
 		{
 			get
 			{
@@ -175,7 +172,7 @@ namespace XFGloss.Views
 			}
 		}
 
-		public Gradient BackgroundGradient
+		public GlossGradient BackgroundGradient
 		{
 			get
 			{

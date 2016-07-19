@@ -3,14 +3,13 @@ using CoreAnimation;
 using CoreGraphics;
 using UIKit;
 using XFGloss.iOS.Extensions;
-using XFGloss.Models;
 
 namespace XFGloss.iOS.Views
 {
 	// Helper class used to resize background gradient layer when the cell size changes
 	internal class UIBackgroundGradientView : UIView
 	{
-		public UIBackgroundGradientView(CGRect rect, Gradient gradientSource) : base(rect)
+		public UIBackgroundGradientView(CGRect rect, GlossGradient gradientSource) : base(rect)
 		{
 			XFGlossGradientLayer.UpdateGradientLayer(this, gradientSource);
 		}
@@ -26,19 +25,19 @@ namespace XFGloss.iOS.Views
 
 	internal class XFGlossGradientLayer : CAGradientLayer
 	{
-		WeakReference<Gradient> _gradientSource;
+		WeakReference<GlossGradient> _gradientSource;
 
-		public XFGlossGradientLayer(Gradient gradient)
+		public XFGlossGradientLayer(GlossGradient gradient)
 		{
-			_gradientSource = new WeakReference<Gradient>(gradient);
+			_gradientSource = new WeakReference<GlossGradient>(gradient);
 			UpdateGradientLayerParams(gradient);
 		}
 
-		public Gradient GradientSource
+		public GlossGradient GradientSource
 		{
 			get
 			{
-				Gradient result;
+				GlossGradient result;
 				if (_gradientSource != null && _gradientSource.TryGetTarget(out result))
 				{
 					return result;
@@ -48,7 +47,7 @@ namespace XFGloss.iOS.Views
 			}
 			set
 			{
-				Gradient existing;
+				GlossGradient existing;
 				if (_gradientSource != null)
 				{
 					// Skip updating gradient if new one's values match the current one
@@ -67,25 +66,18 @@ namespace XFGloss.iOS.Views
 				}
 				else
 				{
-					_gradientSource = new WeakReference<Gradient>(value);
+					_gradientSource = new WeakReference<GlossGradient>(value);
 				}
 
 				UpdateGradientLayerParams(value);
 			}
 		}
 
-		static public void UpdateGradientLayer(UIView view, Gradient gradientSource = null)
+		static public void UpdateGradientLayer(UIView view, GlossGradient gradientSource = null)
 		{
 			XFGlossGradientLayer gradientLayer = GetGradientLayer(view);
 			if (gradientSource != null)
 			{
-				// Verify the gradient's angle has been set - it won't have been if initialized from Xaml and only
-				// the start and end color values were specified
-				if (gradientSource.Angle == Gradient.UNDEFINED_ANGLE)
-				{
-					gradientSource.Angle = Gradient.DEFAULT_ANGLE;
-				}
-
 				// Create or update the layer as needed if a new gradient was passed to us
 				bool insertLayer = false;
 				if (gradientLayer == null)
@@ -135,7 +127,7 @@ namespace XFGloss.iOS.Views
 			return null;
 		}
 
-		void UpdateGradientLayerParams(Gradient gradient)
+		void UpdateGradientLayerParams(GlossGradient gradient)
 		{
 			Colors = gradient.ToCGColors();
 			Locations = gradient.ToNSNumbers();

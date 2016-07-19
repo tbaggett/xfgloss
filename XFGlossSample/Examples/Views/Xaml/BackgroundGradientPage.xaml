@@ -1,19 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
 				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-				xmlns:xfGloss="clr-namespace:XFGloss.Views;assembly=XFGloss"
-				xmlns:xfgModels="clr-namespace:XFGloss.Models;assembly=XFGloss"
+				xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
 				x:Class="XFGlossSample.Examples.Views.Xaml.BackgroundGradientPage"
 				>
 
-	<xfGloss:Page.BackgroundGradient>
+	<xfg:ContentPageGloss.BackgroundGradient>
 		<!-- 
 		Just want a basic 2 color vertical gradient? This does it. You can also add
 		IsHorizontal="true", IsReverseHorizontal="true" or IsReverseVertical="true" to
 		change the gradient direction.
 		-->
-		<xfgModels:Gradient StartColor="White" EndColor="#800000"/>
-	</xfGloss:Page.BackgroundGradient>
+		<xfg:GlossGradient StartColor="White" EndColor="#800000"/>
+	</xfg:ContentPageGloss.BackgroundGradient>
 	
 	<ScrollView>
 		<StackLayout>
@@ -44,34 +43,34 @@
 							<OnPlatform x:TypeArguments="x:String" iOS="" Android="Cell BackgroundGradient values set in Xaml:" />
 						</TableSection.Title>
 						<TextCell Text="Red" TextColor="White">
-							<xfGloss:Cell.BackgroundGradient>
-								<xfgModels:Gradient StartColor="Red" EndColor="Maroon" IsVertical="true" />
-							</xfGloss:Cell.BackgroundGradient>
+							<xfg:CellGloss.BackgroundGradient>
+								<xfg:GlossGradient StartColor="Red" EndColor="Maroon" IsVertical="true" />
+							</xfg:CellGloss.BackgroundGradient>
 						</TextCell>
 						<TextCell Text="Green" TextColor="White">
-							<xfGloss:Cell.BackgroundGradient>
-								<xfgModels:Gradient StartColor="Lime" EndColor="Green" IsHorizontal="true" />
-							</xfGloss:Cell.BackgroundGradient>
+							<xfg:CellGloss.BackgroundGradient>
+								<xfg:GlossGradient StartColor="Lime" EndColor="Green" IsHorizontal="true" />
+							</xfg:CellGloss.BackgroundGradient>
 						</TextCell>
 						<TextCell Text="Blue" TextColor="White">
-							<xfGloss:Cell.BackgroundGradient>
-								<xfgModels:Gradient StartColor="Blue" EndColor="Navy" IsReverseVertical="true" />
-							</xfGloss:Cell.BackgroundGradient>
+							<xfg:CellGloss.BackgroundGradient>
+								<xfg:GlossGradient StartColor="Blue" EndColor="Navy" IsReverseVertical="true" />
+							</xfg:CellGloss.BackgroundGradient>
 						</TextCell>
 						<TextCell Text="All Three" TextColor="White" x:Name="testCell">
 							<!-- You can also create gradients at any angle with as many steps as you want. -->
-							<xfGloss:Cell.BackgroundGradient>
-								<xfgModels:Gradient Angle="135" x:Name="rotatingGradient">
-									<xfgModels:Gradient.Steps>
-										<xfgModels:GradientStep StepColor="Red" StepPercentage="0" />
-										<xfgModels:GradientStep StepColor="Maroon" StepPercentage=".25" />
-										<xfgModels:GradientStep StepColor="Lime" StepPercentage=".4" />
-										<xfgModels:GradientStep StepColor="Green" StepPercentage=".6" />
-										<xfgModels:GradientStep StepColor="Blue" StepPercentage=".75" />
-										<xfgModels:GradientStep StepColor="Navy" StepPercentage="1" />
-									</xfgModels:Gradient.Steps>
-								</xfgModels:Gradient>
-							</xfGloss:Cell.BackgroundGradient>
+							<xfg:CellGloss.BackgroundGradient>
+								<xfg:GlossGradient Angle="135" x:Name="rotatingGradient">
+									<xfg:GlossGradient.Steps>
+										<xfg:GlossGradientStep StepColor="Red" StepPercentage="0" />
+										<xfg:GlossGradientStep StepColor="Maroon" StepPercentage=".25" />
+										<xfg:GlossGradientStep StepColor="Lime" StepPercentage=".4" />
+										<xfg:GlossGradientStep StepColor="Green" StepPercentage=".6" />
+										<xfg:GlossGradientStep StepColor="Blue" StepPercentage=".75" />
+										<xfg:GlossGradientStep StepColor="Navy" StepPercentage="1" />
+									</xfg:GlossGradient.Steps>
+								</xfg:GlossGradient>
+							</xfg:CellGloss.BackgroundGradient>
 						</TextCell>
 					</TableSection>
 				</TableView.Root>

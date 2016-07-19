@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
 				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-				xmlns:xfGloss="clr-namespace:XFGloss.Views;assembly=XFGloss"
+				xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
 				x:Class="XFGlossSample.Examples.Views.Xaml.BackgroundColorPage"
 				Title="Xaml Background Colors"
 				>
@@ -33,9 +33,9 @@
 						<TableSection.Title>
 							<OnPlatform x:TypeArguments="x:String" iOS="" Android="Cell BackgroundColor values set in Xaml:" />
 						</TableSection.Title>
-					<TextCell Text="Red" TextColor="White" xfGloss:Cell.BackgroundColor="Red" />
-					<TextCell Text="Green" TextColor="White" xfGloss:Cell.BackgroundColor="Green" />
-					<TextCell Text="Blue" TextColor="White" xfGloss:Cell.BackgroundColor="Blue" />
+					<TextCell Text="Red" TextColor="White" xfg:CellGloss.BackgroundColor="Red" />
+					<TextCell Text="Green" TextColor="White" xfg:CellGloss.BackgroundColor="Green" />
+					<TextCell Text="Blue" TextColor="White" xfg:CellGloss.BackgroundColor="Blue" />
 				</TableSection>
 			</TableView.Root>
 		</TableView>

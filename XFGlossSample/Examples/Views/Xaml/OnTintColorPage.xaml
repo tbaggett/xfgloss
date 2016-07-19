@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
 				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-				xmlns:xfGloss="clr-namespace:XFGloss.Views;assembly=XFGloss"
+				xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
 				x:Class="XFGlossSample.Examples.Views.Xaml.OnTintColorPage"
 				>
 
@@ -33,24 +33,24 @@
 						<TableSection.Title>
 							<OnPlatform x:TypeArguments="x:String" iOS="" Android="SwitchCell OnTintColor values set in Xaml:" />
 						</TableSection.Title>
-						<SwitchCell Text="Red" xfGloss:SwitchCell.OnTintColor="Red" />
-						<SwitchCell Text="Green" xfGloss:SwitchCell.OnTintColor="Green" />
-						<SwitchCell Text="Blue" xfGloss:SwitchCell.OnTintColor="Blue" />
+						<SwitchCell Text="Red" xfg:SwitchCellGloss.OnTintColor="Red" />
+						<SwitchCell Text="Green" xfg:SwitchCellGloss.OnTintColor="Green" />
+						<SwitchCell Text="Blue" xfg:SwitchCellGloss.OnTintColor="Blue" />
 					</TableSection>
 				</TableView.Root>
 			</TableView>
 			<Label Text="Switch OnTintColor values set in Xaml:" Margin="10"/>
 			<StackLayout Orientation="Horizontal" Padding="10">
 				<Label Text="Red" HorizontalOptions="StartAndExpand" />
-				<Switch xfGloss:Switch.OnTintColor="Red" />
+				<Switch xfg:SwitchGloss.OnTintColor="Red" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" Padding="10">
 				<Label Text="Green" HorizontalOptions="StartAndExpand" />
-				<Switch xfGloss:Switch.OnTintColor="Green" />
+				<Switch xfg:SwitchGloss.OnTintColor="Green" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" Padding="10">
 				<Label Text="Blue" HorizontalOptions="StartAndExpand" />
-				<Switch xfGloss:Switch.OnTintColor="Blue" />
+				<Switch xfg:SwitchGloss.OnTintColor="Blue" />
 			</StackLayout>
 		</StackLayout>
 	</ScrollView>

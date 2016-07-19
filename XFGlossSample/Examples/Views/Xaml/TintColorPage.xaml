@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
 				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-				xmlns:xfGloss="clr-namespace:XFGloss.Views;assembly=XFGloss"
+				xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
 				x:Class="XFGlossSample.Examples.Views.Xaml.TintColorPage"
 				>
 
@@ -13,10 +13,10 @@
 				<TableView HeightRequest="132">
 					<TableView.Root>
 						<TableSection>
-							<TextCell Text="Red" xfGloss:Cell.TintColor="Red" xfGloss:Cell.AccessoryType="Checkmark" />
-							<TextCell Text="Green" xfGloss:Cell.TintColor="Green" xfGloss:Cell.AccessoryType="Checkmark" />
+							<TextCell Text="Red" xfg:CellGloss.TintColor="Red" xfg:CellGloss.AccessoryType="Checkmark" />
+							<TextCell Text="Green" xfg:CellGloss.TintColor="Green" xfg:CellGloss.AccessoryType="Checkmark" />
 							<EntryCell	Label="Blue" Placeholder="Optional" HorizontalTextAlignment="End" 
-										xfGloss:Cell.TintColor="Blue" xfGloss:Cell.AccessoryType="EditIndicator" />
+										xfg:CellGloss.TintColor="Blue" xfg:CellGloss.AccessoryType="EditIndicator" />
 						</TableSection>
 					</TableView.Root>
 				</TableView>
@@ -46,11 +46,11 @@
 							 well make use of it!
 						-->
 						<TableSection.Title>
-							<OnPlatform x:TypeArguments="x:String" iOS="" Android="SwitchCell OnTintColor values set in Xaml:" />
+							<OnPlatform x:TypeArguments="x:String" iOS="" Android="SwitchCell TintColor values set in Xaml:" />
 						</TableSection.Title>
-						<SwitchCell Text="Red" xfGloss:SwitchCell.TintColor="Red" />
-						<SwitchCell Text="Green" xfGloss:SwitchCell.TintColor="Green" />
-						<SwitchCell Text="Blue" xfGloss:SwitchCell.TintColor="Blue" />
+						<SwitchCell Text="Red" xfg:CellGloss.TintColor="Red" />
+						<SwitchCell Text="Green" xfg:CellGloss.TintColor="Green" />
+						<SwitchCell Text="Blue" xfg:CellGloss.TintColor="Blue" />
 					</TableSection>
 				</TableView.Root>
 			</TableView>
@@ -58,15 +58,15 @@
 			<Label Text="Switch TintColor values set in Xaml:" Margin="10"/>
 			<StackLayout Orientation="Horizontal" Padding="10">
 				<Label Text="Red" HorizontalOptions="StartAndExpand" />
-				<Switch xfGloss:Switch.TintColor="Red" />
+				<Switch xfg:SwitchGloss.TintColor="Red" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" Padding="10">
 				<Label Text="Green" HorizontalOptions="StartAndExpand" />
-				<Switch xfGloss:Switch.TintColor="Green" />
+				<Switch xfg:SwitchGloss.TintColor="Green" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" Padding="10">
 				<Label Text="Blue" HorizontalOptions="StartAndExpand" />
-				<Switch xfGloss:Switch.TintColor="Blue" />
+				<Switch xfg:SwitchGloss.TintColor="Blue" />
 			</StackLayout>
 		</StackLayout>
 	</ScrollView>

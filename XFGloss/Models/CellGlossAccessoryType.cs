@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XFGloss.Models
+namespace XFGloss
 {
 	// Supported on iOS only currently
 
@@ -8,7 +8,7 @@ namespace XFGloss.Models
 	// tapped method in the table view source for both the ListView (currently not possible) and 
 	// TableView (currently possible) classes.
 
-	public enum CellAccessoryType
+	public enum CellGlossAccessoryType
 	{
 		None,
 		DisclosureIndicator,

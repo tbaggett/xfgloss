@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using XFGloss.Models;
-using XFGlossSample.Examples.ViewModels;
+using XFGloss;
 using XFGlossSample.Utils;
 
 namespace XFGlossSample.Examples.Views.CSharp
@@ -10,7 +9,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 	public class BackgroundGradientPage : ContentPage
 	{
 		Timer updater;
-		Gradient rotatingGradient;
+		GlossGradient rotatingGradient;
 		TextCell multiCell;
 
 		protected override void OnBindingContextChanged()
@@ -59,7 +58,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 
 			UpdateGradient();
 
-			XFGloss.Views.Page.SetBackgroundGradient(this, new Gradient(Color.White, Color.FromRgb(128, 0, 0)));
+			ContentPageGloss.SetBackgroundGradient(this, new GlossGradient(Color.White, Color.FromRgb(128, 0, 0)));
 		}
 
 		TextCell[] CreateBackgroundGradientCells()
@@ -83,8 +82,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 
 				// Assign our gloss properties - You can use the standard static setter...
 				var cellInfo = Colors[colorName];
-				XFGloss.Views.Cell.SetBackgroundGradient(cell, 
-			                                         	 new Gradient(cellInfo.Item1, cellInfo.Item2, cellInfo.Item3));
+				CellGloss.SetBackgroundGradient(cell, new GlossGradient(cellInfo.Item1, cellInfo.Item2, cellInfo.Item3));
 
 				// ...or instantiate an instance of the Gloss properties you want to assign values to
 				//	var gloss = new XFGloss.Views.Cell(cell);
@@ -102,7 +100,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			multiCell.TextColor = Color.White;
 
 			// Manually construct a multi-color gradient at an angle of our choosing
-			rotatingGradient = new Gradient(135); // 115 degree angle
+			rotatingGradient = new GlossGradient(135); // 115 degree angle
 			rotatingGradient.AddStep(Colors["Red"].Item1, 0);
 			rotatingGradient.AddStep(Colors["Red"].Item2, .25);
 			rotatingGradient.AddStep(Colors["Green"].Item1, .4);
@@ -110,7 +108,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			rotatingGradient.AddStep(Colors["Blue"].Item1, .75);
 			rotatingGradient.AddStep(Colors["Blue"].Item2, 1);
 
-			XFGloss.Views.Cell.SetBackgroundGradient(multiCell, rotatingGradient);
+			CellGloss.SetBackgroundGradient(multiCell, rotatingGradient);
 
 			result.Add(multiCell);
 
@@ -139,11 +137,11 @@ namespace XFGlossSample.Examples.Views.CSharp
 					rotatingGradient.Angle += 5;
 				}
 
-				var newGradient = new Gradient(rotatingGradient);
+				var newGradient = new GlossGradient(rotatingGradient);
 				rotatingGradient.Dispose();
 				rotatingGradient = newGradient;
 
-				XFGloss.Views.Cell.SetBackgroundGradient(multiCell, rotatingGradient);
+				CellGloss.SetBackgroundGradient(multiCell, rotatingGradient);
 			});
 
 			updater?.Dispose();

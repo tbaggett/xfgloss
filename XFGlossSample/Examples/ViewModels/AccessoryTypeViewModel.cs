@@ -1,6 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
-using XFGloss.Models;
+using XFGloss;
 using XFGlossSample.ViewModels;
 
 namespace XFGlossSample.Examples.ViewModels
@@ -9,7 +9,7 @@ namespace XFGlossSample.Examples.ViewModels
 	{
 		public string PropertyDefault
 		{
-			get { return "CellAccessoryType.None"; }
+			get { return "CellGlossAccessoryType.None"; }
 		}
 
 		public string[] PropertyDescription
@@ -19,7 +19,7 @@ namespace XFGlossSample.Examples.ViewModels
 				return new string[] 
 				{
 					"Specifies an indicator type to display in the right side of a table or list view cell.  See the " +
-					"XFGloss CellAccessoryType enumeration for the available types.",
+					"CellGlossAccessoryType enumeration for the available types.",
 					"This property is only implemented on the iOS platform. iOS is the only " +
 					"platform that natively supports an accessory view."
 				};
@@ -28,7 +28,7 @@ namespace XFGlossSample.Examples.ViewModels
 
 		public string PropertyType
 		{
-			get { return "CellAccessoryType"; }
+			get { return "CellGlossAccessoryType"; }
 		}
 
 		public string TargetClasses

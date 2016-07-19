@@ -1,8 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-using XFGloss.Models;
-
-namespace XFGlossSample.Examples.ViewModels
+﻿namespace XFGlossSample.Examples.ViewModels
 {
 	public class OnTintColorViewModel : IExamplesViewModel
 	{

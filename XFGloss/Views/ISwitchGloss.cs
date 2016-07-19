@@ -1,9 +1,9 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace XFGloss.Views
+namespace XFGloss
 {
-	public interface IXFGlossSwitchProperties
+	public interface ISwitchGloss
 	{
 		Color TintColor { get; set; }
 		Color OnTintColor { get; set; }

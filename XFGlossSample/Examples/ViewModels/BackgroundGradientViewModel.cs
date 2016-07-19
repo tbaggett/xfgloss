@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
-using XFGloss.Models;
-
-namespace XFGlossSample.Examples.ViewModels
+﻿namespace XFGlossSample.Examples.ViewModels
 {
 	public class BackgroundGradientViewModel : IExamplesViewModel
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 
 using Xamarin.Forms;
-using XFGloss.Models;
+using XFGloss;
 using XFGlossSample.Examples.ViewModels;
 
 namespace XFGlossSample.Examples.Views.CSharp
@@ -34,9 +34,9 @@ namespace XFGlossSample.Examples.Views.CSharp
 								{
 									new TableSection()
 									{
-										CreateTintColorCell("Red", Color.Red, CellAccessoryType.Checkmark),
-										CreateTintColorCell("Green", Color.Green, CellAccessoryType.Checkmark),
-										CreateTintColorCell("Blue", Color.Blue, CellAccessoryType.EditIndicator)
+										CreateTintColorCell("Red", Color.Red, CellGlossAccessoryType.Checkmark),
+										CreateTintColorCell("Green", Color.Green, CellGlossAccessoryType.Checkmark),
+										CreateTintColorCell("Blue", Color.Blue, CellGlossAccessoryType.EditIndicator)
 									}
 								}
 							}
@@ -106,10 +106,10 @@ namespace XFGlossSample.Examples.Views.CSharp
 			}
 		}
 
-		Cell CreateTintColorCell(string colorName, Color colorValue, CellAccessoryType accessoryType)
+		Cell CreateTintColorCell(string colorName, Color colorValue, CellGlossAccessoryType accessoryType)
 		{
 			Cell result;
-			if (accessoryType == CellAccessoryType.EditIndicator)
+			if (accessoryType == CellGlossAccessoryType.EditIndicator)
 			{
 				result = new EntryCell();
 				(result as EntryCell).Label = colorName;
@@ -123,7 +123,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			}
 
 			// Instantiate an instance of the Gloss properties you want to assign values to
-			var gloss = new XFGloss.Views.Cell(result);
+			var gloss = new CellGloss(result);
 			gloss.TintColor = colorValue;
 			gloss.AccessoryType = accessoryType;
 
@@ -136,7 +136,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			result.Text = colorName;
 
 			// Assign our gloss properties - You can use the standard static setter...
-			XFGloss.Views.SwitchCell.SetTintColor(result, colorValue);
+			CellGloss.SetTintColor(result, colorValue);
 
 			// ...or instantiate an instance of the Gloss properties you want to assign values to
 			//	var gloss = new XFGloss.Views.SwitchCell(result);
@@ -164,7 +164,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			};
 
 			var control = new Switch();
-			XFGloss.Views.Switch.SetTintColor(control, colorValue);
+			SwitchGloss.SetTintColor(control, colorValue);
 
 			result.Children.Add(control);
 

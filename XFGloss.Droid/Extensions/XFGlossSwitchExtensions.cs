@@ -3,20 +3,18 @@ using Android.Content.Res;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using XFGloss.Droid.Utils;
-using XFGloss.Models;
-using XFGloss.Views;
 
 namespace XFGloss.Droid.Extensions
 {
 	public static class XFGlossSwitchExtensions
 	{
-		public static void UpdateColorProperty(this Android.Widget.Switch control, IXFGlossSwitchProperties properties, string propertyName)
+		public static void UpdateColorProperty(this Android.Widget.Switch control, ISwitchGloss properties, string propertyName)
 		{
 			var defaultColor = Android.Graphics.Color.Transparent;
 
 			if (propertyName == null ||
-				propertyName == XFGlossPropertyNames.TintColor ||
-				propertyName == XFGlossPropertyNames.OnTintColor)
+			    propertyName == SwitchGloss.TintColorProperty.PropertyName ||
+			    propertyName == SwitchGloss.OnTintColorProperty.PropertyName)
 			{
 				int[][] states = new int[2][];
 				int[] colors = new int[2];
@@ -42,8 +40,8 @@ namespace XFGloss.Droid.Extensions
 			}
 
 			if (propertyName == null ||
-				propertyName == XFGlossPropertyNames.ThumbTintColor ||
-				propertyName == XFGlossPropertyNames.ThumbOnTintColor)
+			    propertyName == SwitchGloss.ThumbTintColorProperty.PropertyName ||
+			    propertyName == SwitchGloss.ThumbOnTintColorProperty.PropertyName)
 			{
 				int[][] states = new int[2][];
 				int[] colors = new int[2];

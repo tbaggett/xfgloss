@@ -2,23 +2,20 @@
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Graphics.Drawables.Shapes;
-using Android.Runtime;
-using Android.Views;
 using XFGloss.Droid.Extensions;
-using XFGloss.Models;
 
 namespace XFGloss.Droid.Drawables
 {
 	internal class XFGlossPaintDrawable : PaintDrawable
 	{
-		public XFGlossPaintDrawable(Gradient xfgGradient)
+		public XFGlossPaintDrawable(GlossGradient xfgGradient)
 		{
 			Paint.Dither = true;
 			Shape = new RectShape();
 			UpdateXFGlossGradient(xfgGradient);
 		}
 
-		public void UpdateXFGlossGradient(Gradient xfgGradient)
+		public void UpdateXFGlossGradient(GlossGradient xfgGradient)
 		{
 			var sf = GetShaderFactory();
 			sf?.Dispose();
@@ -33,16 +30,16 @@ namespace XFGloss.Droid.Drawables
 
 	internal class XFGlossShaderFactory : ShapeDrawable.ShaderFactory
 	{
-		WeakReference<Gradient> _xfgGradient;
+		WeakReference<GlossGradient> _xfgGradient;
 
-		public XFGlossShaderFactory(Gradient xfgGradient)
+		public XFGlossShaderFactory(GlossGradient xfgGradient)
 		{
-			_xfgGradient = new WeakReference<Gradient>(xfgGradient);
+			_xfgGradient = new WeakReference<GlossGradient>(xfgGradient);
 		}
 
 		public override Shader Resize(int width, int height)
 		{
-			Gradient xfgGradient;
+			GlossGradient xfgGradient;
 			if (_xfgGradient.TryGetTarget(out xfgGradient))
 			{
 				return new LinearGradient((float)(width * xfgGradient.StartPoint.X),

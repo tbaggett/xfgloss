@@ -1,6 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-using XFGloss.Models;
+﻿using Xamarin.Forms;
 
 namespace XFGlossSample.Examples.ViewModels
 {

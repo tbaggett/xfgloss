@@ -1,59 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Xamarin.Forms;
 
-namespace XFGloss.Models
+namespace XFGloss
 {
-	public class GradientStep : ObservableObject
+	public class GlossGradient : ObservableObject, IDisposable
 	{
-		// Color value for this gradient step
-		Color _stepColor;
-		public Color StepColor
-		{
-			get
-			{
-				return _stepColor;
-			}
-			set
-			{
-				SetProperty(ref _stepColor, value);
-			}
-		}
-
-		// Gradient fill percentage to stop at for this step, between 0.0 and 1.0
-		double _stepPercentage;
-		public double StepPercentage
-		{
-			get
-			{
-				return _stepPercentage;
-			}
-			set
-			{
-				if (value < 0 || value > 1)
-				{
-					throw new ArgumentOutOfRangeException("StepPercentage", value, "Value should be between 0.0 and 1.0");
-				}
-
-				SetProperty(ref _stepPercentage, value);
-			}
-		}
-
-		public GradientStep()
-		{
-		}
-
-		public GradientStep(Color stepColor, double stepPercentage)
-		{
-			StepColor = stepColor;
-			StepPercentage = stepPercentage;
-		}
-	}
-
-	public class Gradient : ObservableObject, IDisposable
-	{
-		public List<GradientStep> Steps { get; private set; }
+		public List<GlossGradientStep> Steps { get; private set; }
 
 		public const int UNDEFINED_ANGLE = int.MinValue;
 		public const int DEFAULT_ANGLE = VERTICAL_ANGLE;
@@ -188,7 +141,7 @@ namespace XFGloss.Models
 				}
 				else
 				{
-					Steps.Add(new GradientStep(value, 0));
+					Steps.Add(new GlossGradientStep(value, 0));
 					NotifyPropertyChanged(nameof(Steps));
 				}
 			}
@@ -214,9 +167,9 @@ namespace XFGloss.Models
 				{
 					if (Steps.Count == 0)
 					{
-						Steps.Add(new GradientStep(Color.White, 0));
+						Steps.Add(new GlossGradientStep(Color.White, 0));
 					}
-					Steps.Add(new GradientStep(value, 1));
+					Steps.Add(new GlossGradientStep(value, 1));
 					NotifyPropertyChanged(nameof(Steps));
 				}
 
@@ -265,26 +218,26 @@ namespace XFGloss.Models
 		}
 
 		// Default initialization. Properties will need to be explicitly set.
-		public Gradient()
+		public GlossGradient()
 		{
 			init();
 		}
 
-		public Gradient(Gradient other)
+		public GlossGradient(GlossGradient other)
 		{
 			_angle = other.Angle;
 			_startPoint = other.StartPoint;
 			_endPoint = other.EndPoint;
-			this.Steps = new List<GradientStep>(other.Steps);
+			this.Steps = new List<GlossGradientStep>(other.Steps);
 		}
 
-		public Gradient(bool isHorizontal)
+		public GlossGradient(bool isHorizontal)
 			: this(isHorizontal ? HORIZONTAL_ANGLE : VERTICAL_ANGLE)
 		{
 		}
 
 		// Convenience initializer to set gradient angle with GradientStep instances manually added
-		public Gradient(int gradientAngle)
+		public GlossGradient(int gradientAngle)
 		{
 			init();
 
@@ -292,19 +245,19 @@ namespace XFGloss.Models
 		}
 
 		// Convenience initializer to create a simple two color horizontal or vertical gradient
-		public Gradient(Color startColor, Color endColor, bool isHorizontal = false)
+		public GlossGradient(Color startColor, Color endColor, bool isHorizontal = false)
 			: this(startColor, endColor, isHorizontal ? HORIZONTAL_ANGLE : VERTICAL_ANGLE)
 		{
 		}
 
 		// Convenience initializer to create a simple two color gradient at the specified angle.
 		// Gradient origin is assumed to be in the view center.
-		public Gradient(Color startColor, Color endColor, int gradientAngle)
+		public GlossGradient(Color startColor, Color endColor, int gradientAngle)
 		{
 			init();
 
-			Steps.Add(new GradientStep(startColor, 0));
-			Steps.Add(new GradientStep(endColor, 1));
+			Steps.Add(new GlossGradientStep(startColor, 0));
+			Steps.Add(new GlossGradientStep(endColor, 1));
 
 			Angle = gradientAngle;
 		}
@@ -321,13 +274,13 @@ namespace XFGloss.Models
 													  "completion percentage.");
 			}
 
-			Steps.Add(new GradientStep(stepColor, stepPercentage));
+			Steps.Add(new GlossGradientStep(stepColor, stepPercentage));
 			NotifyPropertyChanged(nameof(Steps));
 		}
 
 		void init()
 		{
-			Steps = new List<GradientStep>();
+			Steps = new List<GlossGradientStep>();
 		}
 
 		public void Dispose()
@@ -355,6 +308,52 @@ namespace XFGloss.Models
 				double endY = (Math.Cos(endRadians) / 2) + 0.5;
 				EndPoint = new Point(endX, endY);
 			}
+		}
+	}
+
+	public class GlossGradientStep : ObservableObject
+	{
+		// Color value for this gradient step
+		Color _stepColor;
+		public Color StepColor
+		{
+			get
+			{
+				return _stepColor;
+			}
+			set
+			{
+				SetProperty(ref _stepColor, value);
+			}
+		}
+
+		// Gradient fill percentage to stop at for this step, between 0.0 and 1.0
+		double _stepPercentage;
+		public double StepPercentage
+		{
+			get
+			{
+				return _stepPercentage;
+			}
+			set
+			{
+				if (value < 0 || value > 1)
+				{
+					throw new ArgumentOutOfRangeException("StepPercentage", value, "Value should be between 0.0 and 1.0");
+				}
+
+				SetProperty(ref _stepPercentage, value);
+			}
+		}
+
+		public GlossGradientStep()
+		{
+		}
+
+		public GlossGradientStep(Color stepColor, double stepPercentage)
+		{
+			StepColor = stepColor;
+			StepPercentage = stepPercentage;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 ﻿using Xamarin.Forms;
-using XFGloss.Models;
+using XFGloss;
 using XFGlossSample.Utils;
 
 namespace XFGlossSample.Examples.Views.Xaml
@@ -26,7 +26,7 @@ namespace XFGlossSample.Examples.Views.Xaml
 
 		void UpdateGradient(object gradient = null)
 		{
-			Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+			Device.BeginInvokeOnMainThread(() =>
 			{
 				if (rotatingGradient.Angle >= 355)
 				{
@@ -37,11 +37,11 @@ namespace XFGlossSample.Examples.Views.Xaml
 					rotatingGradient.Angle += 5;
 				}
 
-				var newGradient = new Gradient(rotatingGradient);
+				var newGradient = new GlossGradient(rotatingGradient);
 				rotatingGradient.Dispose();
 				rotatingGradient = newGradient;
 
-				XFGloss.Views.Cell.SetBackgroundGradient(testCell, rotatingGradient);
+				CellGloss.SetBackgroundGradient(testCell, rotatingGradient);
 			});
 
 			updater?.Dispose();

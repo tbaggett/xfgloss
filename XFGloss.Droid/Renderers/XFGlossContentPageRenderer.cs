@@ -3,9 +3,7 @@ using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using XFGloss.Droid.Drawables;
-using XFGloss.Models;
 
-//[assembly: ExportRenderer(typeof(MasterDetailPage), typeof(MasterDetailRenderer))]
 [assembly: ExportRenderer(typeof(ContentPage), typeof(XFGloss.Droid.Renderers.XFGlossContentPageRenderer))]
 
 namespace XFGloss.Droid.Renderers
@@ -26,7 +24,7 @@ namespace XFGloss.Droid.Renderers
 		{
 			base.OnElementPropertyChanged(sender, e);
 
-			if (e.PropertyName == null || e.PropertyName == XFGlossPropertyNames.BackgroundGradient)
+			if (e.PropertyName == null || e.PropertyName == ContentPageGloss.BackgroundGradientProperty.PropertyName)
 			{
 				UpdateBackgroundGradient();
 			}
@@ -34,7 +32,7 @@ namespace XFGloss.Droid.Renderers
 
 		void UpdateBackgroundGradient()
 		{
-			Gradient bkgrndGradient = (Gradient)Element.GetValue(Views.Page.BackgroundGradientProperty);
+			GlossGradient bkgrndGradient = (GlossGradient)Element.GetValue(ContentPageGloss.BackgroundGradientProperty);
 			// Initialize/update the painter and shader as needed if a gradient is assigned
 			if (bkgrndGradient != null)
 			{

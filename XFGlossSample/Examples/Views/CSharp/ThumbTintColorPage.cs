@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using XFGloss;
 
 namespace XFGlossSample.Examples.Views.CSharp
 {
@@ -61,7 +62,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			result.Text = colorName;
 
 			// Assign our gloss properties - You can use the standard static setter...
-			XFGloss.Views.SwitchCell.SetThumbTintColor(result, colorValue);
+			SwitchCellGloss.SetThumbTintColor(result, colorValue);
 
 			// ...or instantiate an instance of the Gloss properties you want to assign values to
 			//	var gloss = new XFGloss.Views.SwitchCell(result);
@@ -89,7 +90,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			};
 
 			var control = new Switch();
-			XFGloss.Views.Switch.SetThumbTintColor(control, colorValue);
+			SwitchGloss.SetThumbTintColor(control, colorValue);
 
 			result.Children.Add(control);
 

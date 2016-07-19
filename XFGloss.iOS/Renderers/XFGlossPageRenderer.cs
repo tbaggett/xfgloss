@@ -3,7 +3,6 @@ using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XFGloss.iOS.Views;
-using XFGloss.Models;
 
 [assembly: ExportRenderer(typeof(ContentPage), typeof(XFGloss.iOS.Renderers.XFGlossPageRenderer))]
 
@@ -36,7 +35,7 @@ namespace XFGloss.iOS.Renderers
 
 		void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == null || e.PropertyName == XFGlossPropertyNames.BackgroundGradient)
+			if (e.PropertyName == null || e.PropertyName == ContentPageGloss.BackgroundGradientProperty.PropertyName)
 			{
 				UpdateBackgroundGradient();
 			}
@@ -44,7 +43,7 @@ namespace XFGloss.iOS.Renderers
 
 		void UpdateBackgroundGradient()
 		{
-			var gradientSource = (Gradient)Element.GetValue(XFGloss.Views.Page.BackgroundGradientProperty);
+			var gradientSource = (GlossGradient)Element.GetValue(ContentPageGloss.BackgroundGradientProperty);
 			if (gradientSource == null)
 			{
 				XFGlossGradientLayer.RemoveGradientLayer(NativeView);

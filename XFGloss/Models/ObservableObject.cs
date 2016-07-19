@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
-namespace XFGloss.Models
+namespace XFGloss
 {
 	// This class was duplicated from the Xamarin Forms Labs project. Thanks!
 

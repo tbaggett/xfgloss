@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using XFGloss.Models;
+using XFGloss;
 
 namespace XFGlossSample.Examples.Views.CSharp
 {
@@ -33,11 +33,11 @@ namespace XFGlossSample.Examples.Views.CSharp
 			List<Cell> result = new List<Cell>();
 
 			// Iterate through the enumeration's values, creating a new text cell for each entity
-			var typeNames = Enum.GetNames(typeof(CellAccessoryType));
+			var typeNames = Enum.GetNames(typeof(CellGlossAccessoryType));
 			foreach (string typeName in typeNames)
 			{
 				Cell cell;
-				if (typeName == nameof(CellAccessoryType.EditIndicator))
+				if (typeName == nameof(CellGlossAccessoryType.EditIndicator))
 				{
 					cell = new EntryCell();
 				}
@@ -59,10 +59,10 @@ namespace XFGlossSample.Examples.Views.CSharp
 				}
 
 				// Assign our gloss properties
-				var accType = (CellAccessoryType)Enum.Parse(typeof(CellAccessoryType), typeName);
+				var accType = (CellGlossAccessoryType)Enum.Parse(typeof(CellGlossAccessoryType), typeName);
 
 				// You can use the standard static setter...
-				XFGloss.Views.Cell.SetAccessoryType(cell, accType);
+				CellGloss.SetAccessoryType(cell, accType);
 
 				// ...or instantiate an instance of the Gloss properties you want to assign values to
 				//	var gloss = new XFGloss.Views.Cell(cell);

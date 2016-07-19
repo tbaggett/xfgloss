@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
 				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-				xmlns:xfGloss="clr-namespace:XFGloss.Views;assembly=XFGloss"
+				xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
 				x:Class="XFGlossSample.Examples.Views.Xaml.ThumbTintColorPage"
 				>
 
@@ -33,24 +33,24 @@
 						<TableSection.Title>
 							<OnPlatform x:TypeArguments="x:String" iOS="" Android="SwitchCell ThumbTintColor values set in Xaml:" />
 						</TableSection.Title>
-						<SwitchCell Text="Red" xfGloss:SwitchCell.ThumbTintColor="Red" />
-						<SwitchCell Text="Green" xfGloss:SwitchCell.ThumbTintColor="Green" />
-						<SwitchCell Text="Blue" xfGloss:SwitchCell.ThumbTintColor="Blue" />
+						<SwitchCell Text="Red" xfg:SwitchCellGloss.ThumbTintColor="Red" />
+						<SwitchCell Text="Green" xfg:SwitchCellGloss.ThumbTintColor="Green" />
+						<SwitchCell Text="Blue" xfg:SwitchCellGloss.ThumbTintColor="Blue" />
 					</TableSection>
 				</TableView.Root>
 			</TableView>
 			<Label Text="Switch ThumbTintColor values set in Xaml:" Margin="10"/>
 			<StackLayout Orientation="Horizontal" Padding="10">
 				<Label Text="Red" HorizontalOptions="StartAndExpand" />
-				<Switch xfGloss:Switch.ThumbTintColor="Red" />
+				<Switch xfg:SwitchGloss.ThumbTintColor="Red" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" Padding="10">
 				<Label Text="Green" HorizontalOptions="StartAndExpand" />
-				<Switch xfGloss:Switch.ThumbTintColor="Green" />
+				<Switch xfg:SwitchGloss.ThumbTintColor="Green" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" Padding="10">
 				<Label Text="Blue" HorizontalOptions="StartAndExpand" />
-				<Switch xfGloss:Switch.ThumbTintColor="Blue" />
+				<Switch xfg:SwitchGloss.ThumbTintColor="Blue" />
 			</StackLayout>
 		</StackLayout>
 	</ScrollView>
