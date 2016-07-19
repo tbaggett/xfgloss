@@ -1,7 +1,6 @@
-![XFGloss icon](images/XFGlossIcon.png)
-
 # XFGloss: Xamarin.Forms UI Enhancements
 
+<span style="float: left">![XFGloss icon](images/XFGlossIcon.png)</span>
 **XFGloss** adds new bindable properties to Xamarin.Forms standard UI components on the Android and iOS platforms.
 
 XFGloss accomplishes its goals using a combination of:
