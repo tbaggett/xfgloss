@@ -49,6 +49,8 @@ XFGloss properties can also be constructed in code. Here's the C# equivalent for
     			};
     
     			ContentPageGloss.SetBackgroundGradient(this, bkgrndGradient);
+				
+				Content = { ... }
     		}
     	}
     }
