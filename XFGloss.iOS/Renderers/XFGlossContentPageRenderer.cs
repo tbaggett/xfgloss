@@ -4,11 +4,11 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XFGloss.iOS.Views;
 
-[assembly: ExportRenderer(typeof(ContentPage), typeof(XFGloss.iOS.Renderers.XFGlossPageRenderer))]
+[assembly: ExportRenderer(typeof(ContentPage), typeof(XFGloss.iOS.Renderers.XFGlossContentPageRenderer))]
 
 namespace XFGloss.iOS.Renderers
 {
-	public class XFGlossPageRenderer : PageRenderer
+	public class XFGlossContentPageRenderer : PageRenderer
 	{
 		public override void ViewDidLayoutSubviews()
 		{

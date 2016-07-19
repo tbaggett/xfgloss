@@ -14,6 +14,7 @@ namespace XFGlossSample.iOS
 		{
 			global::Xamarin.Forms.Forms.Init();
 
+			/********** ADD THIS CALL TO INITIALIZE XFGloss *********/
 			global::XFGloss.iOS.Library.Init();
 
 			LoadApplication(new App());
@@ -22,4 +23,3 @@ namespace XFGlossSample.iOS
 		}
 	}
 }
-

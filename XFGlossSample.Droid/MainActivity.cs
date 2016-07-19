@@ -22,7 +22,7 @@ namespace XFGlossSample.Droid
 
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 
-			global::XFGloss.Droid.Library.Init();
+			global::XFGloss.Droid.Library.Init(this, bundle);
 
 			LoadApplication(new App());
 		}

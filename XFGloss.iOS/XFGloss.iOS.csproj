@@ -70,7 +70,7 @@
     <Compile Include="Renderers\XFGlossSwitchRenderer.cs" />
     <Compile Include="Extensions\XFGlossGradientExtensions.cs" />
     <Compile Include="Views\UIBackgroundGradientView.cs" />
-    <Compile Include="Renderers\XFGlossPageRenderer.cs" />
+    <Compile Include="Renderers\XFGlossContentPageRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\acc_edit_indicator.png" />

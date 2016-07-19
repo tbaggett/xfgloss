@@ -6,7 +6,7 @@ namespace XFGloss
 {
 	public class GlossGradient : ObservableObject, IDisposable
 	{
-		public List<GlossGradientStep> Steps { get; private set; }
+		public List<GlossGradientStep> Steps { get; set; }
 
 		public const int UNDEFINED_ANGLE = int.MinValue;
 		public const int DEFAULT_ANGLE = VERTICAL_ANGLE;

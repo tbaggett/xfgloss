@@ -23,7 +23,7 @@
 
 		public string PropertyType
 		{
-			get { return "XFGloss.Gradient"; }
+			get { return "XFGloss.GlossGradient"; }
 		}
 
 		public string TargetClasses
