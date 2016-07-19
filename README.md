@@ -71,7 +71,7 @@ You can also instantiate an XFGloss instance to make multiple assignments easier
 
 The XFGloss solution provided in this repository also includes the "XFGlossSample" Xamarin.Forms-based app. It demonstrates all the XFGloss properties being applied in both Xaml and C# code.
 
-# Adding XFGloss to Your Xamarin.Forms Project
+# Adding XFGloss to Your Xamarin.Forms-Based App
 
 Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects like so:
 
@@ -122,7 +122,7 @@ Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet
     
 # Using XFGloss with Other Custom Components
 
-XFGloss should also work with existing custom components provided that the renderer is assigned to the custom component instead of a native XF component. Your **ExportRenderer** assembly attribute should look like this:
+XFGloss should also work with existing custom components provided that the renderer is assigned to the custom component instead of a native XF component. Your custom component renderer's **ExportRenderer** assembly attribute should look like this:
 
 	[assembly: ExportRenderer(typeof(MyCustomSwitch), typeof(MyCustomSwitchRenderer))]
 
@@ -188,6 +188,8 @@ Here's a complete list of the XF renderers that are customized by XFGloss:
 
 Some of the properties added by XFGloss already exist on some XF components. For example, the **BackgroundColor** property is available on many XF components. In such cases, XFGloss adds those properties to other XF components that didn't previously offer them. Other properties like the **BackgroundGradient** property are completely new to the XF environment.
 
+Here's a brief description of the properties added/expanded by XFGloss:
+
 ---
 
 **AccessoryType (iOS only):** XFGloss.CellGlossAccessoryType enum value  
@@ -199,7 +201,7 @@ The Android platform doesn't offer accessory types as part of its standard UI, s
 
 The iOS _DetailButton_ and _DetailDisclosureButton_ accessory types aren't currently supported due to Xamarin.Forms' ListView component not allowing the external access needed to react to the user tapping the Details button. I plan to submit a PR that will address this, and will add support for those types to XFGloss once the needed access is available.
 
-The XF TableView component provides the needed access, so I could add support for those accessory types for use with TableView if they are needed in the meantime. Please submit an issue if you would like the TableView-only property to be added before ListView also supports it.
+The XF TableView component already provides the needed access, so I could add support for those accessory types for use with the TableView only if it is needed in the meantime. Please submit an issue if you would like the TableView-only property to be added before ListView also supports it.
 
 **Code Examples:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/AccessoryTypePage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/AccessoryTypePage.cs)
 
@@ -260,8 +262,7 @@ Allows a color value to be specified as the Switch control's track color when it
 
  - The default XF EntryCell renderer on iOS doesn't take the accessory view into account when positioning/sizing the text entry field. I plan to submit a PR that corrects this issue.
 
- - OnPlatform won't assign a value to an attached property when the binding is declared in Xaml **if Xaml compilation is enabled** ([verified issue by Xamarin](https://bugzilla.xamarin.com/show_bug.cgi?id=37371)). The workaround for this issue is to disable Xaml compilation for the Xaml files where you want to specify a binding for one of XFGloss's attached properties.  
-Here's a code example taken from the verified issue that will fail when Xaml compilation is enabled:
+ - OnPlatform won't assign a value to an attached property when the binding is declared in Xaml **if Xaml compilation is enabled** ([verified issue by Xamarin](https://bugzilla.xamarin.com/show_bug.cgi?id=37371)). The workaround for this issue is to disable Xaml compilation for the Xaml files where you want to specify platform-specific binding. Here's a code example taken from the verified issue. The binding won't update when the app is executed if Xaml compilation is enabled.
 
         <Button>
         	<Grid.Row>
@@ -273,7 +274,7 @@ Here's a code example taken from the verified issue that will fail when Xaml com
 I plan to add support for other properties that aren't offered by the Xamarin.Forms components as my schedule allows. PRs, especially those that add support for other XF-supported platforms, are always welcomed!
 
 # Credits
-XFGloss was inspired by and based on the code presented in "[Lighting Up Native Platform Features In Xamarin Forms](http://www.wintellect.com/devcenter/krome/lighting-up-native-platform-features-in-xamarin-forms-part-1)." Thanks to the series' author, Keith Rome, for the inspiration and starting point for XFGloss.
+XFGloss was inspired by and based on the code presented in "[Lighting Up Native Platform Features In Xamarin Forms](http://www.wintellect.com/devcenter/krome/lighting-up-native-platform-features-in-xamarin-forms-part-1)." Thanks goes out to the series' author, Keith Rome, for the inspiration and starting point for XFGloss.
 
 # About the Author
 I am a Xamarin Certified Mobile Developer focused on Android, iOS and tvOS application development using Microsoft tools and C#, and Apple tools and Swift.  I have 25+ years of professional software development experience and have successfully telecommuted on a variety of projects since 2008.
