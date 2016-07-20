@@ -9,8 +9,8 @@ namespace XFGlossSample.Examples.Views.CSharp
 	public class BackgroundGradientPage : ContentPage
 	{
 		Timer updater;
-		GlossGradient rotatingGradient;
-		TextCell multiCell;
+		GlossGradient rotatingGradient, spareGradient;
+		TextCell rotatingCell;
 
 		protected override void OnBindingContextChanged()
 		{
@@ -56,8 +56,11 @@ namespace XFGlossSample.Examples.Views.CSharp
 
 			Content = stack;
 
+			// Update the rotating gradient
+			spareGradient = new GlossGradient(rotatingGradient);
 			UpdateGradient();
 
+			// Set the page's background gradient
 			ContentPageGloss.SetBackgroundGradient(this, new GlossGradient(Color.White, Color.FromRgb(128, 0, 0)));
 		}
 
@@ -95,9 +98,9 @@ namespace XFGlossSample.Examples.Views.CSharp
 			}
 
 			// Add a multi-color gradient
-			multiCell = new TextCell();
-			multiCell.Text = "All Three";
-			multiCell.TextColor = Color.White;
+			rotatingCell = new TextCell();
+			rotatingCell.Text = "All Three";
+			rotatingCell.TextColor = Color.White;
 
 			// Manually construct a multi-color gradient at an angle of our choosing
 			rotatingGradient = new GlossGradient(135); // 115 degree angle
@@ -108,9 +111,9 @@ namespace XFGlossSample.Examples.Views.CSharp
 			rotatingGradient.AddStep(Colors["Blue"].Item1, .75);
 			rotatingGradient.AddStep(Colors["Blue"].Item2, 1);
 
-			CellGloss.SetBackgroundGradient(multiCell, rotatingGradient);
+			CellGloss.SetBackgroundGradient(rotatingCell, rotatingGradient);
 
-			result.Add(multiCell);
+			result.Add(rotatingCell);
 
 			return result.ToArray();
 		}
@@ -118,9 +121,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 		/******************************************
 		 * 
 		 * NOTE: This code is for gradient demonstration purposes only. I do NOT recommend you continuously update
-		 * a gradient fill in a cell or page! It requires a lot of instance creation to trigger updating and the GC
-		 * runs on a pretty regular basis as a result. I only added it to make it obvious that you can create a gradient
-		 * at any angle and with as many color steps as desired. You have been warned! :-)
+		 * a gradient fill in a cell or page! 
 		 * 
 		 ******************************************/
 
@@ -128,20 +129,30 @@ namespace XFGlossSample.Examples.Views.CSharp
 		{
 			Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
 			{
-				if (rotatingGradient.Angle >= 355)
+				GlossGradient crntGradient = CellGloss.GetBackgroundGradient(rotatingCell);
+				if (crntGradient.Angle >= 355)
 				{
-					rotatingGradient.Angle = 0;
+					crntGradient.Angle = 0;
 				}
 				else
 				{
-					rotatingGradient.Angle += 5;
+					crntGradient.Angle += 5;
 				}
 
-				var newGradient = new GlossGradient(rotatingGradient);
-				rotatingGradient.Dispose();
-				rotatingGradient = newGradient;
+				// Swap gradients
+				GlossGradient newGradient;
+				if (crntGradient == rotatingGradient)
+				{
+					newGradient = spareGradient;
+				}
+				else
+				{
+					newGradient = rotatingGradient;
+				}
 
-				CellGloss.SetBackgroundGradient(multiCell, rotatingGradient);
+				newGradient.ShallowCopy(crntGradient);
+
+				CellGloss.SetBackgroundGradient(rotatingCell, newGradient);
 			});
 
 			updater?.Dispose();

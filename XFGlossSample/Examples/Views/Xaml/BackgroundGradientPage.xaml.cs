@@ -7,41 +7,52 @@ namespace XFGlossSample.Examples.Views.Xaml
 	public partial class BackgroundGradientPage : ContentPage
 	{
 		Timer updater;
+		GlossGradient spareGradient;
 
 		public BackgroundGradientPage()
 		{
 			InitializeComponent();
 
+			// Update the rotating gradient
+			spareGradient = new GlossGradient(rotatingGradient);
 			UpdateGradient();
 		}
 
 		/******************************************
 		 * 
 		 * NOTE: This code is for gradient demonstration purposes only. I do NOT recommend you continuously update
-		 * a gradient fill in a cell or page! It requires a lot of instance creation to trigger updating and the GC
-		 * runs on a pretty regular basis as a result. I only added it to make it obvious that you can create a gradient
-		 * at any angle and with as many color steps as desired. You have been warned! :-)
+		 * a gradient fill in a cell or page! 
 		 * 
 		 ******************************************/
 
 		void UpdateGradient(object gradient = null)
 		{
-			Device.BeginInvokeOnMainThread(() =>
+			Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
 			{
-				if (rotatingGradient.Angle >= 355)
+				GlossGradient crntGradient = CellGloss.GetBackgroundGradient(rotatingCell);
+				if (crntGradient.Angle >= 355)
 				{
-					rotatingGradient.Angle = 0;
+					crntGradient.Angle = 0;
 				}
 				else
 				{
-					rotatingGradient.Angle += 5;
+					crntGradient.Angle += 5;
 				}
 
-				var newGradient = new GlossGradient(rotatingGradient);
-				rotatingGradient.Dispose();
-				rotatingGradient = newGradient;
+				// Swap gradients
+				GlossGradient newGradient;
+				if (crntGradient == rotatingGradient)
+				{
+					newGradient = spareGradient;
+				}
+				else
+				{
+					newGradient = rotatingGradient;
+				}
 
-				CellGloss.SetBackgroundGradient(testCell, rotatingGradient);
+				newGradient.ShallowCopy(crntGradient);
+
+				CellGloss.SetBackgroundGradient(rotatingCell, newGradient);
 			});
 
 			updater?.Dispose();

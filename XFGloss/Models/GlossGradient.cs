@@ -225,10 +225,7 @@ namespace XFGloss
 
 		public GlossGradient(GlossGradient other)
 		{
-			_angle = other.Angle;
-			_startPoint = other.StartPoint;
-			_endPoint = other.EndPoint;
-			this.Steps = new List<GlossGradientStep>(other.Steps);
+			ShallowCopy(other);
 		}
 
 		public GlossGradient(bool isHorizontal)
@@ -260,6 +257,15 @@ namespace XFGloss
 			Steps.Add(new GlossGradientStep(endColor, 1));
 
 			Angle = gradientAngle;
+		}
+
+		// Make a shallow copy of another instance. NOTE: Steps are shared across instances!
+		public void ShallowCopy(GlossGradient other)
+		{
+			_angle = other.Angle;
+			_startPoint = other.StartPoint;
+			_endPoint = other.EndPoint;
+			this.Steps = other.Steps;
 		}
 
 		// Convenience method to add gradient step to gradient without caller having to instantiate a 

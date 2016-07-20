@@ -57,7 +57,7 @@
 								<xfg:GlossGradient StartColor="Blue" EndColor="Navy" IsReverseVertical="true" />
 							</xfg:CellGloss.BackgroundGradient>
 						</TextCell>
-						<TextCell Text="All Three" TextColor="White" x:Name="testCell">
+						<TextCell Text="All Three" TextColor="White" x:Name="rotatingCell">
 							<!-- You can also create gradients at any angle with as many steps as you want. -->
 							<xfg:CellGloss.BackgroundGradient>
 								<xfg:GlossGradient Angle="135" x:Name="rotatingGradient">
