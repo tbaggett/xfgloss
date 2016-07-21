@@ -92,14 +92,39 @@ The iOS _DetailButton_ and _DetailDisclosureButton_ accessory types aren't curre
 
 The XF TableView component already provides the needed access, so I could add support for those accessory types for use with the TableView only if it is needed in the meantime. Please submit an issue if you would like the TableView-only property to be added before ListView also supports it.
 
+**Xaml Example:**
+
+    <TextCell Text="DisclosureIndicator" xfg:CellGloss.AccessoryType="DisclosureIndicator" />
+
+**C# Example:**
+
+    TextCell cell = new TextCell();
+    cell.Text = "DisclosureIndicator";
+    
+    CellGloss.SetAccessoryType(cell, CellGlossAccessoryType.DisclosureIndicator);
+    
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/AccessoryTypePage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/AccessoryTypePage.cs)
 
 ---
+
+![BackgroundColor Example](images/prop_background_color.jpg)
 
 **BackgroundColor:** Xamarin.Forms Color  
 _Added to EntryCell, ImageCell, SwitchCell, TextCell and ViewCell_
 
 Allows a color value to be specified as a cell's background color. Possible values are either named colors or numeric color values.
+
+**Xaml Example:**
+
+    <TextCell Text="Red" xfg:CellGloss.BackgroundColor="Red" />
+
+**C# Example:**
+
+    TextCell cell = new TextCell();
+    cell.Text = "Red";
+    
+    CellGloss.SetBackgroundColor(cell, Color.Red);
+
 
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/BackgroundColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/BackgroundColorPage.cs)
 
