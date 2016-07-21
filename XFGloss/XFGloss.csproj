@@ -31,15 +31,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\ISwitchGloss.cs" />
-    <Compile Include="Views\SwitchGloss.cs" />
+    <Compile Include="Gloss\ISwitchGloss.cs" />
+    <Compile Include="Gloss\SwitchGloss.cs" />
     <Compile Include="Models\CellGlossAccessoryType.cs" />
-    <Compile Include="Views\CellGloss.cs" />
-    <Compile Include="Views\SwitchCellGloss.cs" />
+    <Compile Include="Gloss\CellGloss.cs" />
+    <Compile Include="Gloss\SwitchCellGloss.cs" />
     <Compile Include="Trackers\XFGlossCellTracker.cs" />
     <Compile Include="Models\GlossGradient.cs" />
     <Compile Include="Models\ObservableObject.cs" />
-    <Compile Include="Views\ContentPageGloss.cs" />
+    <Compile Include="Gloss\ContentPageGloss.cs" />
+    <Compile Include="Gloss\SliderGloss.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -56,7 +57,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
+    <Folder Include="Gloss\" />
     <Folder Include="Models\" />
     <Folder Include="Trackers\" />
   </ItemGroup>

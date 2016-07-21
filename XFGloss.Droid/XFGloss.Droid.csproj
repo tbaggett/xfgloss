@@ -91,6 +91,7 @@
     <Compile Include="Extensions\XFGlossGradientExtensions.cs" />
     <Compile Include="Drawables\XFGlossPaintDrawable.cs" />
     <Compile Include="Renderers\XFGlossContentPageRenderer.cs" />
+    <Compile Include="Renderers\XFGlossSliderRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

@@ -6,7 +6,13 @@
 				>
 
 	<ScrollView>
-		<StackLayout>
+		<StackLayout Padding="10">
+
+			<Label Text="Slider ThumbTintColor values set in Xaml:" Margin="10"/>
+			<Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.ThumbTintColor="Red" /> 
+			<Slider Minimum="0" Maximum="100" Value="50" xfg:SliderGloss.ThumbTintColor="Green" /> 
+			<Slider Minimum="0" Maximum="100" Value="75" xfg:SliderGloss.ThumbTintColor="Blue" /> 
+
 			<!-- This is a bit of a hack. Android's renderer for TableView always adds an empty header for a 
 				 TableSection declaration, while iOS doesn't. To compensate, I'm using a Label to display info text
 				 on iOS, and the TableSection on Android since there is no easy way to get rid of it. This is a 

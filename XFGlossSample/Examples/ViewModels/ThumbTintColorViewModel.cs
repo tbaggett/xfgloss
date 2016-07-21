@@ -13,7 +13,8 @@
 			{
 				return new string[]
 				{
-					"Specifies a numeric or named XF.Color value to apply to the thumb portion of the Switch control when the control is in the \"Off\" position.",
+					"Specifies a numeric or named XF.Color value to apply to the thumb portion of the Slider control " +
+					"as well as the Switch and SwitchCell controls when they are in the \"Off\" position.",
 				};
 			}
 		}
@@ -25,7 +26,7 @@
 
 		public string TargetClasses
 		{
-			get { return "Switch, SwitchCell"; }
+			get { return "Slider, Switch, SwitchCell"; }
 		}
 	}
 }

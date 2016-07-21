@@ -71,6 +71,7 @@
     <Compile Include="Extensions\XFGlossGradientExtensions.cs" />
     <Compile Include="Views\UIBackgroundGradientView.cs" />
     <Compile Include="Renderers\XFGlossContentPageRenderer.cs" />
+    <Compile Include="Renderers\XFGlossSliderRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\acc_edit_indicator.png" />

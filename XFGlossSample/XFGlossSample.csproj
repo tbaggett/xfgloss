@@ -63,6 +63,12 @@
     <EmbeddedResource Include="Examples\Views\Xaml\BackgroundGradientPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Examples\Views\Xaml\MaxTrackTintColorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Examples\Views\Xaml\MinTrackTintColorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -117,6 +123,16 @@
       <DependentUpon>BackgroundGradientPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Timer.cs" />
+    <Compile Include="Examples\ViewModels\MaxTrackTintColorViewModel.cs" />
+    <Compile Include="Examples\ViewModels\MinTrackTintColorViewModel.cs" />
+    <Compile Include="Examples\Views\CSharp\MaxTrackTintColorPage.cs" />
+    <Compile Include="Examples\Views\CSharp\MinTrackTintColorPage.cs" />
+    <Compile Include="Examples\Views\Xaml\MaxTrackTintColorPage.xaml.cs">
+      <DependentUpon>MaxTrackTintColorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\Views\Xaml\MinTrackTintColorPage.xaml.cs">
+      <DependentUpon>MinTrackTintColorPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XFGloss\XFGloss.csproj">

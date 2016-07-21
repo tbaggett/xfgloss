@@ -21,7 +21,7 @@
 					</TableView.Root>
 				</TableView>
 			</StackLayout>
-			
+
 			<!-- This is a bit of a hack. Android's renderer for TableView always adds an empty header for a 
 				 TableSection declaration, while iOS doesn't. To compensate, I'm using a Label to display info text
 				 on iOS, and the TableSection on Android since there is no easy way to get rid of it. This is a 

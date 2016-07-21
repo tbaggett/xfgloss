@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
+				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+				xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
+				x:Class="XFGlossSample.Examples.Views.Xaml.MinTrackTintColorPage"
+				>
+
+		<ScrollView>
+			<StackLayout Padding="10">
+				<Label Text="Slider MinTrackTintColor values set in Xaml:" Margin="10"/>
+				<Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.MinTrackTintColor="Red" /> 
+				<Slider Minimum="0" Maximum="100" Value="50" xfg:SliderGloss.MinTrackTintColor="Green" /> 
+				<Slider Minimum="0" Maximum="100" Value="75" xfg:SliderGloss.MinTrackTintColor="Blue" /> 
+			</StackLayout>
+		</ScrollView>
+
+</ContentPage>

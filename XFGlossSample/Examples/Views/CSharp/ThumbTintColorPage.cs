@@ -1,6 +1,4 @@
-﻿using System;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using XFGloss;
 
 namespace XFGlossSample.Examples.Views.CSharp
@@ -29,7 +27,15 @@ namespace XFGlossSample.Examples.Views.CSharp
 			section.Add(CreateThumbTintColorCell("Green", Color.Green));
 			section.Add(CreateThumbTintColorCell("Blue", Color.Blue));
 
-			var stack = new StackLayout();
+			var stack = new StackLayout { Padding = 10 };
+
+			// Slider demo
+
+			stack.Children.Add(new Label { Text = "Slider ThumbTintColor values set in C#", Margin = new Thickness(10) });
+			stack.Children.Add(CreateThumbTintColorSlider(25, Color.Red));
+			stack.Children.Add(CreateThumbTintColorSlider(50, Color.Green));
+			stack.Children.Add(CreateThumbTintColorSlider(75, Color.Blue));
+
 			if (Device.OS == TargetPlatform.iOS)
 			{
 				stack.Children.Add(new Label { Text = "SwitchCell ThumbTintColor values set in C#:", Margin = new Thickness(10) });
@@ -53,7 +59,16 @@ namespace XFGlossSample.Examples.Views.CSharp
 			stack.Children.Add(CreateThumbTintColorSwitch("Green", Color.Green));
 			stack.Children.Add(CreateThumbTintColorSwitch("Blue", Color.Blue));
 
-			Content = stack;
+			Content = new ScrollView() { Content = stack };
+		}
+
+		Slider CreateThumbTintColorSlider(double value, Color colorValue)
+		{
+			var slider = new Slider { Minimum = 0, Maximum = 100, Value = value };
+
+			SliderGloss.SetThumbTintColor(slider, colorValue);
+
+			return slider;
 		}
 
 		SwitchCell CreateThumbTintColorCell(string colorName, Color colorValue)

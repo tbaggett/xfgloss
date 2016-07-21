@@ -24,6 +24,8 @@ namespace XFGlossSample.ViewModels
 				{
 					new AppMenuItem("BackgroundColor"),
 					new AppMenuItem("BackgroundGradient"),
+					new AppMenuItem("MaxTrackTintColor"),
+					new AppMenuItem("MinTrackTintColor"),
 					new AppMenuItem("OnTintColor"),
 					new AppMenuItem("ThumbOnTintColor"),
 					new AppMenuItem("ThumbTintColor"),

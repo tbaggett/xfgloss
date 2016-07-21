@@ -10,6 +10,9 @@ namespace XFGloss.Droid.Extensions
 	{
 		public static void UpdateColorProperty(this Android.Widget.Switch control, ISwitchGloss properties, string propertyName)
 		{
+			// We have to create a multiple state color list to set both the "off" and "on" (checked/unchecked)
+			// states of the switch control. 
+
 			var defaultColor = Android.Graphics.Color.Transparent;
 
 			if (propertyName == null ||
