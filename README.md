@@ -71,130 +71,7 @@ You can also instantiate an XFGloss instance to make multiple assignments easier
 
 The XFGloss solution provided in this repository also includes the "XFGlossSample" Xamarin.Forms-based app. It demonstrates all the XFGloss properties being applied in both Xaml and C# code.
 
-# Adding XFGloss to Your Xamarin.Forms-Based App
-
-Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet package to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects, like so:
-
-**Android MainActivity.cs:**
-
-    namespace XFGlossSample.Droid
-    {
-    	[Activity(Label = "XFGlossSample.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
-    	{
-    		protected override void OnCreate(Bundle bundle)
-    		{
-    			TabLayoutResource = Resource.Layout.Tabbar;
-    			ToolbarResource = Resource.Layout.Toolbar;
-    
-    			base.OnCreate(bundle);
-    
-    			global::Xamarin.Forms.Forms.Init(this, bundle);
-    
-    			/********** ADD THIS CALL TO INITIALIZE XFGloss *********/
-				global::XFGloss.Droid.Library.Init(this, bundle);
-    
-    			LoadApplication(new App());
-    		}
-    	}
-    }
-
-**iOS AppDelegate.cs:**
-
-    namespace XFGlossSample.iOS
-    {
-    	[Register("AppDelegate")]
-    	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
-    	{
-    		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
-    		{
-    			global::Xamarin.Forms.Forms.Init();
-    
-    			/********** ADD THIS CALL TO INITIALIZE XFGloss *********/
-    			global::XFGloss.iOS.Library.Init();
-    
-    			LoadApplication(new App());
-    
-    			return base.FinishedLaunching(app, options);
-    		}
-    	}
-    }
-    
-# Using XFGloss with Other Custom XF Controls
-
-XFGloss should work with existing custom XF controls provided that the following criteria is met.
-
-## The ExportRenderer Attribute Should Not Map to Existing XF Controls
-The **ExportRenderer** attribute tells the XF framework what code should be executed to create and communicate with a platform-specific UI component when a given generic XF control is used. Most tutorials/examples of making custom XF components show a ExportRenderer attribute that maps a new generic XF control (the first typeof parameter in the attribute) to a new platform-specific renderer (the second typeof parameter). Your existing custom controls should work with XFGloss if that approach was used.
-
-Existing custom controls with an ExportRenderer attribute like this should work:
-
-<pre><code>[assembly: ExportRenderer(typeof(<b><font color="#0000ff">MyCustomSwitch</font></b>), typeof(MyCustomSwitchRenderer))]</code></pre>
-
-A custom control won't be compatible with XFGloss if the ExportRenderer attribute maps a new custom renderer directly to an existing XF control. XFGloss uses this technique to enhance the stock controls instead of creating new custom ones. XFGloss must be the only case where custom renderers are mapped to standard XF controls. If there are multiple mappings to the same XF control, the last mapping to be processed at runtime is the only renderer that will be used.
-
-Existing custom controls with an ExportRenderer attribute that maps directly to a stock XF control (the Switch control in this example) won't work:
-
-<pre><code>[assembly: ExportRenderer(typeof(<b><font color="#ff0000">Switch</font></b>), typeof(MyCustomSwitchRenderer))]</code></pre>
-
-## Other Custom Component Renderers Must Inherit From XFGloss Renderers
-To make XFGloss work with your custom component, change your custom renderers to inherit from the XFGloss renderers instead of the Xamarin.Forms renderers.
-
-For example, change:
-
-	public class MyCustomContentPageRenderer : PageRenderer
-	{
-	...
-	}
-
-To:
-
-	public class MyCustomContentPageRenderer : XFGlossContentPageRenderer
-	{
-	...
-	}
-
-Here's a complete list of the XF renderers that are customized by XFGloss:
-
-<table>
-	<tr>
-		<th>XF Renderer</th>
-		<th>XFG Renderer</th>
-	</tr>
-	<tr>
-		<td>EntryCellRenderer</td>
-		<td>XFGlossEntryCellRenderer</td>
-	</tr>
-	<tr>
-		<td>ImageCellRenderer</td>
-		<td>XFGlossImageCellRenderer</td>
-	</tr>
-	<tr>
-		<td>PageRenderer</td>
-		<td>XFGlossContentPageRenderer</td>
-	</tr>
-	<tr>
-		<td>SliderRenderer</td>
-		<td>XFGlossSliderRenderer</td>
-	<tr>
-		<td>SwitchRenderer</td>
-		<td>XFGlossSwitchRenderer</td>
-	</tr>
-	<tr>
-		<td>SwitchCellRenderer</td>
-		<td>XFGlossSwitchCellRenderer</td>
-	</tr>
-	<tr>
-		<td>TextCellRenderer</td>
-		<td>XFGlossTextCellRenderer</td>
-	</tr>
-	<tr>
-		<td>ViewCellRenderer</td>
-		<td>XFGlossViewCellRenderer</td>
-	</tr>
-</table>
-
-# XFGloss Properties
+# New/Enhanced Properties Provided by XFGloss
 
 Some of the properties added by XFGloss already exist on some XF components. For example, the **BackgroundColor** property is available on many XF components. In such cases, XFGloss adds those properties to other XF components that didn't previously offer them. Other properties like the **BackgroundGradient** property are completely new to the XF environment.
 
@@ -269,6 +146,133 @@ _Added to all cell classes' accessory types (iOS only), and the Switch and Switc
 Allows a color value to be specified as the Switch control's track color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes, and for the accessory view on iOS. Possible values are either named colors or numeric color values.
 
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/TintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/TintColorPage.cs)
+
+# Adding XFGloss to Your Xamarin.Forms-Based App
+
+Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet package to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects, like so:
+
+**Android MainActivity.cs:**
+
+    namespace XFGlossSample.Droid
+    {
+    	[Activity(Label = "XFGlossSample.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    	{
+    		protected override void OnCreate(Bundle bundle)
+    		{
+    			TabLayoutResource = Resource.Layout.Tabbar;
+    			ToolbarResource = Resource.Layout.Toolbar;
+    
+    			base.OnCreate(bundle);
+    
+    			global::Xamarin.Forms.Forms.Init(this, bundle);
+    
+    			/********** ADD THIS CALL TO INITIALIZE XFGloss *********/
+				global::XFGloss.Droid.Library.Init(this, bundle);
+    
+    			LoadApplication(new App());
+    		}
+    	}
+    }
+
+**iOS AppDelegate.cs:**
+
+    namespace XFGlossSample.iOS
+    {
+    	[Register("AppDelegate")]
+    	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+    	{
+    		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+    		{
+    			global::Xamarin.Forms.Forms.Init();
+    
+    			/********** ADD THIS CALL TO INITIALIZE XFGloss *********/
+    			global::XFGloss.iOS.Library.Init();
+    
+    			LoadApplication(new App());
+    
+    			return base.FinishedLaunching(app, options);
+    		}
+    	}
+    }
+    
+# Using XFGloss with Other Custom XF Controls
+
+XFGloss should work with existing custom XF controls provided that the following criteria is met.
+
+## 1. The ExportRenderer Attribute Should Not Map to Existing XF Controls
+The **ExportRenderer** attribute tells the XF framework what code should be executed to create and communicate with a platform-specific UI component when a given generic XF control is used. Most tutorials/examples of making custom XF components show a ExportRenderer attribute that maps a new generic XF control (the first typeof parameter in the attribute) to a new platform-specific renderer (the second typeof parameter). Your existing custom controls should work with XFGloss if that approach was used.
+
+Existing custom controls with an ExportRenderer attribute like this should work:
+
+<pre><code>[assembly: ExportRenderer(typeof(<b><font color="#0000ff">MyCustomSwitch</font></b>), typeof(MyCustomSwitchRenderer))]</code></pre>
+
+A custom control won't be compatible with XFGloss if the ExportRenderer attribute maps a new custom renderer directly to an existing XF control. XFGloss uses this technique to enhance the stock controls instead of creating new custom ones. XFGloss must be the only case where custom renderers are mapped to standard XF controls. If there are multiple mappings to the same XF control, the last mapping to be processed at runtime is the only renderer that will be used.
+
+Existing custom controls with an ExportRenderer attribute that maps directly to a stock XF control (the Switch control in this example) won't work:
+
+<pre><code>[assembly: ExportRenderer(typeof(<b><font color="#ff0000">Switch</font></b>), typeof(MyCustomSwitchRenderer))]</code></pre>
+
+## 2. Existing Renderers Should Inherit From XFGloss Renderers Where Applicable
+To make XFGloss work with your custom component, change your custom renderers to inherit from the XFGloss renderers instead of the Xamarin.Forms renderers.
+
+For example, change:
+
+	public class MyCustomContentPageRenderer : PageRenderer
+	{
+	...
+	}
+
+To:
+
+	public class MyCustomContentPageRenderer : XFGlossContentPageRenderer
+	{
+	...
+	}
+
+A complete list of the XF renderers that are customized by XFGloss is provided below. Change existing custom renderers to inherit from the XFGloss renderer if its current base class is found in this list.
+
+<table>
+	<tr>
+		<th>XF Renderer</th>
+		<th>XFG Renderer</th>
+	</tr>
+	<tr>
+		<td>EntryCellRenderer</td>
+		<td>XFGlossEntryCellRenderer</td>
+	</tr>
+	<tr>
+		<td>ImageCellRenderer</td>
+		<td>XFGlossImageCellRenderer</td>
+	</tr>
+	<tr>
+		<td>PageRenderer</td>
+		<td>XFGlossContentPageRenderer</td>
+	</tr>
+	<tr>
+		<td>SliderRenderer</td>
+		<td>XFGlossSliderRenderer</td>
+	<tr>
+		<td>SwitchRenderer</td>
+		<td>XFGlossSwitchRenderer</td>
+	</tr>
+	<tr>
+		<td>SwitchCellRenderer</td>
+		<td>XFGlossSwitchCellRenderer</td>
+	</tr>
+	<tr>
+		<td>TextCellRenderer</td>
+		<td>XFGlossTextCellRenderer</td>
+	</tr>
+	<tr>
+		<td>ViewCellRenderer</td>
+		<td>XFGlossViewCellRenderer</td>
+	</tr>
+</table>
+
+## 3. Existing Renderers Should Call the Base Class Versions of Overridden Methods
+
+The XFGloss renderer classes require their overridden versions of OnElementChanged and OnElementPropertyChanged methods to be called, as well as other overridable properties on a per-control basis. Verify your renderers are calling the base class implementations of any overridden methods if the XFGloss properties aren't being applied to your XF controls.
 
 #Known Issues
 
