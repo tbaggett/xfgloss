@@ -157,6 +157,26 @@ Allows a multiple-color linear gradient to be specified as a content page or cel
 
 ---
 
+![MaxTrackTintColor Example](images/prop_max_track_tint_color.jpg)
+
+**MaxTrackTintColor:** Xamarin.Forms.Color  
+_Added to Slider_
+
+Allows a color value to be specified for a Slider's right side of the track, beginning at the current thumb position. Possible values are either named colors or numeric color values.
+
+**Xaml Example:**
+
+	<Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.MaxTrackTintColor="Red" /> 
+
+**C# Example:**
+
+	var slider = new Slider { Minimum = 0, Maximum = 100, Value = 25 };
+	SliderGloss.SetMaxTrackTintColor(slider, Color.Red);
+
+**Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/MaxTrackTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/MaxTrackTintColorPage.cs)
+
+---
+
 **OnTintColor:** Xamarin.Forms Color  
 _Added to Switch and SwitchCell_
 
