@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.Content;
+using Android.Graphics;
 using Android.Support.V4.Content;
 using Android.Util;
 
@@ -17,6 +18,14 @@ namespace XFGloss.Droid.Utils
 		public static int SpToPx(Context context, int sp)
 		{
 			return (int)(TypedValue.ApplyDimension(ComplexUnitType.Sp, sp, context.Resources.DisplayMetrics) + 0.5f);
+		}
+
+		public static Color IntToColor(int colorValue)
+		{
+			return new Color(Color.GetRedComponent(colorValue), 
+			                 Color.GetGreenComponent(colorValue), 
+			                 Color.GetBlueComponent(colorValue),
+			                 Color.GetAlphaComponent(colorValue));
 		}
 
 		public static int ColorFromResourceId(Context context, int resourceId, int defaultValue)

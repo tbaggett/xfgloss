@@ -1,6 +1,8 @@
 ﻿using Android.Content.Res;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using XFGloss.Droid.Utils;
+using AColor = Android.Graphics.Color;
 
 [assembly: ExportRenderer(typeof(Slider), typeof(XFGloss.Droid.Renderers.XFGlossSliderRenderer))]
 namespace XFGloss.Droid.Renderers
@@ -33,13 +35,17 @@ namespace XFGloss.Droid.Renderers
 				return;
 			}
 
+			var defaultColor = AColor.Transparent;
+
 			// MaxTrackTintColor Property
 			if (propertyName == null || propertyName == SliderGloss.MaxTrackTintColorProperty.PropertyName)
 			{
 				var maxTrackTintColor = (Color)Element.GetValue(SliderGloss.MaxTrackTintColorProperty);
 
 				Control.ProgressBackgroundTintList = 
-					(maxTrackTintColor == Color.Default) ? null : ColorStateList.ValueOf(maxTrackTintColor.ToAndroid());
+					ColorStateList.ValueOf((maxTrackTintColor == Color.Default) ? 
+					                       ThemeUtil.IntToColor(ThemeUtil.ColorControlNormal(Control.Context, defaultColor)) : 
+				    						maxTrackTintColor.ToAndroid());
 			}
 
 			// MinTrackTintColor Property
@@ -48,7 +54,9 @@ namespace XFGloss.Droid.Renderers
 				var minTrackTintColor = (Color)Element.GetValue(SliderGloss.MinTrackTintColorProperty);
 
 				Control.ProgressTintList = 
-					(minTrackTintColor == Color.Default) ? null : ColorStateList.ValueOf(minTrackTintColor.ToAndroid());
+					ColorStateList.ValueOf((minTrackTintColor == Color.Default) ?
+					                       ThemeUtil.IntToColor(ThemeUtil.ColorAccent(Control.Context, defaultColor)) :
+										   minTrackTintColor.ToAndroid());
 			}
 
 			// ThumbTintColor Property
@@ -57,7 +65,9 @@ namespace XFGloss.Droid.Renderers
 				var thumbTintColor = (Color)Element.GetValue(SliderGloss.ThumbTintColorProperty);
 
 				Control.ThumbTintList = 
-					(thumbTintColor == Color.Default) ? null : ColorStateList.ValueOf(thumbTintColor.ToAndroid());
+					ColorStateList.ValueOf((thumbTintColor == Color.Default) ?
+										   ThemeUtil.IntToColor(ThemeUtil.ColorAccent(Control.Context, defaultColor)) :
+					                       thumbTintColor.ToAndroid());
 			}
 		}
 	}
