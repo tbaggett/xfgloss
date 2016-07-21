@@ -120,17 +120,24 @@ Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet
     	}
     }
     
-# Using XFGloss with Other Custom Components
+# Using XFGloss with Other Custom XF Controls
 
-XFGloss should also work with existing custom components provided that the renderer is assigned to the custom component instead of a native XF component. Your custom component renderer's **ExportRenderer** assembly attribute should look like this:
+XFGloss should work with existing custom XF controls provided that the following criteria is met.
 
-	[assembly: ExportRenderer(typeof(MyCustomSwitch), typeof(MyCustomSwitchRenderer))]
+## The ExportRenderer Attribute Should Not Map to Existing XF Controls
+The **ExportRenderer** attribute tells the XF framework what code should be executed to create and communicate with a platform-specific UI component when a given generic XF control is used. Most tutorials/examples of making custom XF components show a ExportRenderer attribute that maps a new generic XF control (the first typeof parameter in the attribute) to a new platform-specific renderer (the second typeof parameter). Your existing custom controls should work with XFGloss if that approach was used.
 
-Instead of this:
+Existing custom controls with an ExportRenderer attribute like this should work:
 
-	[assembly: ExportRenderer(typeof(Switch), typeof(MyCustomSwitchRenderer))]
+<pre><code>[assembly: ExportRenderer(typeof(<b><font color="#0000ff">MyCustomSwitch</font></b>), typeof(MyCustomSwitchRenderer))]</code></pre>
 
+A custom control won't be compatible with XFGloss if the ExportRenderer attribute maps a new custom renderer directly to an existing XF control. XFGloss uses this technique to enhance the stock controls instead of creating new custom ones. XFGloss must be the only case where custom renderers are mapped to standard XF controls. If there are multiple mappings to the same XF control, the last mapping to be processed at runtime is the only renderer that will be used.
 
+Existing custom controls with an ExportRenderer attribute that maps directly to a stock XF control (the Switch control in this example) won't work:
+
+<pre><code>[assembly: ExportRenderer(typeof(<b><font color="#ff0000">Switch</font></b>), typeof(MyCustomSwitchRenderer))]</code></pre>
+
+## Other Custom Component Renderers Must Inherit From XFGloss Renderers
 To make XFGloss work with your custom component, change your custom renderers to inherit from the XFGloss renderers instead of the Xamarin.Forms renderers.
 
 For example, change:
@@ -167,6 +174,9 @@ Here's a complete list of the XF renderers that are customized by XFGloss:
 		<td>XFGlossContentPageRenderer</td>
 	</tr>
 	<tr>
+		<td>SliderRenderer</td>
+		<td>XFGlossSliderRenderer</td>
+	<tr>
 		<td>SwitchRenderer</td>
 		<td>XFGlossSwitchRenderer</td>
 	</tr>
@@ -192,6 +202,8 @@ Here's a brief description of the properties added/expanded by XFGloss:
 
 ---
 
+![AccessoryType Example](images/prop_accessory_type.jpg)
+
 **AccessoryType (iOS only):** XFGloss.CellGlossAccessoryType enum value  
 _Added to EntryCell, ImageCell, TextCell and ViewCell_
 
@@ -203,7 +215,7 @@ The iOS _DetailButton_ and _DetailDisclosureButton_ accessory types aren't curre
 
 The XF TableView component already provides the needed access, so I could add support for those accessory types for use with the TableView only if it is needed in the meantime. Please submit an issue if you would like the TableView-only property to be added before ListView also supports it.
 
-**Code Examples:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/AccessoryTypePage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/AccessoryTypePage.cs)
+**Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/AccessoryTypePage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/AccessoryTypePage.cs)
 
 ---
 
@@ -212,7 +224,7 @@ _Added to EntryCell, ImageCell, SwitchCell, TextCell and ViewCell_
 
 Allows a color value to be specified as a cell's background color. Possible values are either named colors or numeric color values.
 
-**Code Examples:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/BackgroundColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/BackgroundColorPage.cs)
+**Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/BackgroundColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/BackgroundColorPage.cs)
 
 ---
 
@@ -221,7 +233,7 @@ _Added to ContentPage, EntryCell, ImageCell, SwitchCell, TextCell and ViewCell_
 
 Allows a multiple-color linear gradient to be specified as a content page or cells' background. You can specify as many colors as you like and control their distribution across the fill at any angle. Convenience properties and constructors also make it easy to create two-color horizontal or vertical fills.
 
-**Code Examples:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/BackgroundGradientPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/BackgroundGradientPage.cs)
+**Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/BackgroundGradientPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/BackgroundGradientPage.cs)
 
 ---
 
@@ -230,7 +242,7 @@ _Added to Switch and SwitchCell_
 
 Allows a color value to be specified as the Switch control's track color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
-**Code Examples:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/OnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/OnTintColorPage.cs)
+**Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/OnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/OnTintColorPage.cs)
 
 ---
 **ThumbOnTintColor:** Xamarin.Forms Color  
@@ -238,7 +250,7 @@ _Added to Switch and SwitchCell_
 
 Allows a color value to be specified as the Switch control's thumb color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
-**Code Examples:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/ThumbOnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/ThumbOnTintColorPage.cs)
+**Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/ThumbOnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/ThumbOnTintColorPage.cs)
 
 ---
 
@@ -247,7 +259,7 @@ _Added to Switch and SwitchCell_
 
 Allows a color value to be specified as the Switch control's thumb color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
-**Code Examples:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/ThumbTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/ThumbTintColorPage.cs)
+**Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/ThumbTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/ThumbTintColorPage.cs)
 
 ---
 
@@ -256,7 +268,7 @@ _Added to all cell classes' accessory types (iOS only), and the Switch and Switc
 
 Allows a color value to be specified as the Switch control's track color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes, and for the accessory view on iOS. Possible values are either named colors or numeric color values.
 
-**Code Examples:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/TintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/TintColorPage.cs)
+**Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/TintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/TintColorPage.cs)
 
 #Known Issues
 
