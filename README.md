@@ -86,7 +86,7 @@ _Added to EntryCell, ImageCell, TextCell and ViewCell_
 
 Allows specifying the accessory type to be shown on the right side of the cell. Possible values are _None_, _DisclosureIndicator_, _Checkmark_ and _EditIndicator_. 
 
-The Android platform doesn't offer accessory types as part of its standard UI, so this property isn't supported on Android devices.
+The Android platform doesn't offer accessory types as part of its standard UI, so this property is ignored on Android devices.
 
 The iOS _DetailButton_ and _DetailDisclosureButton_ accessory types aren't currently supported due to Xamarin.Forms' ListView component not allowing the external access needed to react to the user tapping the Details button. I plan to submit a PR that will address this, and will add support for those types to XFGloss once the needed access is available.
 
@@ -130,10 +130,28 @@ Allows a color value to be specified as a cell's background color. Possible valu
 
 ---
 
+![BackgroundGradient Example](images/prop_background_gradient.jpg)
+
 **BackgroundGradient:** XFGloss.GlossGradient  
 _Added to ContentPage, EntryCell, ImageCell, SwitchCell, TextCell and ViewCell_
 
 Allows a multiple-color linear gradient to be specified as a content page or cells' background. You can specify as many colors as you like and control their distribution across the fill at any angle. Convenience properties and constructors also make it easy to create two-color horizontal or vertical fills.
+
+**Xaml Example:**
+
+	<TextCell Text="Red" TextColor="White">
+		<xfg:CellGloss.BackgroundGradient>
+			<xfg:GlossGradient StartColor="Red" EndColor="Maroon" IsVertical="true" />
+		</xfg:CellGloss.BackgroundGradient>
+	</TextCell>
+
+**C# Example:**
+
+	var cell = new TextCell();
+	cell.Text = "Red";
+	cell.TextColor = Color.White;
+
+	CellGloss.SetBackgroundGradient(cell, new GlossGradient(Color.Red, Color.Maroon, GlossGradient.VERTICAL_ANGLE));
 
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/BackgroundGradientPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/BackgroundGradientPage.cs)
 

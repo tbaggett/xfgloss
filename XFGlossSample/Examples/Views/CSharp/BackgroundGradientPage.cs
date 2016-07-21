@@ -70,9 +70,9 @@ namespace XFGlossSample.Examples.Views.CSharp
 
 			Dictionary<string, Tuple<Color, Color, int>> Colors = new Dictionary<string, Tuple<Color, Color, int>>()
 			{
-				{ "Red", new Tuple<Color, Color, int>(Color.Red, Color.Maroon, 180) },
-				{ "Green", new Tuple<Color, Color, int>(Color.Lime, Color.Green, 90) },
-				{ "Blue", new Tuple<Color, Color, int>(Color.Blue, Color.Navy, 0) }
+				{ "Red", new Tuple<Color, Color, int>(Color.Red, Color.Maroon, GlossGradient.VERTICAL_ANGLE) },
+				{ "Green", new Tuple<Color, Color, int>(Color.Lime, Color.Green, GlossGradient.HORIZONTAL_ANGLE) },
+				{ "Blue", new Tuple<Color, Color, int>(Color.Blue, Color.Navy, GlossGradient.REVERSE_VERTICAL_ANGLE) }
 			};
 
 			// Iterate through the color values, creating a new text cell for each entity

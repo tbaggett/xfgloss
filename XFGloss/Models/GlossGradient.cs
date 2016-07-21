@@ -11,11 +11,11 @@ namespace XFGloss
 		public const int UNDEFINED_ANGLE = int.MinValue;
 		public const int DEFAULT_ANGLE = VERTICAL_ANGLE;
 
-		const int HORIZONTAL_ANGLE = 90;
-		const int REVERSE_HORIZONTAL_ANGLE = 270;
+		public const int HORIZONTAL_ANGLE = 90;
+		public const int REVERSE_HORIZONTAL_ANGLE = 270;
 
-		const int VERTICAL_ANGLE = 180;
-		const int REVERSE_VERTICAL_ANGLE = 360;
+		public const int VERTICAL_ANGLE = 180;
+		public const int REVERSE_VERTICAL_ANGLE = 0;
 
 		public bool IsHorizontal
 		{
