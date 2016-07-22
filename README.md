@@ -6,64 +6,70 @@
 
 In the above screenshots, a gradient background was added to the bottom half of the XF ContentPage by adding this code to the Xaml declaration:
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <ContentPage	xmlns="http://xamarin.com/schemas/2014/forms"
-    				xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    				xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
-    				x:Class="XFGlossSample.Views.AboutPage"
-    		 		Title="XFGloss Sample App" Padding="10"
-    				>
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
+             x:Class="XFGlossSample.Views.AboutPage"
+             Title="XFGloss Sample App" Padding="10"
+             >
     
-    	<xfg:ContentPageGloss.BackgroundGradient>
-    		<xfg:GlossGradient Angle="150">
-    			<xfg:GlossGradient.Steps>
-    				<xfg:GlossGradientStep StepColor="White" StepPercentage="0" />
-    				<xfg:GlossGradientStep StepColor="White" StepPercentage=".5" />
-    				<xfg:GlossGradientStep StepColor="#ccd9ff" StepPercentage="1" />
-    			</xfg:GlossGradient.Steps>
-    		</xfg:GlossGradient>
-    	</xfg:ContentPageGloss.BackgroundGradient>
+    <xfg:ContentPageGloss.BackgroundGradient>
+        <xfg:GlossGradient Angle="150">
+            <xfg:GlossGradient.Steps>
+                <xfg:GlossGradientStep StepColor="White" StepPercentage="0" />
+                <xfg:GlossGradientStep StepColor="White" StepPercentage=".5" />
+                <xfg:GlossGradientStep StepColor="#ccd9ff" StepPercentage="1" />
+            </xfg:GlossGradient.Steps>
+        </xfg:GlossGradient>
+    </xfg:ContentPageGloss.BackgroundGradient>
     ...
-    </ContentPage>
+</ContentPage>
+```
     
 XFGloss properties can also be constructed in code. Here's the C# equivalent for the above Xaml.
 
-    namespace XFGlossSample.Views
+```csharp
+namespace XFGlossSample.Views
+{
+    public class AboutPage : ContentPage
     {
-    	public class AboutPage : ContentPage
-    	{
-    		public AboutPage()
-    		{
-    			Title = "XFGloss Sample App";
-    			Padding = 10;
+        public AboutPage()
+        {
+            Title = "XFGloss Sample App";
+            Padding = 10;
     
-    			var bkgrndGradient = new GlossGradient()
-    			{
-    				Angle = 150,
-    				Steps = new List<GlossGradientStep>()
-    				{
-    					new GlossGradientStep(Color.White, 0),
-    					new GlossGradientStep(Color.White, .5),
-    					new GlossGradientStep(Color.FromHex("#ccd9ff"), 1)
-    				}
-    			};
+            var bkgrndGradient = new GlossGradient()
+            {
+                Angle = 150,
+                Steps = new List<GlossGradientStep>()
+                {
+                    new GlossGradientStep(Color.White, 0),
+                    new GlossGradientStep(Color.White, .5),
+                    new GlossGradientStep(Color.FromHex("#ccd9ff"), 1)
+                }
+            };
     
-    			ContentPageGloss.SetBackgroundGradient(this, bkgrndGradient);
+            ContentPageGloss.SetBackgroundGradient(this, bkgrndGradient);
 				
-				Content = { ... }
-    		}
-    	}
+            Content = { ... }
+        }
     }
+}
+```
         
 You can also instantiate an XFGloss instance to make multiple assignments easier. Note that the gloss instance doesn't have to be retained. It only provides convenient access to the static setters.
 
-    // Create a XF Switch component and apply some gloss to it
-    var onOffSwitch = new Switch();
-    var gloss = new SwitchGloss(onOffSwitch);
-    gloss.TintColor = Color.Red;
-    gloss.ThumbTintColor = Color.Maroon;
-    gloss.OnTintColor = Color.Green;
-    gloss.ThumbOnTintColor = Color.Lime;
+```csharp
+// Create a XF Switch component and apply some gloss to it
+var onOffSwitch = new Switch();
+var gloss = new SwitchGloss(onOffSwitch);
+gloss.TintColor = Color.Red;
+gloss.ThumbTintColor = Color.Maroon;
+gloss.OnTintColor = Color.Green;
+gloss.ThumbOnTintColor = Color.Lime;
+```
     
 #Sample App
 
@@ -92,15 +98,17 @@ The iOS _DetailButton_ and _DetailDisclosureButton_ accessory types aren't curre
 The XF TableView component already provides the needed access, so I could add support for those accessory types for use with the TableView only if it is needed in the meantime. Please submit an issue if you would like the TableView-only property to be added before ListView also supports it.
 
 **Xaml Example:**
-
-    <TextCell Text="DisclosureIndicator" xfg:CellGloss.AccessoryType="DisclosureIndicator" />
+```
+<TextCell Text="DisclosureIndicator" xfg:CellGloss.AccessoryType="DisclosureIndicator" />
+```
 
 **C# Example:**
-
-    TextCell cell = new TextCell();
-    cell.Text = "DisclosureIndicator";
+```csharp
+TextCell cell = new TextCell();
+cell.Text = "DisclosureIndicator";
     
-    CellGloss.SetAccessoryType(cell, CellGlossAccessoryType.DisclosureIndicator);
+CellGloss.SetAccessoryType(cell, CellGlossAccessoryType.DisclosureIndicator);
+```
     
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/AccessoryTypePage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/AccessoryTypePage.cs)
 
@@ -115,16 +123,16 @@ The XF TableView component already provides the needed access, so I could add su
 Allows a color value to be specified as a cell's background color. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
-
-    <TextCell Text="Red" xfg:CellGloss.BackgroundColor="Red" />
-
+```
+<TextCell Text="Red" xfg:CellGloss.BackgroundColor="Red" />
+```
 **C# Example:**
-
-    TextCell cell = new TextCell();
-    cell.Text = "Red";
+```csharp
+TextCell cell = new TextCell();
+cell.Text = "Red";
     
-    CellGloss.SetBackgroundColor(cell, Color.Red);
-
+CellGloss.SetBackgroundColor(cell, Color.Red);
+```
 
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/BackgroundColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/BackgroundColorPage.cs)
 
@@ -139,21 +147,21 @@ Allows a color value to be specified as a cell's background color. Possible valu
 Allows a multiple-color linear gradient to be specified as a content page or cells' background. You can specify as many colors as you like and control their distribution across the fill at any angle. Convenience properties and constructors also make it easy to create two-color horizontal or vertical fills.
 
 **Xaml Example:**
-
-	<TextCell Text="Red" TextColor="White">
-		<xfg:CellGloss.BackgroundGradient>
-			<xfg:GlossGradient StartColor="Red" EndColor="Maroon" IsVertical="true" />
-		</xfg:CellGloss.BackgroundGradient>
-	</TextCell>
-
+```
+<TextCell Text="Red" TextColor="White">
+    <xfg:CellGloss.BackgroundGradient>
+        <xfg:GlossGradient StartColor="Red" EndColor="Maroon" IsVertical="true" />
+    </xfg:CellGloss.BackgroundGradient>
+</TextCell>
+```
 **C# Example:**
+```csharp
+var cell = new TextCell();
+cell.Text = "Red";
+cell.TextColor = Color.White;
 
-	var cell = new TextCell();
-	cell.Text = "Red";
-	cell.TextColor = Color.White;
-
-	CellGloss.SetBackgroundGradient(cell, new GlossGradient(Color.Red, Color.Maroon, GlossGradient.VERTICAL_ANGLE));
-
+CellGloss.SetBackgroundGradient(cell, new GlossGradient(Color.Red, Color.Maroon, GlossGradient.VERTICAL_ANGLE));
+```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/BackgroundGradientPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/BackgroundGradientPage.cs)
 
 ---
@@ -167,14 +175,14 @@ Allows a multiple-color linear gradient to be specified as a content page or cel
 Allows a color value to be specified for a Slider's right side of the track, beginning at the current thumb position. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
-
-	<Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.MaxTrackTintColor="Red" /> 
-
+```
+<Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.MaxTrackTintColor="Red" /> 
+```
 **C# Example:**
-
+```csharp
 	var slider = new Slider { Minimum = 0, Maximum = 100, Value = 25 };
 	SliderGloss.SetMaxTrackTintColor(slider, Color.Red);
-
+```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/MaxTrackTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/MaxTrackTintColorPage.cs)
 
 ---
@@ -188,14 +196,14 @@ Allows a color value to be specified for a Slider's right side of the track, beg
 Allows a color value to be specified for a Slider's left side of the track, up to the current thumb position. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
-
-	<Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.MinTrackTintColor="Red" /> 
-
+```
+<Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.MinTrackTintColor="Red" /> 
+```
 **C# Example:**
-
-	var slider = new Slider { Minimum = 0, Maximum = 100, Value = 25 };
-	SliderGloss.SetMinTrackTintColor(slider, Color.Red);
-
+```csharp
+var slider = new Slider { Minimum = 0, Maximum = 100, Value = 25 };
+SliderGloss.SetMinTrackTintColor(slider, Color.Red);
+```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/MinTrackTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/MinTrackTintColorPage.cs)
 
 ---
@@ -209,20 +217,20 @@ Allows a color value to be specified for a Slider's left side of the track, up t
 Allows a color value to be specified as the Switch control's track color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
+```
+<SwitchCell Text="Red" xfg:SwitchCellGloss.OnTintColor="Red" />
 
-	<SwitchCell Text="Red" xfg:SwitchCellGloss.OnTintColor="Red" />
-
-	<Switch xfg:SwitchGloss.OnTintColor="Red" />
-
+<Switch xfg:SwitchGloss.OnTintColor="Red" />
+```
 **C# Example:**
+```csharp
+var cell = new SwitchCell();
+cell.Text = "Red";
+SwitchCellGloss.SetOnTintColor(cell, Color.Red);
 
-	var cell = new SwitchCell();
-	cell.Text = "Red";
-	SwitchCellGloss.SetOnTintColor(cell, Color.Red);
-
-	var switch = new Switch();
-	SwitchGloss.SetOnTintColor(switch, Color.Red);
-
+var switch = new Switch();
+SwitchGloss.SetOnTintColor(switch, Color.Red);
+```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/OnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/OnTintColorPage.cs)
 
 ---
@@ -235,20 +243,20 @@ Allows a color value to be specified as the Switch control's track color when it
 Allows a color value to be specified as the Switch control's thumb color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
+```
+<SwitchCell Text="Red" xfg:SwitchCellGloss.ThumbOnTintColor="Red" />
 
-	<SwitchCell Text="Red" xfg:SwitchCellGloss.ThumbOnTintColor="Red" />
-
-	<Switch xfg:SwitchGloss.ThumbOnTintColor="Red" />
-
+<Switch xfg:SwitchGloss.ThumbOnTintColor="Red" />
+```
 **C# Example:**
+```csharp
+var cell = new SwitchCell();
+cell.Text = "Red";
+SwitchCellGloss.SetThumbOnTintColor(cell, Color.Red);
 
-	var cell = new SwitchCell();
-	cell.Text = "Red";
-	SwitchCellGloss.SetThumbOnTintColor(cell, Color.Red);
-
-	var switch = new Switch();
-	SwitchGloss.SetThumbOnTintColor(switch, Color.Red);
-
+var switch = new Switch();
+SwitchGloss.SetThumbOnTintColor(switch, Color.Red);
+```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/ThumbOnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/ThumbOnTintColorPage.cs)
 
 ---
@@ -262,20 +270,20 @@ Allows a color value to be specified as the Switch control's thumb color when it
 Allows a color value to be specified as the Slider control's thumb color as well as the Switch control's thumb color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
+```
+<SwitchCell Text="Red" xfg:SwitchCellGloss.ThumbTintColor="Red" />
 
-	<SwitchCell Text="Red" xfg:SwitchCellGloss.ThumbTintColor="Red" />
-
-	<Switch xfg:SwitchGloss.ThumbTintColor="Red" />
-
+<Switch xfg:SwitchGloss.ThumbTintColor="Red" />
+```
 **C# Example:**
+```csharp
+var cell = new SwitchCell();
+cell.Text = "Red";
+SwitchCellGloss.SetThumbTintColor(cell, Color.Red);
 
-	var cell = new SwitchCell();
-	cell.Text = "Red";
-	SwitchCellGloss.SetThumbTintColor(cell, Color.Red);
-
-	var switch = new Switch();
-	SwitchGloss.SetThumbTintColor(switch, Color.Red);
-
+var switch = new Switch();
+SwitchGloss.SetThumbTintColor(switch, Color.Red);
+```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/ThumbTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/ThumbTintColorPage.cs)
 
 ---
@@ -289,33 +297,33 @@ Allows a color value to be specified as the Slider control's thumb color as well
 Allows a color value to be specified as the Switch control's track color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes, and for the accessory view on iOS. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
+```
+<TextCell Text="Red" xfg:CellGloss.TintColor="Red" xfg:CellGloss.AccessoryType="Checkmark" />
 
-	<TextCell Text="Red" xfg:CellGloss.TintColor="Red" xfg:CellGloss.AccessoryType="Checkmark" />
+<SwitchCell Text="Red" xfg:CellGloss.TintColor="Red" />
 
-	<SwitchCell Text="Red" xfg:CellGloss.TintColor="Red" />
-
-	<Switch xfg:SwitchGloss.TintColor="Red" />
-
+<Switch xfg:SwitchGloss.TintColor="Red" />
+```
 **C# Example:**
+```csharp
+// iOS AccessoryType
+var cell = new TextCell();
+cell.Text = "Red";
 
-	// iOS AccessoryType
-	var cell = new TextCell();
-	cell.Text = "Red";
+var gloss = new CellGloss(cell);
+gloss.TintColor = Color.Red;
+gloss.AccessoryType = CellGlossAccessoryType.Checkmark;
 
-	var gloss = new CellGloss(cell);
-	gloss.TintColor = Color.Red;
-	gloss.AccessoryType = CellGlossAccessoryType.Checkmark;
+// SwitchCell
+var switchCell = new SwitchCell();
+switchCell.Text = "Red";
 
-	// SwitchCell
-	var switchCell = new SwitchCell();
-	switchCell.Text = "Red";
+CellGloss.SetTintColor(switchCell, Color.Red);
 
-	CellGloss.SetTintColor(switchCell, Color.Red);
-
-	// Switch
-	var switchCtrl = new Switch();
-	SwitchGloss.SetTintColor(switchCtrl, Color.Red);
-
+// Switch
+var switchCtrl = new Switch();
+SwitchGloss.SetTintColor(switchCtrl, Color.Red);
+```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/TintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/TintColorPage.cs)
 
 # Adding XFGloss to Your Xamarin.Forms-Based App
@@ -323,50 +331,50 @@ Allows a color value to be specified as the Switch control's track color when it
 Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet package to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects, like so:
 
 **Android MainActivity.cs:**
-
-    namespace XFGlossSample.Droid
+```csharp
+namespace XFGlossSample.Droid
+{
+    [Activity(Label = "XFGlossSample.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-    	[Activity(Label = "XFGlossSample.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
-    	{
-    		protected override void OnCreate(Bundle bundle)
-    		{
-    			TabLayoutResource = Resource.Layout.Tabbar;
-    			ToolbarResource = Resource.Layout.Toolbar;
+        protected override void OnCreate(Bundle bundle)
+        {
+            TabLayoutResource = Resource.Layout.Tabbar;
+            ToolbarResource = Resource.Layout.Toolbar;
     
-    			base.OnCreate(bundle);
+            base.OnCreate(bundle);
     
-    			global::Xamarin.Forms.Forms.Init(this, bundle);
+            global::Xamarin.Forms.Forms.Init(this, bundle);
     
-    			/********** ADD THIS CALL TO INITIALIZE XFGloss *********/
-				global::XFGloss.Droid.Library.Init(this, bundle);
+            /********** ADD THIS CALL TO INITIALIZE XFGloss *********/
+            global::XFGloss.Droid.Library.Init(this, bundle);
     
-    			LoadApplication(new App());
-    		}
-    	}
+            LoadApplication(new App());
+        }
     }
-
+}
+```
 **iOS AppDelegate.cs:**
-
-    namespace XFGlossSample.iOS
+```csharp
+namespace XFGlossSample.iOS
+{
+    [Register("AppDelegate")]
+    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
-    	[Register("AppDelegate")]
-    	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
-    	{
-    		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
-    		{
-    			global::Xamarin.Forms.Forms.Init();
+        public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+        {
+            global::Xamarin.Forms.Forms.Init();
     
-    			/********** ADD THIS CALL TO INITIALIZE XFGloss *********/
-    			global::XFGloss.iOS.Library.Init();
+            /********** ADD THIS CALL TO INITIALIZE XFGloss *********/
+            global::XFGloss.iOS.Library.Init();
     
-    			LoadApplication(new App());
+            LoadApplication(new App());
     
-    			return base.FinishedLaunching(app, options);
-    		}
-    	}
+            return base.FinishedLaunching(app, options);
+        }
     }
-    
+}
+```    
 # Using XFGloss with Other Custom XF Controls
 
 XFGloss should work with existing custom XF controls provided that the following criteria is met.
@@ -387,19 +395,21 @@ Existing custom controls with an ExportRenderer attribute that maps directly to 
 ## 2. Existing Renderers Should Inherit From XFGloss Renderers Where Applicable
 To make XFGloss work with your custom component, change your custom renderers to inherit from the XFGloss renderers instead of the Xamarin.Forms renderers.
 
-For example, change:
-
-	public class MyCustomContentPageRenderer : PageRenderer
-	{
-	...
-	}
+For example, change:  
+```csharp
+public class MyCustomContentPageRenderer : PageRenderer
+{
+...
+}
+```
 
 To:
-
-	public class MyCustomContentPageRenderer : XFGlossContentPageRenderer
-	{
-	...
-	}
+```csharp
+public class MyCustomContentPageRenderer : XFGlossContentPageRenderer
+{
+...
+}
+```
 
 A complete list of the XF renderers that are customized by XFGloss is provided below. Change existing custom renderers to inherit from the XFGloss renderer if its current base class is found in this list.
 
