@@ -70,12 +70,16 @@ gloss.ThumbTintColor = Color.Maroon;
 gloss.OnTintColor = Color.Green;
 gloss.ThumbOnTintColor = Color.Lime;
 ```
+
+---
     
 #Sample App
 
 ![XFGloss Property Example](images/propexample.jpg)
 
 The XFGloss solution provided in this repository also includes the "XFGlossSample" Xamarin.Forms-based app. It demonstrates all the XFGloss properties being applied in both Xaml and C# code.
+
+---
 
 # New/Enhanced Properties Provided by XFGloss
 
@@ -326,6 +330,8 @@ SwitchGloss.SetTintColor(switchCtrl, Color.Red);
 ```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/TintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/TintColorPage.cs)
 
+---
+
 # Adding XFGloss to Your Xamarin.Forms-Based App
 
 Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet package to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects, like so:
@@ -374,7 +380,10 @@ namespace XFGlossSample.iOS
         }
     }
 }
-```    
+```
+
+---
+
 # Using XFGloss with Other Custom XF Controls
 
 XFGloss should work with existing custom XF controls provided that the following criteria is met.
@@ -455,6 +464,8 @@ A complete list of the XF renderers that are customized by XFGloss is provided b
 
 The XFGloss renderer classes require their overridden versions of OnElementChanged and OnElementPropertyChanged methods to be called, as well as other overridable properties on a per-control basis. Verify your renderers are calling the base class implementations of any overridden methods if the XFGloss properties aren't being applied to your XF controls.
 
+---
+
 #Known Issues
 
  - The default XF EntryCell renderer on iOS doesn't take the accessory view into account when positioning/sizing the text entry field. I plan to submit a PR that corrects this issue.
@@ -466,14 +477,20 @@ The XFGloss renderer classes require their overridden versions of OnElementChang
         		<OnPlatform x:TypeArguments="x:Int32" iOS="3" Android="0"/>
         	</Grid.Row>
         </Button>
-        
+
+---
+
 # Future Enhancements
 I plan to add support for other properties that aren't offered by the Xamarin.Forms components as my schedule allows. PRs, especially those that add support for other XF-supported platforms, are always welcomed!
+
+---
 
 # Credits
 XFGloss was inspired by and based on the code presented in "[Lighting Up Native Platform Features In Xamarin Forms](http://www.wintellect.com/devcenter/krome/lighting-up-native-platform-features-in-xamarin-forms-part-1)." Thanks goes out to the series' author, [Keith Rome](https://twitter.com/keith_rome), for the inspiration and starting point for XFGloss.
 
 Also, my skills with Xamarin were once again greatly improved this year by getting recertified as a [Xamarin Certified Mobile Developer](https://university.xamarin.com/certification) after having been originally certified in 2013. Here's a special shout out to some of my favorite XamU instructors, including [Glenn Stephens](https://twitter.com/glenntstephens), [Kym Phillpotts](https://twitter.com/kphillpotts) and [Judy McNeil](https://twitter.com/flyinggeekette)! They're all seasoned Xamarin developers and great instructors. Thanks to all of you and the other XamU instructors for the great training!
+
+---
 
 # About the Author
 I am a Xamarin Certified Mobile Developer focused on Android, iOS and tvOS application development using Microsoft tools and C#, and Apple tools and Swift.  I have 25+ years of professional software development experience and have successfully telecommuted on a variety of projects since 2008.
