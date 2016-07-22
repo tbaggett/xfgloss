@@ -2,7 +2,7 @@
 
 ![XFGloss icon](images/phoneshot.jpg)
 
-**XFGloss** adds new bindable properties to Xamarin.Forms standard UI components on the Android and iOS platforms. It uses attached bindable properties and enhanced renderers for the supported Xamarin.Forms UI components to work its magic. 
+**XFGloss** adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms. It uses attached bindable properties and enhanced platform-specific renderers to work its magic. 
 
 In the above screenshots, a gradient background was added to the bottom half of the XF ContentPage by adding this code to the Xaml declaration:
 
@@ -159,7 +159,24 @@ Allows a multiple-color linear gradient to be specified as a content page or cel
         <xfg:GlossGradient StartColor="Red" EndColor="Maroon" IsVertical="true" />
     </xfg:CellGloss.BackgroundGradient>
 </TextCell>
+
+<TextCell Text="All Three" TextColor="White" x:Name="rotatingCell">
+    <!-- You can also create gradients at any angle with as many steps as you want. -->
+    <xfg:CellGloss.BackgroundGradient>
+        <xfg:GlossGradient Angle="135" x:Name="rotatingGradient">
+            <xfg:GlossGradient.Steps>
+                <xfg:GlossGradientStep StepColor="Red" StepPercentage="0" />
+                <xfg:GlossGradientStep StepColor="Maroon" StepPercentage=".25" />
+                <xfg:GlossGradientStep StepColor="Lime" StepPercentage=".4" />
+                <xfg:GlossGradientStep StepColor="Green" StepPercentage=".6" />
+                <xfg:GlossGradientStep StepColor="Blue" StepPercentage=".75" />
+                <xfg:GlossGradientStep StepColor="Navy" StepPercentage="1" />
+            </xfg:GlossGradient.Steps>
+        </xfg:GlossGradient>
+    </xfg:CellGloss.BackgroundGradient>
+</TextCell>
 ```
+
 **C# Example:**
 ```csharp
 var cell = new TextCell();
@@ -167,7 +184,23 @@ cell.Text = "Red";
 cell.TextColor = Color.White;
 
 CellGloss.SetBackgroundGradient(cell, new GlossGradient(Color.Red, Color.Maroon, GlossGradient.VERTICAL_ANGLE));
+
+// Manually construct a multi-color gradient at an angle of our choosing
+var rotatingCell = new TextCell();
+rotatingCell.Text = "All Three";
+rotatingCell.TextColor = Color.White;
+
+var rotatingGradient = new GlossGradient(135); // 135 degree angle
+rotatingGradient.AddStep(Color.Red, 0);
+rotatingGradient.AddStep(Color.Maroon, .25);
+rotatingGradient.AddStep(Color.Lime, .4);
+rotatingGradient.AddStep(Color.Green, .6);
+rotatingGradient.AddStep(Color.Blue, .75);
+rotatingGradient.AddStep(Color.Navy, 1);
+
+CellGloss.SetBackgroundGradient(rotatingCell, rotatingGradient);
 ```
+
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/BackgroundGradientPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/BackgroundGradientPage.cs)
 
 ---
@@ -438,7 +471,7 @@ A complete list of the XF renderers that are customized by XFGloss is provided b
 		<td>XFGlossImageCellRenderer</td>
 	</tr>
 	<tr>
-		<td>PageRenderer</td>
+		<td>PageRenderer*</td>
 		<td>XFGlossContentPageRenderer</td>
 	</tr>
 	<tr>
@@ -461,6 +494,8 @@ A complete list of the XF renderers that are customized by XFGloss is provided b
 		<td>XFGlossViewCellRenderer</td>
 	</tr>
 </table>
+
+\* PageRenderer inheritance should only be changed if the associated ExportRenderer attribute is mapping the XF ContentPage control to a custom renderer. Mapping the XF Page base class to custom renderers causes unstable behavior on the Android platform.
 
 ## 3. Existing Renderers Should Always Call the Base Class Versions of Overridden Methods
 

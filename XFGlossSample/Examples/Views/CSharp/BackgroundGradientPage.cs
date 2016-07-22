@@ -119,7 +119,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			rotatingCell.TextColor = Color.White;
 
 			// Manually construct a multi-color gradient at an angle of our choosing
-			rotatingGradient = new GlossGradient(135); // 115 degree angle
+			rotatingGradient = new GlossGradient(135); // 135 degree angle
 			rotatingGradient.AddStep(Colors["Red"].Item1, 0);
 			rotatingGradient.AddStep(Colors["Red"].Item2, .25);
 			rotatingGradient.AddStep(Colors["Green"].Item1, .4);
