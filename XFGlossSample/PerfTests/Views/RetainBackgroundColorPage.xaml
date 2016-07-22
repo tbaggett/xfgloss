@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
+			 xmlns:vm="clr-namespace:XFGlossSample.PerfTests.ViewModels;assembly=XFGlossSample"
+			 x:Class="XFGlossSample.PerfTests.Views.RetainBackgroundColorPage"
+			 >
+
+	<ListView ItemsSource="{x:Static vm:PerfTestViewModel.ListItems}" 
+			  GroupDisplayBinding="{Binding Title}" IsGroupingEnabled="true" 
+			  BackgroundColor="Red" CachingStrategy="RetainElement">
+		<ListView.GroupHeaderTemplate>
+			<DataTemplate>
+				<TextCell Text="{Binding Title}" xfg:CellGloss.BackgroundColor="Purple" TextColor="Yellow" />
+			</DataTemplate>
+		</ListView.GroupHeaderTemplate>
+		<ListView.ItemTemplate>
+			<DataTemplate>
+				<TextCell Text="{Binding Title}" xfg:CellGloss.BackgroundColor="Blue" TextColor="White" />
+			</DataTemplate>
+		</ListView.ItemTemplate>
+	</ListView>
+	
+</ContentPage>

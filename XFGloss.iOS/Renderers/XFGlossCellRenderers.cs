@@ -35,8 +35,6 @@ namespace XFGloss.iOS.Renderers
 
 	internal class iOSXFGlossCellTracker : XFGlossCellTracker<UITableViewCell>
 	{
-		Color _lastBkgrndColor = Color.Default;
-
 		public static void Apply(Cell cell, UITableViewCell nativeCell)
 		{
 			Apply(cell, nativeCell, () => new iOSXFGlossCellTracker());
@@ -95,7 +93,13 @@ namespace XFGloss.iOS.Renderers
 					}
 					else
 					{
-						DisposeBackgroundView(nativeCell);
+						// Dispose of any previously assigned background color view
+						if (nativeCell.BackgroundView is UIBackgroundColorView)
+						{
+							nativeCell.BackgroundView.Dispose();
+							nativeCell.BackgroundView = null;
+						}
+
 						nativeCell.BackgroundView = new UIBackgroundGradientView(CGRect.Empty, backgroundGradient);
 					}
 
@@ -104,7 +108,12 @@ namespace XFGloss.iOS.Renderers
 				}
 				else
 				{
-					DisposeBackgroundView(nativeCell);
+					// Dispose of any previously assigned background gradient view since a gradient is no longer assigned
+					if (nativeCell.BackgroundView is UIBackgroundGradientView)
+					{
+						nativeCell.BackgroundView.Dispose();
+						nativeCell.BackgroundView = null;
+					}
 				}
 			}
 
@@ -114,15 +123,24 @@ namespace XFGloss.iOS.Renderers
 
 				if (bkgrndColor != Color.Default)
 				{
-					if (bkgrndColor != _lastBkgrndColor)
+					UIColor uiColor = bkgrndColor.ToUIColor();
+
+					// First check for a background color view being already assigned. Update it if found
+					if (nativeCell.BackgroundView is UIBackgroundColorView &&
+					    nativeCell.BackgroundView.BackgroundColor != uiColor)
 					{
-						_lastBkgrndColor = bkgrndColor;
+						nativeCell.BackgroundView.BackgroundColor = uiColor;
+					}
+					else
+					{
+						// Dispose of any previously assigned background gradient view before replacing it with a background color view
+						if (nativeCell.BackgroundView is UIBackgroundGradientView)
+						{
+							nativeCell.BackgroundView.Dispose();
+							nativeCell.BackgroundView = null;
+						}
 
-						UIColor uiColor = bkgrndColor.ToUIColor();
-
-						DisposeBackgroundView(nativeCell);
-
-						UIView bkgrndView = new UIView(CGRect.Empty);
+						UIBackgroundColorView bkgrndView = new UIBackgroundColorView(CGRect.Empty);
 						bkgrndView.BackgroundColor = uiColor;
 
 						nativeCell.BackgroundView = bkgrndView;
@@ -130,18 +148,20 @@ namespace XFGloss.iOS.Renderers
 				}
 				else
 				{
-					DisposeBackgroundView(nativeCell);
+					// Dispose of any previously assigned background color view as a color is no longer assigned
+					if (nativeCell.BackgroundView is UIBackgroundColorView)
+					{
+						nativeCell.BackgroundView.Dispose();
+						nativeCell.BackgroundView = null;
+					}
 				}
 			}
 		}
 
-		void DisposeBackgroundView(UITableViewCell nativeCell)
+		// Creating a marker class so we can confirm if an instance is assigned to the UINativeCell.BackgroundView property
+		class UIBackgroundColorView : UIView
 		{
-			if (nativeCell?.BackgroundView != null)
-			{
-				nativeCell.BackgroundView.Dispose();
-				nativeCell.BackgroundView = null;
-			}
+			public UIBackgroundColorView(CGRect rect) : base(rect) { }
 		}
 	}
 	#endregion
@@ -177,17 +197,20 @@ namespace XFGloss.iOS.Renderers
 				UIView accView;
 				if (_accessoryView != null && _accessoryView.TryGetTarget(out accView))
 				{
-					accView.Dispose();
-					_accessoryView = null;
-					nativeCell.AccessoryView = null;
+					if (accessoryType != CellGlossAccessoryType.EditIndicator)
+					{
+						accView.Dispose();
+						_accessoryView = null;
+						nativeCell.AccessoryView = null;
+					}
 				}
 
 				switch (accessoryType)
 				{
 					case CellGlossAccessoryType.None:
 						nativeCell.Accessory = UITableViewCellAccessory.None;
-						nativeCell.AccessoryView = new UIView(new CGRect(0, 0, 20, 40));
-						_accessoryView = new WeakReference<UIView>(nativeCell.AccessoryView);
+						//nativeCell.AccessoryView = new UIView(new CGRect(0, 0, 20, 40));
+						//_accessoryView = new WeakReference<UIView>(nativeCell.AccessoryView);
 						break;
 
 					case CellGlossAccessoryType.Checkmark:
@@ -211,9 +234,12 @@ namespace XFGloss.iOS.Renderers
 						break;
 
 					case CellGlossAccessoryType.EditIndicator:
-						nativeCell.Accessory = UITableViewCellAccessory.None;
-						nativeCell.AccessoryView = CreateEditIndicatorAccessoryView((Color)cell.GetValue(CellGloss.TintColorProperty));
-						_accessoryView = new WeakReference<UIView>(nativeCell.AccessoryView);
+						if (!(nativeCell.AccessoryView is EditIndicatorView))
+						{
+							nativeCell.Accessory = UITableViewCellAccessory.None;
+							nativeCell.AccessoryView = CreateEditIndicatorAccessoryView((Color)cell.GetValue(CellGloss.TintColorProperty));
+							_accessoryView = new WeakReference<UIView>(nativeCell.AccessoryView);
+						}
 						break;
 				}
 			}
@@ -221,7 +247,13 @@ namespace XFGloss.iOS.Renderers
 			base.ReapplyProperties(cell, nativeCell, propertyName);
 		}
 
-		UIImageView CreateEditIndicatorAccessoryView(Color tintColor)
+		// Creating a marker class so we can confirm if an instance is assigned to the UINativeCell.AccessoryView property
+		class EditIndicatorView : UIImageView
+		{
+			public EditIndicatorView(UIImage image) : base(image) { }
+		}
+
+		EditIndicatorView CreateEditIndicatorAccessoryView(Color tintColor)
 		{
 			// Load our custom edit indicator image
 			UIImage image = new UIImage("acc_edit_indicator.png");
@@ -232,7 +264,7 @@ namespace XFGloss.iOS.Renderers
 				image = image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
 			}
 
-			UIImageView view = new UIImageView(image);
+			EditIndicatorView view = new EditIndicatorView(image);
 			if (tintColor != Color.Default)
 			{
 				view.TintColor = tintColor.ToUIColor();

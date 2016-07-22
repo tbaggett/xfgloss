@@ -46,6 +46,13 @@ namespace XFGlossSample.ViewModels
 					new AppMenuItem("ThumbOnTintColor"),
 					new AppMenuItem("ThumbTintColor"),
 					new AppMenuItem("TintColor"),
+				},
+				new AppMenuViewModel("ListView Performance Tests")
+				{
+					new AppMenuItem("Recycle, BkgrndColor", "RecycleBackgroundColor"),
+					new AppMenuItem("Retain, BkgrndColor", "RetainBackgroundColor"),
+					new AppMenuItem("Recycle, BkgrndGradient", "RecycleBackgroundGradient"),
+					new AppMenuItem("Retain, BkgrndGradient", "RetainBackgroundGradient"),
 				}
 			};
 

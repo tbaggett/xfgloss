@@ -69,6 +69,18 @@
     <EmbeddedResource Include="Examples\Views\Xaml\MinTrackTintColorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="PerfTests\Views\RetainBackgroundColorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PerfTests\Views\RecycleBackgroundColorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PerfTests\Views\RecycleBackgroundGradientPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PerfTests\Views\RetainBackgroundGradientPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -110,7 +122,7 @@
     <Compile Include="Examples\Views\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Examples\Views\PropertyExampleViewFactory.cs" />
+    <Compile Include="Examples\Views\XFGlossSampleViewFactory.cs" />
     <Compile Include="Examples\ViewModels\AccessoryTypeViewModel.cs" />
     <Compile Include="Examples\ViewModels\BackgroundColorViewModel.cs" />
     <Compile Include="Examples\ViewModels\OnTintColorViewModel.cs" />
@@ -132,6 +144,20 @@
     </Compile>
     <Compile Include="Examples\Views\Xaml\MinTrackTintColorPage.xaml.cs">
       <DependentUpon>MinTrackTintColorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PerfTests\Views\IPerfTestPage.cs" />
+    <Compile Include="PerfTests\ViewModels\PerfTestViewModel.cs" />
+    <Compile Include="PerfTests\Views\RetainBackgroundColorPage.xaml.cs">
+      <DependentUpon>RetainBackgroundColorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PerfTests\Views\RecycleBackgroundColorPage.xaml.cs">
+      <DependentUpon>RecycleBackgroundColorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PerfTests\Views\RecycleBackgroundGradientPage.xaml.cs">
+      <DependentUpon>RecycleBackgroundGradientPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PerfTests\Views\RetainBackgroundGradientPage.xaml.cs">
+      <DependentUpon>RetainBackgroundGradientPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +189,9 @@
     <Folder Include="Examples\Views\Xaml\" />
     <Folder Include="Examples\ViewModels\" />
     <Folder Include="Utils\" />
+    <Folder Include="PerfTests\" />
+    <Folder Include="PerfTests\ViewModels\" />
+    <Folder Include="PerfTests\Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

@@ -57,7 +57,7 @@ namespace XFGlossSample
 		bool ShowPage(string propertyName, string pageTitle = null)
 		{
 			bool result = false;
-			var examplePage = PropertyExampleViewFactory.CreateExampleView(propertyName, pageTitle);
+			var examplePage = XFGlossSampleViewFactory.CreateSampleAppPage(propertyName, pageTitle);
 			if (examplePage != null)
 			{
 				Detail = examplePage;
