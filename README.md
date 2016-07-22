@@ -427,7 +427,7 @@ Using statement needed in C# files:
 
 	using XFGloss;
 
-Finally, have fun!
+Finally, have fun with all the cool new ways you can style the Xamarin.Forms components!
 
 ---
 
