@@ -417,6 +417,18 @@ namespace XFGlossSample.iOS
 }
 ```
 
+Next, add a namespace entry to your Xaml files, or a using statement to your C# files, and start adding the new XFGloss properties to Xamarin.Forms components as demonstrated here and in the XFGlossSample app's source code.
+
+XML namespace declaration needed in Xaml files:
+
+	xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
+
+Using statement needed in C# files:
+
+	using XFGloss;
+
+Finally, have fun!
+
 ---
 
 # Using XFGloss with Other Custom XF Controls
