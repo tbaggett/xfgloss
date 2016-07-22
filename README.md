@@ -110,7 +110,7 @@ The XF TableView component already provides the needed access, so I could add su
 
 **C# Example:**
 ```csharp
-TextCell cell = new TextCell();
+var cell = new TextCell();
 cell.Text = "DisclosureIndicator";
     
 CellGloss.SetAccessoryType(cell, CellGlossAccessoryType.DisclosureIndicator);
@@ -134,7 +134,7 @@ Allows a color value to be specified as a cell's background color. Possible valu
 ```
 **C# Example:**
 ```csharp
-TextCell cell = new TextCell();
+var cell = new TextCell();
 cell.Text = "Red";
     
 CellGloss.SetBackgroundColor(cell, Color.Red);
@@ -186,8 +186,8 @@ Allows a color value to be specified for a Slider's right side of the track, beg
 ```
 **C# Example:**
 ```csharp
-	var slider = new Slider { Minimum = 0, Maximum = 100, Value = 25 };
-	SliderGloss.SetMaxTrackTintColor(slider, Color.Red);
+var slider = new Slider { Minimum = 0, Maximum = 100, Value = 25 };
+SliderGloss.SetMaxTrackTintColor(slider, Color.Red);
 ```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/MaxTrackTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/MaxTrackTintColorPage.cs)
 
@@ -234,8 +234,8 @@ var cell = new SwitchCell();
 cell.Text = "Red";
 SwitchCellGloss.SetOnTintColor(cell, Color.Red);
 
-var switch = new Switch();
-SwitchGloss.SetOnTintColor(switch, Color.Red);
+var switchCtrl = new Switch();
+SwitchGloss.SetOnTintColor(switchCtrl, Color.Red);
 ```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/OnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/OnTintColorPage.cs)
 
@@ -260,8 +260,8 @@ var cell = new SwitchCell();
 cell.Text = "Red";
 SwitchCellGloss.SetThumbOnTintColor(cell, Color.Red);
 
-var switch = new Switch();
-SwitchGloss.SetThumbOnTintColor(switch, Color.Red);
+var switchCtrl = new Switch();
+SwitchGloss.SetThumbOnTintColor(switchCtrl, Color.Red);
 ```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/ThumbOnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/ThumbOnTintColorPage.cs)
 
@@ -287,8 +287,8 @@ var cell = new SwitchCell();
 cell.Text = "Red";
 SwitchCellGloss.SetThumbTintColor(cell, Color.Red);
 
-var switch = new Switch();
-SwitchGloss.SetThumbTintColor(switch, Color.Red);
+var switchCtrl = new Switch();
+SwitchGloss.SetThumbTintColor(switchCtrl, Color.Red);
 ```
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/ThumbTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/ThumbTintColorPage.cs)
 
