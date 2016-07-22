@@ -108,4 +108,10 @@ Global
 		{16011700-BE9F-43A0-A779-264FF066D15D}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{16011700-BE9F-43A0-A779-264FF066D15D}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.StandardHeader = $1
+		$1.Text = @/*\n * Copyright (C) 2016 Ansuria Solutions LLC & Tommy Baggett: \n * http://github.com/tbaggett\n * http://twitter.com/tbaggett\n * http://tommyb.com\n * http://ansuria.com\n * \n * The MIT License (MIT) see GitHub For more information\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an "AS IS" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n
+		$1.IncludeInNewFiles = True
+	EndGlobalSection
 EndGlobal

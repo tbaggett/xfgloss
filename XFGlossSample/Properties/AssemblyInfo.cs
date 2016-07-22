@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("XFGlossSample")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Visual Gloss for Xamarin.Forms")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("(c) Tommy Baggett")]
+[assembly: AssemblyCopyright("(c) 2016 Ansuria Solutions LLC and Tommy Baggett")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
