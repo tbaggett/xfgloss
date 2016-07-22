@@ -499,7 +499,7 @@ A complete list of the XF renderers that are customized by XFGloss is provided b
 
 ## 3. Existing Renderers Should Always Call the Base Class Versions of Overridden Methods
 
-The XFGloss renderer classes require their overridden versions of OnElementChanged and OnElementPropertyChanged methods to be called, as well as other overridable properties on a per-control basis. Verify your renderers are calling the base class implementations of any overridden methods if the XFGloss properties aren't being applied to your XF controls.
+The XFGloss renderer classes require their overridden versions of OnElementChanged and OnElementPropertyChanged methods to be called, as well as other overridable methods and properties on a per-control basis. Verify your renderers are calling the base class implementations of any overridden methods and properties if XFGloss isn't working as expected.
 
 ---
 
