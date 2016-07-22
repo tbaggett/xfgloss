@@ -77,12 +77,11 @@ Some of the properties added by XFGloss already exist on some XF components. For
 
 Here's a brief description of the properties added/expanded by XFGloss:
 
----
-
+###AccessoryType (iOS only)
 ![AccessoryType Example](images/prop_accessory_type.jpg)
 
-**AccessoryType (iOS only):** XFGloss.CellGlossAccessoryType enum value  
-_Added to EntryCell, ImageCell, TextCell and ViewCell_
+**Type:** XFGloss.CellGlossAccessoryType enum value  
+**Added to:** EntryCell, ImageCell, TextCell and ViewCell
 
 Allows specifying the accessory type to be shown on the right side of the cell. Possible values are _None_, _DisclosureIndicator_, _Checkmark_ and _EditIndicator_. 
 
@@ -107,10 +106,11 @@ The XF TableView component already provides the needed access, so I could add su
 
 ---
 
+###BackgroundColor
 ![BackgroundColor Example](images/prop_background_color.jpg)
 
-**BackgroundColor:** Xamarin.Forms Color  
-_Added to EntryCell, ImageCell, SwitchCell, TextCell and ViewCell_
+**Type:** Xamarin.Forms Color  
+**Added to:** EntryCell, ImageCell, SwitchCell, TextCell and ViewCell
 
 Allows a color value to be specified as a cell's background color. Possible values are either named colors or numeric color values.
 
@@ -130,10 +130,11 @@ Allows a color value to be specified as a cell's background color. Possible valu
 
 ---
 
+###BackgroundGradient
 ![BackgroundGradient Example](images/prop_background_gradient.jpg)
 
-**BackgroundGradient:** XFGloss.GlossGradient  
-_Added to ContentPage, EntryCell, ImageCell, SwitchCell, TextCell and ViewCell_
+**Type:** XFGloss.GlossGradient  
+**Added to:** ContentPage, EntryCell, ImageCell, SwitchCell, TextCell and ViewCell
 
 Allows a multiple-color linear gradient to be specified as a content page or cells' background. You can specify as many colors as you like and control their distribution across the fill at any angle. Convenience properties and constructors also make it easy to create two-color horizontal or vertical fills.
 
@@ -157,10 +158,11 @@ Allows a multiple-color linear gradient to be specified as a content page or cel
 
 ---
 
+###MaxTrackTintColor
 ![MaxTrackTintColor Example](images/prop_max_track_tint_color.jpg)
 
-**MaxTrackTintColor:** Xamarin.Forms.Color  
-_Added to Slider_
+**Type:** Xamarin.Forms.Color  
+**Added to:** Slider
 
 Allows a color value to be specified for a Slider's right side of the track, beginning at the current thumb position. Possible values are either named colors or numeric color values.
 
@@ -177,36 +179,142 @@ Allows a color value to be specified for a Slider's right side of the track, beg
 
 ---
 
-**OnTintColor:** Xamarin.Forms Color  
-_Added to Switch and SwitchCell_
+###MinTrackTintColor
+![MinTrackTintColor Example](images/prop_min_track_tint_color.jpg)
+
+**Type:** Xamarin.Forms.Color  
+**Added to:** Slider
+
+Allows a color value to be specified for a Slider's left side of the track, up to the current thumb position. Possible values are either named colors or numeric color values.
+
+**Xaml Example:**
+
+	<Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.MinTrackTintColor="Red" /> 
+
+**C# Example:**
+
+	var slider = new Slider { Minimum = 0, Maximum = 100, Value = 25 };
+	SliderGloss.SetMinTrackTintColor(slider, Color.Red);
+
+**Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/MinTrackTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/MinTrackTintColorPage.cs)
+
+---
+
+###OnTintColor
+![OnTintColor Example](images/prop_on_tint_color.jpg)
+
+**Type:** Xamarin.Forms Color  
+**Added to:** Switch and SwitchCell
 
 Allows a color value to be specified as the Switch control's track color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
+
+**Xaml Example:**
+
+	<SwitchCell Text="Red" xfg:SwitchCellGloss.OnTintColor="Red" />
+
+	<Switch xfg:SwitchGloss.OnTintColor="Red" />
+
+**C# Example:**
+
+	var cell = new SwitchCell();
+	cell.Text = "Red";
+	SwitchCellGloss.SetOnTintColor(cell, Color.Red);
+
+	var switch = new Switch();
+	SwitchGloss.SetOnTintColor(switch, Color.Red);
 
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/OnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/OnTintColorPage.cs)
 
 ---
-**ThumbOnTintColor:** Xamarin.Forms Color  
-_Added to Switch and SwitchCell_
+###ThumbOnTintColor
+![ThumbOnTintColor Example](images/prop_thumb_on_tint_color.jpg)
+
+**Type:** Xamarin.Forms Color  
+**Added to:** Switch and SwitchCell
 
 Allows a color value to be specified as the Switch control's thumb color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
+
+**Xaml Example:**
+
+	<SwitchCell Text="Red" xfg:SwitchCellGloss.ThumbOnTintColor="Red" />
+
+	<Switch xfg:SwitchGloss.ThumbOnTintColor="Red" />
+
+**C# Example:**
+
+	var cell = new SwitchCell();
+	cell.Text = "Red";
+	SwitchCellGloss.SetThumbOnTintColor(cell, Color.Red);
+
+	var switch = new Switch();
+	SwitchGloss.SetThumbOnTintColor(switch, Color.Red);
 
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/ThumbOnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/ThumbOnTintColorPage.cs)
 
 ---
 
-**ThumbTintColor:** Xamarin.Forms Color  
-_Added to Switch and SwitchCell_
+###ThumbTintColor
+![ThumbTintColor Example](images/prop_thumb_tint_color.jpg)
 
-Allows a color value to be specified as the Switch control's thumb color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
+**Type:** Xamarin.Forms Color  
+**Added to:** Slider, Switch and SwitchCell
+
+Allows a color value to be specified as the Slider control's thumb color as well as the Switch control's thumb color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
+
+**Xaml Example:**
+
+	<SwitchCell Text="Red" xfg:SwitchCellGloss.ThumbTintColor="Red" />
+
+	<Switch xfg:SwitchGloss.ThumbTintColor="Red" />
+
+**C# Example:**
+
+	var cell = new SwitchCell();
+	cell.Text = "Red";
+	SwitchCellGloss.SetThumbTintColor(cell, Color.Red);
+
+	var switch = new Switch();
+	SwitchGloss.SetThumbTintColor(switch, Color.Red);
 
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/ThumbTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/ThumbTintColorPage.cs)
 
 ---
 
-**TintColor:** Xamarin.Forms Color  
-_Added to all cell classes' accessory types (iOS only), and the Switch and SwitchCell components (both platforms)_
+###TintColor
+![TintColor Example](images/prop_tint_color.jpg)
+
+**Type:** Xamarin.Forms Color  
+**Added to:** All cell classes' accessory types (iOS only), and the Switch and SwitchCell components (both platforms)
 
 Allows a color value to be specified as the Switch control's track color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes, and for the accessory view on iOS. Possible values are either named colors or numeric color values.
+
+**Xaml Example:**
+
+	<TextCell Text="Red" xfg:CellGloss.TintColor="Red" xfg:CellGloss.AccessoryType="Checkmark" />
+
+	<SwitchCell Text="Red" xfg:CellGloss.TintColor="Red" />
+
+	<Switch xfg:SwitchGloss.TintColor="Red" />
+
+**C# Example:**
+
+	// iOS AccessoryType
+	var cell = new TextCell();
+	cell.Text = "Red";
+
+	var gloss = new CellGloss(cell);
+	gloss.TintColor = Color.Red;
+	gloss.AccessoryType = CellGlossAccessoryType.Checkmark;
+
+	// SwitchCell
+	var switchCell = new SwitchCell();
+	switchCell.Text = "Red";
+
+	CellGloss.SetTintColor(switchCell, Color.Red);
+
+	// Switch
+	var switchCtrl = new Switch();
+	SwitchGloss.SetTintColor(switchCtrl, Color.Red);
 
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/TintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/TintColorPage.cs)
 
@@ -333,7 +441,7 @@ A complete list of the XF renderers that are customized by XFGloss is provided b
 	</tr>
 </table>
 
-## 3. Existing Renderers Should Call the Base Class Versions of Overridden Methods
+## 3. Existing Renderers Should Always Call the Base Class Versions of Overridden Methods
 
 The XFGloss renderer classes require their overridden versions of OnElementChanged and OnElementPropertyChanged methods to be called, as well as other overridable properties on a per-control basis. Verify your renderers are calling the base class implementations of any overridden methods if the XFGloss properties aren't being applied to your XF controls.
 
@@ -355,7 +463,7 @@ I plan to add support for other properties that aren't offered by the Xamarin.Fo
 # Credits
 XFGloss was inspired by and based on the code presented in "[Lighting Up Native Platform Features In Xamarin Forms](http://www.wintellect.com/devcenter/krome/lighting-up-native-platform-features-in-xamarin-forms-part-1)." Thanks goes out to the series' author, [Keith Rome](https://twitter.com/keith_rome), for the inspiration and starting point for XFGloss.
 
-Also, my skills with Xamarin were once again greatly improved this year by getting recertified as a [Xamarin Certified Mobile Developer](https://university.xamarin.com/certification) after having been originally certified in 2013. Here's a special shout out to some of my favorite XamU instructors, including [Glenn Stephens](https://twitter.com/glenntstephens), [Kym Phillpotts](https://twitter.com/kphillpotts) and [Judy McNeil](https://twitter.com/flyinggeekette)! They're all seasoned Xamarin developers as well as great instructors. Thanks to all of you and the other XamU instructors for the great training.
+Also, my skills with Xamarin were once again greatly improved this year by getting recertified as a [Xamarin Certified Mobile Developer](https://university.xamarin.com/certification) after having been originally certified in 2013. Here's a special shout out to some of my favorite XamU instructors, including [Glenn Stephens](https://twitter.com/glenntstephens), [Kym Phillpotts](https://twitter.com/kphillpotts) and [Judy McNeil](https://twitter.com/flyinggeekette)! They're all seasoned Xamarin developers and great instructors. Thanks to all of you and the other XamU instructors for the great training!
 
 # About the Author
 I am a Xamarin Certified Mobile Developer focused on Android, iOS and tvOS application development using Microsoft tools and C#, and Apple tools and Swift.  I have 25+ years of professional software development experience and have successfully telecommuted on a variety of projects since 2008.

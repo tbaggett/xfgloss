@@ -11,7 +11,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 
 			// Slider demo
 
-			stack.Children.Add(new Label { Text = "Slider MinTrackTintColor values set in C#", Margin = new Thickness(10) });
+			stack.Children.Add(new Label { Text = "Slider MinTrackTintColor values set in C#:", Margin = new Thickness(10) });
 			stack.Children.Add(CreateMinTrackTintColorSlider(25, Color.Red));
 			stack.Children.Add(CreateMinTrackTintColorSlider(50, Color.Green));
 			stack.Children.Add(CreateMinTrackTintColorSlider(75, Color.Blue));
