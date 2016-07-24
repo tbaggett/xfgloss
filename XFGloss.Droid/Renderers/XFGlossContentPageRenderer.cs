@@ -56,7 +56,7 @@ namespace XFGloss.Droid.Renderers
 
 				if (Background is XFGlossPaintDrawable)
 				{
-					(Background as XFGlossPaintDrawable).UpdateXFGlossGradient(bkgrndGradient);
+					(Background as XFGlossPaintDrawable).UpdateXFGlossGradientSteps(bkgrndGradient);
 					Invalidate();
 				}
 				else

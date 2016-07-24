@@ -28,10 +28,11 @@ namespace XFGloss.Droid.Drawables
 		{
 			Paint.Dither = true;
 			Shape = new RectShape();
-			UpdateXFGlossGradient(xfgGradient);
+
+			UpdateXFGlossGradientSteps(xfgGradient);
 		}
 
-		public void UpdateXFGlossGradient(GlossGradient xfgGradient)
+		public void UpdateXFGlossGradientSteps(GlossGradient xfgGradient)
 		{
 			var sf = GetShaderFactory();
 			sf?.Dispose();
@@ -42,32 +43,77 @@ namespace XFGloss.Droid.Drawables
 			Paint.Shader?.Dispose();
 			Paint.SetShader(sf.Resize(Bounds.Width(), Bounds.Height()));
 		}
+
+		public void UpdateXFGlossGradientRotation(int angle)
+		{
+			// An XFGlossShaderFactory instance should be assigned if we've been properly initialized.
+			// Don't make any changes if this sanity check fails.
+			if (GetShaderFactory() is XFGlossShaderFactory == false)
+			{
+				return;
+			}
+
+			XFGlossShaderFactory.UpdateXFGlossGradientAngle(Paint.Shader, Bounds.Width(), Bounds.Height(), angle);
+		}
 	}
 
 	internal class XFGlossShaderFactory : ShapeDrawable.ShaderFactory
 	{
-		WeakReference<GlossGradient> _xfgGradient;
+		int angle;
+		int[] androidColorValues;
+		float[] androidPercentages;
 
 		public XFGlossShaderFactory(GlossGradient xfgGradient)
 		{
-			_xfgGradient = new WeakReference<GlossGradient>(xfgGradient);
+			angle = xfgGradient.Angle;
+			androidColorValues = xfgGradient.ToAndroidColorValues();
+			androidPercentages = xfgGradient.ToAndroidPercentages();
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				androidColorValues = null;
+				androidPercentages = null;
+			}
+
+			base.Dispose(disposing);
 		}
 
 		public override Shader Resize(int width, int height)
 		{
-			GlossGradient xfgGradient;
-			if (_xfgGradient.TryGetTarget(out xfgGradient))
-			{
-				return new LinearGradient((float)(width * xfgGradient.StartPoint.X),
-										  (float)(height * xfgGradient.StartPoint.Y),
-										  (float)(width * xfgGradient.EndPoint.X),
-										  (float)(height * xfgGradient.EndPoint.Y),
-										  xfgGradient.ToAndroidColorValues(),
-										  xfgGradient.ToAndroidPercentages(),
-										  Shader.TileMode.Clamp);
-			}
+			var result = new LinearGradient(0, Math.Max(width, height), 0, 0,
+			                                androidColorValues,
+			                                androidPercentages,
+			                                Shader.TileMode.Clamp);
 
-			return null;
+			UpdateXFGlossGradientAngle(result, width, height, angle);
+
+			return result;
+		}
+
+		internal static void UpdateXFGlossGradientAngle(Shader shader, float width, float height, int angle)
+		{
+			// No point in setting up the matrix if we're dealing with an invalid shader or empty rect
+			if (shader != null && height > 0 && width > 0)
+			{
+				Matrix matrix = null;
+				if (!shader.GetLocalMatrix(matrix))
+				{
+					matrix = new Matrix();
+				}
+				else
+				{
+					matrix.Reset();
+				}
+
+				var maxDim = Math.Max(width, height);
+				float halfMaxDim = (float)maxDim / 2;
+				matrix.SetRotate(angle, halfMaxDim, halfMaxDim);
+				matrix.PostScale(Math.Min(width / height, 1), Math.Min(height / width, 1));
+				shader.SetLocalMatrix(matrix);
+			}
 		}
 	}
 }

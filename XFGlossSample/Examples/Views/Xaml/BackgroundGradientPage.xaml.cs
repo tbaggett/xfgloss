@@ -29,8 +29,13 @@ namespace XFGlossSample.Examples.Views.Xaml
 		{
 			InitializeComponent();
 
-			// Update the rotating gradient
 			spareGradient = new GlossGradient(rotatingGradient);
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+
 			UpdateGradient();
 		}
 
@@ -72,7 +77,8 @@ namespace XFGlossSample.Examples.Views.Xaml
 			});
 
 			updater?.Dispose();
-			updater = new Timer(UpdateGradient, rotatingGradient, 100, -1);
+			// Continue updating the gradient as long as we're visible
+			updater = (IsVisible) ? new Timer(UpdateGradient, rotatingGradient, 100, -1) : null;
 		}
 	}
 }

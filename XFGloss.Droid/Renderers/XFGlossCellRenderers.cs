@@ -68,7 +68,7 @@ namespace XFGloss.Droid.Renderers
 				{
 					if (nativeCell.Background is XFGlossPaintDrawable)
 					{
-						(nativeCell.Background as XFGlossPaintDrawable).UpdateXFGlossGradient(bkgrndGradient);
+						(nativeCell.Background as XFGlossPaintDrawable).UpdateXFGlossGradientSteps(bkgrndGradient);
 						nativeCell.Invalidate();
 					}
 					else

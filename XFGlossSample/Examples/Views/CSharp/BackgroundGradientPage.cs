@@ -74,10 +74,16 @@ namespace XFGlossSample.Examples.Views.CSharp
 
 			// Update the rotating gradient
 			spareGradient = new GlossGradient(rotatingGradient);
-			UpdateGradient();
 
 			// Set the page's background gradient
 			ContentPageGloss.SetBackgroundGradient(this, new GlossGradient(Color.White, Color.FromRgb(128, 0, 0)));
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+
+			UpdateGradient();
 		}
 
 		TextCell[] CreateBackgroundGradientCells()
@@ -172,7 +178,8 @@ namespace XFGlossSample.Examples.Views.CSharp
 			});
 
 			updater?.Dispose();
-			updater = new Timer(UpdateGradient, rotatingGradient, 100, -1);
+			// Continue updating the gradient as long as we're visible
+			updater = (IsVisible) ? new Timer(UpdateGradient, rotatingGradient, 100, -1) : null;
 		}
 	}
 }
