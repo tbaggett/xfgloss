@@ -131,13 +131,28 @@ namespace XFGlossSample.Examples.Views.CSharp
 			rotatingCell.TextColor = Color.White;
 
 			// Manually construct a multi-color gradient at an angle of our choosing
-			rotatingGradient = new Gradient(135); // 135 degree angle
-			rotatingGradient.AddStep(Colors["Red"].Item2, 0);
-			rotatingGradient.AddStep(Colors["Red"].Item3, .25);
-			rotatingGradient.AddStep(Colors["Green"].Item2, .4);
-			rotatingGradient.AddStep(Colors["Green"].Item3, .6);
-			rotatingGradient.AddStep(Colors["Blue"].Item2, .75);
-			rotatingGradient.AddStep(Colors["Blue"].Item3, 1);
+			rotatingGradient = new Gradient()
+			{
+				Rotation = 135,
+				Steps = new GradientStepCollection()
+				{
+					new GradientStep(Colors["Red"].Item2, 0),
+					new GradientStep(Colors["Red"].Item3, .25),
+					new GradientStep(Colors["Green"].Item2, .4),
+					new GradientStep(Colors["Green"].Item3, .6),
+					new GradientStep(Colors["Blue"].Item2, .75),
+					new GradientStep(Colors["Blue"].Item3, 1),
+				}
+			};
+
+			// You can also initialize a multi-color gradient in code like this:
+			//rotatingGradient = new Gradient(135); // 135 degree angle
+			//rotatingGradient.AddStep(Colors["Red"].Item2, 0);
+			//rotatingGradient.AddStep(Colors["Red"].Item3, .25);
+			//rotatingGradient.AddStep(Colors["Green"].Item2, .4);
+			//rotatingGradient.AddStep(Colors["Green"].Item3, .6);
+			//rotatingGradient.AddStep(Colors["Blue"].Item2, .75);
+			//rotatingGradient.AddStep(Colors["Blue"].Item3, 1);
 
 			CellGloss.SetBackgroundGradient(rotatingCell, rotatingGradient);
 

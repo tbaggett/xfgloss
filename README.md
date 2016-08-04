@@ -16,7 +16,7 @@ In the above screenshots, a gradient background was added to the bottom half of 
              >
     
     <xfg:ContentPageGloss.BackgroundGradient>
-        <xfg:Gradient Angle="150">
+        <xfg:Gradient Rotation="150">
             <xfg:GradientStep StepColor="White" StepPercentage="0" />
             <xfg:GradientStep StepColor="White" StepPercentage=".5" />
             <xfg:GradientStep StepColor="#ccd9ff" StepPercentage="1" />
@@ -38,16 +38,17 @@ namespace XFGlossSample.Views
             Title = "XFGloss Sample App";
             Padding = 10;
     
-            var bkgrndGradient = new Gradient()
-            {
-                Angle = 150,
-                Steps = new List<GradientStep>()
-                {
-                    new GradientStep(Color.White, 0),
-                    new GradientStep(Color.White, .5),
-                    new GradientStep(Color.FromHex("#ccd9ff"), 1)
-                }
-            };
+			// Manually construct a multi-color gradient at an angle of our choosing
+			var bkgrndGradient = new Gradient()
+			{
+				Rotation = 150,
+				Steps = new GradientStepCollection()
+				{
+					new GradientStep(Color.White, 0),
+					new GradientStep(Color.White, .5),
+					new GradientStep(Color.FromHex("#ccd9ff"), 1)
+				}
+			};
     
             ContentPageGloss.SetBackgroundGradient(this, bkgrndGradient);
 				
@@ -161,7 +162,7 @@ Allows a multiple-color linear gradient to be specified as a content page or cel
 <TextCell Text="All Three" TextColor="White" x:Name="rotatingCell">
     <!-- You can also create gradients at any angle with as many steps as you want. -->
     <xfg:CellGloss.BackgroundGradient>
-        <xfg:Gradient Angle="135" x:Name="rotatingGradient">
+        <xfg:Gradient Rotation="135" x:Name="rotatingGradient">
             <xfg:GradientStep StepColor="Red" StepPercentage="0" />
             <xfg:GradientStep StepColor="Maroon" StepPercentage=".25" />
             <xfg:GradientStep StepColor="Lime" StepPercentage=".4" />
