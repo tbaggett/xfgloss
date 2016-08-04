@@ -125,8 +125,7 @@ namespace XFGloss.Droid.Drawables
 			{
 				var maxDim = Math.Max(width, height);
 				float halfMaxDim = maxDim / 2;
-				shader.GetLocalMatrix(_shaderMatrix);
-				_shaderMatrix.Reset();
+
 				_shaderMatrix.SetRotate(rotation, halfMaxDim, halfMaxDim);
 				_shaderMatrix.PostScale(Math.Min(width / height, 1), Math.Min(height / width, 1));
 
