@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using Xamarin.Forms;
 using XFGlossSample.Examples.ViewModels;
@@ -108,8 +109,9 @@ namespace XFGlossSample.Examples.Views
 				// Unrecognized page type!
 				return null;
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
+				Debug.WriteLine(e);
 				// No need to handle any exceptions here. The caller is responsible for displaying an error message
 				// to the user if the requested page couldn't be constructed.
 			}

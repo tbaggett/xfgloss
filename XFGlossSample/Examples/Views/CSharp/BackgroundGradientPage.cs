@@ -25,7 +25,9 @@ namespace XFGlossSample.Examples.Views.CSharp
 	public class BackgroundGradientPage : ContentPage
 	{
 		Timer updater;
-		GlossGradient rotatingGradient, spareGradient;
+		bool updateGradient;
+
+		Gradient rotatingGradient;
 		TextCell rotatingCell;
 
 		protected override void OnBindingContextChanged()
@@ -57,7 +59,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			{
 				stack.Children.Add(new Label { Text = "Cell BackgroundGradient values set in C#:", Margin = new Thickness(10) });
 			}
-			stack.Children.Add(new TableView()
+			stack.Children.Add(new TableView
 			{
 				Intent = TableIntent.Data,
 				BackgroundColor = Color.Transparent,
@@ -72,29 +74,34 @@ namespace XFGlossSample.Examples.Views.CSharp
 
 			Content = stack;
 
-			// Update the rotating gradient
-			spareGradient = new GlossGradient(rotatingGradient);
-
 			// Set the page's background gradient
-			ContentPageGloss.SetBackgroundGradient(this, new GlossGradient(Color.White, Color.FromRgb(128, 0, 0)));
+			ContentPageGloss.SetBackgroundGradient(this, new Gradient(Color.White, Color.FromRgb(128, 0, 0)));
 		}
 
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
 
+			updateGradient = true;
 			UpdateGradient();
+		}
+
+		protected override void OnDisappearing()
+		{
+			base.OnDisappearing();
+
+			updateGradient = false;
 		}
 
 		TextCell[] CreateBackgroundGradientCells()
 		{
 			List<TextCell> result = new List<TextCell>();
 
-			Dictionary<string, Tuple<Color, Color, int>> Colors = new Dictionary<string, Tuple<Color, Color, int>>()
+			Dictionary<string, Tuple<int, Color, Color>> Colors = new Dictionary<string, Tuple<int, Color, Color>>()
 			{
-				{ "Red", new Tuple<Color, Color, int>(Color.Red, Color.Maroon, GlossGradient.VERTICAL_ANGLE) },
-				{ "Green", new Tuple<Color, Color, int>(Color.Lime, Color.Green, GlossGradient.HORIZONTAL_ANGLE) },
-				{ "Blue", new Tuple<Color, Color, int>(Color.Blue, Color.Navy, GlossGradient.REVERSE_VERTICAL_ANGLE) }
+				{ "Red", new Tuple<int, Color, Color>(Gradient.RotationTopToBottom, Color.Red, Color.Maroon) },
+				{ "Green", new Tuple<int, Color, Color>(Gradient.RotationLeftToRight, Color.Lime, Color.Green) },
+				{ "Blue", new Tuple<int, Color, Color>(Gradient.RotationBottomToTop, Color.Blue, Color.Navy) }
 			};
 
 			// Iterate through the color values, creating a new text cell for each entity
@@ -107,7 +114,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 
 				// Assign our gloss properties - You can use the standard static setter...
 				var cellInfo = Colors[colorName];
-				CellGloss.SetBackgroundGradient(cell, new GlossGradient(cellInfo.Item1, cellInfo.Item2, cellInfo.Item3));
+				CellGloss.SetBackgroundGradient(cell, new Gradient(cellInfo.Item1, cellInfo.Item2, cellInfo.Item3));
 
 				// ...or instantiate an instance of the Gloss properties you want to assign values to
 				//	var gloss = new XFGloss.Views.Cell(cell);
@@ -125,13 +132,13 @@ namespace XFGlossSample.Examples.Views.CSharp
 			rotatingCell.TextColor = Color.White;
 
 			// Manually construct a multi-color gradient at an angle of our choosing
-			rotatingGradient = new GlossGradient(135); // 135 degree angle
-			rotatingGradient.AddStep(Colors["Red"].Item1, 0);
-			rotatingGradient.AddStep(Colors["Red"].Item2, .25);
-			rotatingGradient.AddStep(Colors["Green"].Item1, .4);
-			rotatingGradient.AddStep(Colors["Green"].Item2, .6);
-			rotatingGradient.AddStep(Colors["Blue"].Item1, .75);
-			rotatingGradient.AddStep(Colors["Blue"].Item2, 1);
+			rotatingGradient = new Gradient(135); // 135 degree angle
+			rotatingGradient.AddStep(Colors["Red"].Item2, 0);
+			rotatingGradient.AddStep(Colors["Red"].Item3, .25);
+			rotatingGradient.AddStep(Colors["Green"].Item2, .4);
+			rotatingGradient.AddStep(Colors["Green"].Item3, .6);
+			rotatingGradient.AddStep(Colors["Blue"].Item2, .75);
+			rotatingGradient.AddStep(Colors["Blue"].Item3, 1);
 
 			CellGloss.SetBackgroundGradient(rotatingCell, rotatingGradient);
 
@@ -151,35 +158,20 @@ namespace XFGlossSample.Examples.Views.CSharp
 		{
 			Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
 			{
-				GlossGradient crntGradient = CellGloss.GetBackgroundGradient(rotatingCell);
-				if (crntGradient.Angle >= 355)
+				if (rotatingGradient.Rotation >= 355)
 				{
-					crntGradient.Angle = 0;
+					rotatingGradient.Rotation = 0;
 				}
 				else
 				{
-					crntGradient.Angle += 5;
+					rotatingGradient.Rotation += 5;
 				}
-
-				// Swap gradients
-				GlossGradient newGradient;
-				if (crntGradient == rotatingGradient)
-				{
-					newGradient = spareGradient;
-				}
-				else
-				{
-					newGradient = rotatingGradient;
-				}
-
-				newGradient.ShallowCopy(crntGradient);
-
-				CellGloss.SetBackgroundGradient(rotatingCell, newGradient);
+				//CellGloss.SetBackgroundGradient(rotatingCell, newGradient);
 			});
 
 			updater?.Dispose();
 			// Continue updating the gradient as long as we're visible
-			updater = (IsVisible) ? new Timer(UpdateGradient, rotatingGradient, 100, -1) : null;
+			updater = (updateGradient) ? new Timer(UpdateGradient, rotatingGradient, 100, -1) : null;
 		}
 	}
 }

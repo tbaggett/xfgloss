@@ -31,44 +31,113 @@ using XFGloss.iOS.Views;
 
 namespace XFGloss.iOS.Renderers
 {
-	#region iOSXFGlossCellTracker
+	#region iOSXFGlossCellRenderer
 
-	internal class iOSXFGlossCellTracker : XFGlossCellTracker<UITableViewCell>
+	internal class iOSXFGlossCellRenderer : XFGlossCellRenderer<UITableViewCell>, IGradientRenderer
 	{
-		public static void Apply(Cell cell, UITableViewCell nativeCell)
+		#region IGradientRenderer implementation
+
+		public virtual void CreateNativeElement<TElement>(string propertyName, TElement element) where TElement : XFGlossElement
 		{
-			Apply(cell, nativeCell, () => new iOSXFGlossCellTracker());
+			// No need to check property name yet. BackgroundGradient is the only property currently supported.
+			//if (propertyName == CellGloss.BackgroundGradientProperty.PropertyName && element is Gradient)
+			//{
+			if (element is Gradient)
+			{
+				CreateBackgroundGradientView(GetNativeCell(), element as Gradient);
+			}
+			//}
 		}
 
-		protected override void CellPropertyChanged(object sender, PropertyChangedEventArgs args)
+		public virtual bool IsUpdating(string propertyName)
 		{
-			// Check all the properties that this implementation supports for changes
-			if (args.PropertyName == CellGloss.BackgroundColorProperty.PropertyName ||
-			    args.PropertyName == CellGloss.BackgroundGradientProperty.PropertyName ||
-			    args.PropertyName == CellGloss.TintColorProperty.PropertyName)
+			// No need to check property name yet. BackgroundGradient is the only property currently supported.
+			var nativeCell = GetNativeCell();
+			if (nativeCell != null)
 			{
-				Reapply(args.PropertyName);
+				return GetBackgroundGradientView(nativeCell) != null;
+			}
+
+			return false;
+		}
+
+		public virtual void RemoveNativeElement(string propertyName)
+		{
+			// No need to check property name yet. BackgroundGradient is the only property currently supported.
+			var nativeCell = GetNativeCell();
+			if (nativeCell != null)
+			{
+				RemoveBackgroundGradientView(nativeCell);
 			}
 		}
 
-		protected override void Reapply(string propertyName = null)
+		public void UpdateRotation(string propertyName, int rotation)
 		{
-			Cell cell;
-			UITableViewCell nativeCell;
-
-			if (Reapply(out cell, out nativeCell))
+			// No need to check property name yet, BackgroundGradient is the only one being handled here.
+			var nativeCell = GetNativeCell();
+			if (nativeCell != null)
 			{
-				ReapplyProperties(cell, nativeCell, propertyName);
+				GetBackgroundGradientView(nativeCell)?.UpdateRotation(rotation);
 			}
 		}
 
-		protected virtual void ReapplyProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
+		public void UpdateSteps(string propertyName, GradientStepCollection steps)
+		{
+			// No need to check property name yet, BackgroundGradient is the only one being handled here.
+			var nativeCell = GetNativeCell();
+			if (nativeCell != null)
+			{
+				GetBackgroundGradientView(nativeCell)?.UpdateSteps(steps);
+			}
+		}
+
+		// Helper func to create new background gradient view if one is assigned
+		UIBackgroundGradientView CreateBackgroundGradientView(UITableViewCell nativeCell, Gradient gradient)
+		{
+			RemoveBackgroundGradientView(nativeCell);
+
+			if (nativeCell != null)
+			{
+				nativeCell.BackgroundView = new UIBackgroundGradientView(CGRect.Empty, gradient);
+			}
+			return nativeCell?.BackgroundView as UIBackgroundGradientView;
+		}
+
+		// Helper func to get existing background gradient view if one is assigned
+		UIBackgroundGradientView GetBackgroundGradientView(UITableViewCell nativeCell)
+		{
+			if (nativeCell != null && nativeCell.BackgroundView is UIBackgroundGradientView)
+			{
+				return nativeCell.BackgroundView as UIBackgroundGradientView;
+			}
+
+			return null;
+		}
+
+		void RemoveBackgroundGradientView(UITableViewCell nativeCell)
+		{
+			if (nativeCell != null)
+			{
+				nativeCell.BackgroundView?.Dispose();
+				nativeCell.BackgroundView = null;
+			}
+		}
+
+		#endregion
+
+		#region UpdateProperties
+
+		public static void UpdateProperties(Cell cell, UITableViewCell nativeCell)
+		{
+			UpdateProperties(cell, nativeCell, () => new iOSXFGlossCellRenderer());
+		}
+
+		protected override void UpdateProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
 		{
 			// TintColor property - to be passed to CreateEditIndicatorAccessoryView and possibly others in the future
-			if (propertyName == null ||
-			    propertyName == CellGloss.TintColorProperty.PropertyName)
+			if (propertyName == null || propertyName == CellGloss.TintColorProperty.PropertyName)
 			{
-				Color tintColor = (Color)cell.GetValue(CellGloss.TintColorProperty);
+				var tintColor = (Color)cell.GetValue(CellGloss.TintColorProperty);
 				if (tintColor != Color.Default)
 				{
 					nativeCell.TintColor = tintColor.ToUIColor();
@@ -82,39 +151,12 @@ namespace XFGloss.iOS.Renderers
 
 			// BackgroundColor and BackgroundGradient properties
 			// We shouldn't apply BOTH a background gradient and solid color. The gradient takes preference.
-			if (propertyName == null || propertyName == CellGloss.BackgroundGradientProperty.PropertyName)
+			Gradient bkgrndGradient = (Gradient)cell.GetValue(CellGloss.BackgroundGradientProperty);
+			if (bkgrndGradient != null && bkgrndGradient.UpdateProperties(CellGloss.BackgroundGradientProperty.PropertyName, 
+			                                                              this, propertyName))
 			{
-				GlossGradient backgroundGradient = (GlossGradient)cell.GetValue(CellGloss.BackgroundGradientProperty);
-				if (backgroundGradient != null)
-				{
-					if (nativeCell.BackgroundView is UIBackgroundGradientView)
-					{
-						XFGlossGradientLayer.UpdateGradientLayer(nativeCell.BackgroundView, backgroundGradient);
-					}
-					else
-					{
-						// Dispose of any previously assigned background color view
-						if (nativeCell.BackgroundView is UIBackgroundColorView)
-						{
-							nativeCell.BackgroundView.Dispose();
-							nativeCell.BackgroundView = null;
-						}
-
-						nativeCell.BackgroundView = new UIBackgroundGradientView(CGRect.Empty, backgroundGradient);
-					}
-
-					// We don't need to handle BackgroundColor if a BackgroundGradient is assigned
-					return;
-				}
-				else
-				{
-					// Dispose of any previously assigned background gradient view since a gradient is no longer assigned
-					if (nativeCell.BackgroundView is UIBackgroundGradientView)
-					{
-						nativeCell.BackgroundView.Dispose();
-						nativeCell.BackgroundView = null;
-					}
-				}
+				// We don't need to handle BackgroundColor if a BackgroundGradient is assigned/updated
+				return ;
 			}
 
 			if (propertyName == null || propertyName == CellGloss.BackgroundColorProperty.PropertyName)
@@ -163,31 +205,33 @@ namespace XFGloss.iOS.Renderers
 		{
 			public UIBackgroundColorView(CGRect rect) : base(rect) { }
 		}
+
+		#endregion
 	}
 	#endregion
 
-	#region iOSXFGlossAccessoryCellTracker
-	internal class iOSXFGlossAccessoryCellTracker : iOSXFGlossCellTracker
+	#region iOSXFGlossAccessoryCellRenderer
+	internal class iOSXFGlossAccessoryCellRenderer : iOSXFGlossCellRenderer
 	{
 		WeakReference<UIView> _accessoryView;
 
-		new public static void Apply(Cell cell, UITableViewCell nativeCell)
+		new public static void UpdateProperties(Cell cell, UITableViewCell nativeCell)
 		{
-			Apply(cell, nativeCell, () => new iOSXFGlossAccessoryCellTracker());
+			UpdateProperties(cell, nativeCell, () => new iOSXFGlossAccessoryCellRenderer());
 		}
 
-		protected override void CellPropertyChanged(object sender, PropertyChangedEventArgs args)
+		protected override void ElementPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			// Check all the properties that this implementation supports for changes
 			if (args.PropertyName == CellGloss.AccessoryTypeProperty.PropertyName)
 			{
-				Reapply(args.PropertyName);
+				UpdateProperties(args.PropertyName);
 			}
 
-			base.CellPropertyChanged(sender, args);
+			base.ElementPropertyChanged(sender, args);
 		}
 
-		protected override void ReapplyProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
+		protected override void UpdateProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
 		{
 			// AccessoryType property
 			if (propertyName == null ||
@@ -244,7 +288,7 @@ namespace XFGloss.iOS.Renderers
 				}
 			}
 
-			base.ReapplyProperties(cell, nativeCell, propertyName);
+			base.UpdateProperties(cell, nativeCell, propertyName);
 		}
 
 		// Creating a marker class so we can confirm if an instance is assigned to the UINativeCell.AccessoryView property
@@ -275,41 +319,41 @@ namespace XFGloss.iOS.Renderers
 	}
 	#endregion
 
-	#region iOSXFGlossSwitchCellTracker
-	internal class iOSXFGlossSwitchCellTracker : iOSXFGlossCellTracker
+	#region iOSXFGlossSwitchCellRenderer
+	internal class iOSXFGlossSwitchCellRenderer : iOSXFGlossCellRenderer
 	{
 		SwitchCellGloss _properties;
 
-		public iOSXFGlossSwitchCellTracker(BindableObject bindable)
+		public iOSXFGlossSwitchCellRenderer(BindableObject bindable)
 		{
 			_properties = new SwitchCellGloss(bindable);
 		}
 
-		new public static void Apply(Cell cell, UITableViewCell nativeCell)
+		new public static void UpdateProperties(Cell cell, UITableViewCell nativeCell)
 		{
-			Apply(cell, nativeCell, () => new iOSXFGlossSwitchCellTracker(cell));
+			UpdateProperties(cell, nativeCell, () => new iOSXFGlossSwitchCellRenderer(cell));
 		}
 
-		protected override void CellPropertyChanged(object sender, PropertyChangedEventArgs args)
+		protected override void ElementPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			// Check all the properties that this implementation supports for changes
 			if (args.PropertyName == SwitchCellGloss.OnTintColorProperty.PropertyName ||
 			    args.PropertyName == SwitchCellGloss.ThumbTintColorProperty.PropertyName ||
 			    args.PropertyName == SwitchCellGloss.ThumbOnTintColorProperty.PropertyName)
 			{
-				Reapply(args.PropertyName);
+				UpdateProperties(args.PropertyName);
 			}
 
 			// Special handling of state change to make XF Switch and Switch property names consistent
 			if (args.PropertyName == SwitchCell.OnProperty.PropertyName)
 			{
-				base.Reapply(Switch.IsToggledProperty.PropertyName);
+				base.UpdateProperties(Switch.IsToggledProperty.PropertyName);
 			}
 
-			base.CellPropertyChanged(sender, args);
+			base.ElementPropertyChanged(sender, args);
 		}
 
-		protected override void ReapplyProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
+		protected override void UpdateProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
 		{
 			if (nativeCell.AccessoryView is UISwitch)
 			{
@@ -317,20 +361,20 @@ namespace XFGloss.iOS.Renderers
 				uiSwitch.UpdateColorProperty(_properties, propertyName);
 			}
 
-			base.ReapplyProperties(cell, nativeCell, propertyName);
+			base.UpdateProperties(cell, nativeCell, propertyName);
 		}
 	}
 	#endregion
 
-	#region renderers
+	#region Xamarin.Forms renderers
 	public class XFGlossEntryCellRenderer : EntryCellRenderer
 	{
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
-			var cell = base.GetCell(item, reusableCell, tv);
-			iOSXFGlossAccessoryCellTracker.Apply(item, cell);
+			var nativeCell = base.GetCell(item, reusableCell, tv);
+			iOSXFGlossAccessoryCellRenderer.UpdateProperties(item, nativeCell);
 
-			return cell;
+			return nativeCell;
 		}
 	}
 
@@ -338,9 +382,9 @@ namespace XFGloss.iOS.Renderers
 	{
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
-			var cell = base.GetCell(item, reusableCell, tv);
-			iOSXFGlossSwitchCellTracker.Apply(item, cell);
-			return cell;
+			var nativeCell = base.GetCell(item, reusableCell, tv);
+			iOSXFGlossSwitchCellRenderer.UpdateProperties(item, nativeCell);
+			return nativeCell;
 		}
 	}
 
@@ -348,9 +392,9 @@ namespace XFGloss.iOS.Renderers
 	{
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
-			var cell = base.GetCell(item, reusableCell, tv);
-			iOSXFGlossAccessoryCellTracker.Apply(item, cell);
-			return cell;
+			var nativeCell = base.GetCell(item, reusableCell, tv);
+			iOSXFGlossAccessoryCellRenderer.UpdateProperties(item, nativeCell);
+			return nativeCell;
 		}
 	}
 
@@ -358,9 +402,9 @@ namespace XFGloss.iOS.Renderers
 	{
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
-			var cell = base.GetCell(item, reusableCell, tv);
-			iOSXFGlossAccessoryCellTracker.Apply(item, cell);
-			return cell;
+			var nativeCell = base.GetCell(item, reusableCell, tv);
+			iOSXFGlossAccessoryCellRenderer.UpdateProperties(item, nativeCell);
+			return nativeCell;
 		}
 	}
 
@@ -368,9 +412,9 @@ namespace XFGloss.iOS.Renderers
 	{
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
-			var cell = base.GetCell(item, reusableCell, tv);
-			iOSXFGlossAccessoryCellTracker.Apply(item, cell);
-			return cell;
+			var nativeCell = base.GetCell(item, reusableCell, tv);
+			iOSXFGlossAccessoryCellRenderer.UpdateProperties(item, nativeCell);
+			return nativeCell;
 		}
 	}
 	#endregion

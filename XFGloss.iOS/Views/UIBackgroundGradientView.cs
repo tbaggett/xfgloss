@@ -15,112 +15,92 @@
  */
 
 using System;
+using System.Collections.Generic;
 using CoreAnimation;
 using CoreGraphics;
+using Foundation;
 using UIKit;
-using XFGloss.iOS.Extensions;
+using Xamarin.Forms.Platform.iOS;
 
 namespace XFGloss.iOS.Views
 {
-	// Helper class used to resize background gradient layer when the cell size changes
-	internal class UIBackgroundGradientView : UIView
+	// UIBackgroundGradientView is a helper class used to resize background gradient layer when the cell size changes.
+	// This class is NOT used in the ContentPage renderer. The XFGlossGradientLayer is directly attached to the page's
+	// main view in that case.
+	class UIBackgroundGradientView : UIView
 	{
-		public UIBackgroundGradientView(CGRect rect, GlossGradient gradientSource) : base(rect)
+		public UIBackgroundGradientView(CGRect rect, Gradient gradientSource) : base(rect)
 		{
-			XFGlossGradientLayer.UpdateGradientLayer(this, gradientSource);
+			XFGlossGradientLayer.CreateGradientLayer(this, gradientSource);
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				XFGlossGradientLayer.RemoveGradientLayer(this);
+			}
+
+			base.Dispose(disposing);
 		}
 
 		// Update our gradient layer's size to match our view's bounds whenever the bounds are changing
 		public override void LayoutSubviews()
 		{
-			XFGlossGradientLayer.UpdateGradientLayer(this);
+			var layer = XFGlossGradientLayer.GetGradientLayer(this);
+			if (layer != null)
+			{
+				layer.Frame = new CGRect(CGPoint.Empty, Frame.Size);
+			}
 
 			base.LayoutSubviews();
 		}
+
+		public void UpdateRotation(int rotation)
+		{
+			var layer = XFGlossGradientLayer.GetGradientLayer(this);
+			layer?.UpdateRotation(rotation);
+		}
+
+		public void UpdateSteps(GradientStepCollection steps)
+		{
+			var layer = XFGlossGradientLayer.GetGradientLayer(this);
+			layer?.UpdateSteps(steps);
+		}
 	}
 
-	internal class XFGlossGradientLayer : CAGradientLayer
+	class XFGlossGradientLayer : CAGradientLayer
 	{
-		WeakReference<GlossGradient> _gradientSource;
+		#region Static methods
 
-		public XFGlossGradientLayer(GlossGradient gradient)
+		// Creates a new gradient layer and inserts it as a subview if a gradient layer doesn't already exist.
+		// If one does exist, the existing one is updated.
+		static public void CreateGradientLayer(UIView view, Gradient gradient)
 		{
-			_gradientSource = new WeakReference<GlossGradient>(gradient);
-			UpdateGradientLayerParams(gradient);
-		}
+			// Clear any previously-assigned background color
+			view.BackgroundColor = UIColor.Clear;
 
-		public GlossGradient GradientSource
-		{
-			get
-			{
-				GlossGradient result;
-				if (_gradientSource != null && _gradientSource.TryGetTarget(out result))
-				{
-					return result;
-				}
-
-				return null;
-			}
-			set
-			{
-				GlossGradient existing;
-				if (_gradientSource != null)
-				{
-					// Skip updating gradient if new one's values match the current one
-					bool skipUpdate = false;
-					if (_gradientSource.TryGetTarget(out existing) && existing == value)
-					{
-						skipUpdate = true;
-					}
-
-					_gradientSource.SetTarget(value);
-
-					if (skipUpdate)
-					{
-						return;
-					}
-				}
-				else
-				{
-					_gradientSource = new WeakReference<GlossGradient>(value);
-				}
-
-				UpdateGradientLayerParams(value);
-			}
-		}
-
-		static public void UpdateGradientLayer(UIView view, GlossGradient gradientSource = null)
-		{
 			XFGlossGradientLayer gradientLayer = GetGradientLayer(view);
-			if (gradientSource != null)
+			// Create or update the layer as needed if a new gradient was passed to us
+			bool insertLayer = false;
+			if (gradientLayer == null)
 			{
-				// Create or update the layer as needed if a new gradient was passed to us
-				bool insertLayer = false;
-				if (gradientLayer == null)
-				{
-					gradientLayer = new XFGlossGradientLayer(gradientSource);
-					insertLayer = true;
-				}
-				else
-				{
-					gradientLayer.GradientSource = gradientSource;
-				}
-
-				// Clear any previously-assigned background color
-				view.BackgroundColor = UIColor.Clear;
-
-				// Insert the layer if we created a new one
-				if (insertLayer)
-				{
-					view.Layer.InsertSublayer(gradientLayer, 0);
-				}
+				gradientLayer = new XFGlossGradientLayer(view, gradient);
+				insertLayer = true;
+			}
+			else
+			{
+				gradientLayer.GradientSource = gradient;
 			}
 
-			// We should update the gradient layer's frame if one was created or already existed
-			if (gradientLayer != null)
+			// Insert the layer if we created a new one
+			if (insertLayer)
 			{
-				gradientLayer.Frame = view.Bounds;
+				view.Layer.InsertSublayer(gradientLayer, 0);
 			}
+
+			//// Update the gradient layer's frame
+			//gradientLayer.Frame = view.Bounds;
 		}
 
 		static public void RemoveGradientLayer(UIView view)
@@ -130,10 +110,11 @@ namespace XFGloss.iOS.Views
 			{
 				layer.RemoveFromSuperLayer();
 				layer.Dispose();
+				layer = null;
 			}
 		}
 
-		static XFGlossGradientLayer GetGradientLayer(UIView view)
+		static public XFGlossGradientLayer GetGradientLayer(UIView view)
 		{
 			if (view.Layer.Sublayers != null && view.Layer.Sublayers.Length > 0 && view.Layer.Sublayers[0] is XFGlossGradientLayer)
 			{
@@ -143,12 +124,145 @@ namespace XFGloss.iOS.Views
 			return null;
 		}
 
-		void UpdateGradientLayerParams(GlossGradient gradient)
+		// Helper function that converts a list of Xamarin.Forms.Color instances to iOS CGColor instances
+		static CGColor[] ToCGColors(GradientStepCollection steps)
 		{
-			Colors = gradient.ToCGColors();
-			Locations = gradient.ToNSNumbers();
-			StartPoint = new CGPoint(gradient.StartPoint.X, gradient.StartPoint.Y);
-			EndPoint = new CGPoint(gradient.EndPoint.X, gradient.EndPoint.Y);
+			List<CGColor> result = new List<CGColor>();
+
+			foreach (GradientStep step in steps)
+			{
+				result.Add(step.StepColor.ToCGColor());
+			}
+
+			return result.ToArray();
 		}
+
+		// Helper function that converts a list of float instances to NSNumbers
+		static public NSNumber[] ToNSNumbers(GradientStepCollection steps)
+		{
+			List<NSNumber> result = new List<NSNumber>();
+
+			float lastStep = float.MinValue;
+			foreach (GradientStep step in steps)
+			{
+				if (lastStep > step.StepPercentage)
+				{
+					throw new ArgumentOutOfRangeException(nameof(GradientStep.StepPercentage), "The current StepPercentage " +
+														  "value must be greater than zero and the previous " +
+														  " StepPercentage value.");
+				}
+
+				result.Add(new NSNumber(step.StepPercentage));
+			}
+
+			return result.ToArray();
+		}
+
+		#endregion
+
+		#region Instance properties/methods
+
+		Gradient _gradientSource;
+		WeakReference<UIView> _gradientView;
+
+		public XFGlossGradientLayer(UIView gradientView, Gradient gradient)
+		{
+			_gradientSource = new Gradient();
+			_gradientView = new WeakReference<UIView>(gradientView);
+
+			UpdateGradientLayerParams(gradient);
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_gradientSource = null;
+				_gradientView = null;
+			}
+
+			base.Dispose(disposing);
+		}
+
+		public Gradient GradientSource
+		{
+			get
+			{
+				return _gradientSource;
+			}
+			set
+			{
+				// Check for changes
+				if ((_gradientSource == null && value == null) || (bool)_gradientSource?.Equals(value))
+				{
+					// no changes detected, so nothing to do
+					return;
+				}
+
+				UpdateGradientLayerParams(value);
+			}
+		}
+
+		void UpdateGradientLayerParams(Gradient gradient)
+		{
+			// If a layer currently exists but the gradient is being set to null...
+			if (gradient == null)
+			{
+				UIView view = null;
+				if ((bool)_gradientView?.TryGetTarget(out view) && view != null)
+				{
+					RemoveGradientLayer(view);
+				}
+				return;
+			}
+
+			UpdateRotation(gradient.Rotation);
+			UpdateSteps(gradient.Steps);
+		}
+
+		public void UpdateRotation(int rotation)
+		{
+			var gradient = GradientSource ?? new Gradient();
+
+			if (rotation >= 0 && rotation < 360 && rotation != gradient.Rotation)
+			{
+				gradient.Rotation = rotation;
+				var points = new RotationToPositionsConverter(rotation);
+				StartPoint = new CGPoint(points.StartPoint.X, points.StartPoint.Y);
+				EndPoint = new CGPoint(points.EndPoint.X, points.EndPoint.Y);
+
+				if (GradientSource == null)
+				{
+					GradientSource = gradient;
+				}
+				else
+				{
+					GradientSource.Rotation = gradient.Rotation;
+				}
+			}
+		}
+
+		public void UpdateSteps(GradientStepCollection steps)
+		{
+			var gradient = GradientSource ?? new Gradient();
+
+			if (gradient != null && !gradient.Steps.Equals(steps))
+			{
+				gradient.Steps = new GradientStepCollection(steps);
+				Colors = ToCGColors(steps);
+				Locations = ToNSNumbers(steps);
+
+				if (GradientSource == null)
+				{
+					GradientSource = gradient;
+				}
+				else
+				{
+					GradientSource.Steps = gradient.Steps;
+				}
+			}
+		}
+
+		#endregion
 	}
 }

@@ -31,16 +31,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Gloss\ISwitchGloss.cs" />
     <Compile Include="Gloss\SwitchGloss.cs" />
     <Compile Include="Models\CellGlossAccessoryType.cs" />
     <Compile Include="Gloss\CellGloss.cs" />
     <Compile Include="Gloss\SwitchCellGloss.cs" />
-    <Compile Include="Trackers\XFGlossCellTracker.cs" />
-    <Compile Include="Models\GlossGradient.cs" />
     <Compile Include="Models\ObservableObject.cs" />
-    <Compile Include="Gloss\ContentPageGloss.cs" />
     <Compile Include="Gloss\SliderGloss.cs" />
+    <Compile Include="Gloss\ContentPageGloss.cs" />
+    <Compile Include="Events\WeakEvent.cs" />
+    <Compile Include="Events\EventUtilities.cs" />
+    <Compile Include="Events\XFGlossEventUtilities.cs" />
+    <Compile Include="Interfaces\ISwitchGloss.cs" />
+    <Compile Include="Elements\Gradient.cs" />
+    <Compile Include="Elements\XFGlossElement.cs" />
+    <Compile Include="Interfaces\IGradientRenderer.cs" />
+    <Compile Include="Interfaces\IXFGlossRenderer.cs" />
+    <Compile Include="Renderers\XFGlossCellRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -59,7 +65,10 @@
   <ItemGroup>
     <Folder Include="Gloss\" />
     <Folder Include="Models\" />
-    <Folder Include="Trackers\" />
+    <Folder Include="Renderers\" />
+    <Folder Include="Events\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Elements\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.0.107\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

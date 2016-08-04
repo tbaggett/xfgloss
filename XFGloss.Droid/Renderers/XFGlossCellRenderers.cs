@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-using System;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using XFGloss.Droid.Extensions;
 using XFGloss.Droid.Drawables;
 using AView = Android.Views.View;
+using AViewGroup = Android.Views.ViewGroup;
+using Android.Content;
 
 [assembly: ExportRenderer(typeof(EntryCell), typeof(XFGloss.Droid.Renderers.XFGlossEntryCellRenderer))]
 [assembly: ExportRenderer(typeof(SwitchCell), typeof(XFGloss.Droid.Renderers.XFGlossSwitchCellRenderer))]
@@ -30,62 +31,103 @@ using AView = Android.Views.View;
 
 namespace XFGloss.Droid.Renderers
 {
-	internal class DroidXFGlossCellTracker : XFGlossCellTracker<AView>
+	internal class DroidXFGlossCellRenderer : XFGlossCellRenderer<AView>, IGradientRenderer
 	{
-		public static void Apply(Xamarin.Forms.Cell cell, AView nativeCell)
-		{
-			Apply(cell, nativeCell, () => new DroidXFGlossCellTracker());
-		}
+		#region IGradientRenderer implementation
 
-		protected override void CellPropertyChanged(object sender, PropertyChangedEventArgs args)
+		public void CreateNativeElement<TElement>(string propertyName, TElement element) where TElement : XFGlossElement
 		{
-			// Check all the properties that this implementation supports for changes
-			if (args.PropertyName == CellGloss.BackgroundColorProperty.PropertyName ||
-			    args.PropertyName == CellGloss.BackgroundGradientProperty.PropertyName)
+			// No need to check property name yet. BackgroundGradient is the only property currently supported.
+			//if (propertyName == CellGloss.BackgroundGradientProperty.PropertyName && element is Gradient)
+			var nativeCell = GetNativeCell();
+			if (nativeCell != null)
 			{
-				Reapply(args.PropertyName);
+				RemoveBackgroundGradientDrawable(nativeCell);
+				nativeCell.Background = new XFGlossPaintDrawable(element as Gradient);
 			}
 		}
 
-		protected override void Reapply(string propertyName = null)
+		public bool IsUpdating(string propertyName)
 		{
-			Xamarin.Forms.Cell cell;
-			AView nativeCell;
-
-			if (Reapply(out cell, out nativeCell))
+			// No need to check property name yet, BackgroundGradient is the only one being handled here.
+			var nativeCell = GetNativeCell();
+			if (nativeCell != null)
 			{
-				ReapplyProperties(cell, nativeCell, propertyName);
+				return GetBackgroundGradientDrawable(nativeCell) != null;
+			}
+
+			return false;
+		}
+
+		public void RemoveNativeElement(string propertyName)
+		{
+			// No need to check property name yet, BackgroundGradient is the only one being handled here.
+			var nativeCell = GetNativeCell();
+			if (nativeCell != null)
+			{
+				RemoveBackgroundGradientDrawable(nativeCell);
 			}
 		}
 
-		protected virtual void ReapplyProperties(Xamarin.Forms.Cell cell, AView nativeCell, string propertyName)
+		public void UpdateRotation(string propertyName, int rotation)
 		{
-			if (propertyName == null || propertyName == CellGloss.BackgroundGradientProperty.PropertyName)
+			// No need to check property name yet, BackgroundGradient is the only one being handled here.
+			var nativeCell = GetNativeCell();
+			if (nativeCell != null)
 			{
-				GlossGradient bkgrndGradient = (GlossGradient)cell.GetValue(CellGloss.BackgroundGradientProperty);
-				// Initialize/update the painter and shader as needed if a gradient is assigned
-				if (bkgrndGradient != null)
-				{
-					if (nativeCell.Background is XFGlossPaintDrawable)
-					{
-						(nativeCell.Background as XFGlossPaintDrawable).UpdateXFGlossGradientSteps(bkgrndGradient);
-						nativeCell.Invalidate();
-					}
-					else
-					{
-						nativeCell.Background = new XFGlossPaintDrawable(bkgrndGradient);
-					}
+				GetBackgroundGradientDrawable(nativeCell)?.UpdateRotation(rotation);
+			}
+		}
 
-					// We don't need to handle BackgroundColor if a BackgroundGradient is assigned
-					return;
-				}
-				else
-				{
-					nativeCell.Background?.Dispose();
-					nativeCell.Background = null;
-				}
+		public void UpdateSteps(string propertyName, GradientStepCollection steps)
+		{
+			// No need to check property name yet, BackgroundGradient is the only one being handled here.
+			var nativeCell = GetNativeCell();
+			if (nativeCell != null)
+			{
+				GetBackgroundGradientDrawable(nativeCell)?.UpdateSteps(steps);
+			}
+		}
+
+		XFGlossPaintDrawable GetBackgroundGradientDrawable(AView nativeCell)
+		{
+			if (nativeCell.Background is XFGlossPaintDrawable)
+			{
+				return nativeCell.Background as XFGlossPaintDrawable;
 			}
 
+			return null;
+		}
+
+		void RemoveBackgroundGradientDrawable(AView nativeCell)
+		{
+			if (nativeCell != null)
+			{
+				nativeCell.Background?.Dispose();
+				nativeCell.Background = null;
+			}
+		}
+
+		#endregion
+
+		public static void UpdateProperties(Cell cell, AView nativeCell)
+		{
+			UpdateProperties(cell, nativeCell, () => new DroidXFGlossCellRenderer());
+		}
+
+		protected override void UpdateProperties(Cell cell, AView nativeCell, string propertyName)
+		{
+			// BackgroundColor and BackgroundGradient properties
+			// We shouldn't apply BOTH a background gradient and solid color. The gradient takes preference.
+			Gradient bkgrndGradient = (Gradient)cell.GetValue(CellGloss.BackgroundGradientProperty);
+			if (bkgrndGradient != null && bkgrndGradient.UpdateProperties(CellGloss.BackgroundGradientProperty.PropertyName,
+																		  this, propertyName))
+			{
+				// We don't need to handle BackgroundColor if a BackgroundGradient is assigned/updated
+				return;
+			}
+
+			// We only process background color if a gradient wasn't applied by the base class.
 			// BackgroundColor property
 			if (propertyName == null || propertyName == CellGloss.BackgroundColorProperty.PropertyName)
 			{
@@ -96,21 +138,21 @@ namespace XFGloss.Droid.Renderers
 		}
 	}
 
-	internal class DroidXFGlossSwitchCellTracker : DroidXFGlossCellTracker
+	internal class DroidXFGlossSwitchCellRenderer : DroidXFGlossCellRenderer
 	{
 		SwitchCellGloss _properties;
 
-		public DroidXFGlossSwitchCellTracker(BindableObject bindable)
+		public DroidXFGlossSwitchCellRenderer(BindableObject bindable)
 		{
 			_properties = new SwitchCellGloss(bindable);
 		}
 
-		new public static void Apply(Xamarin.Forms.Cell cell, AView nativeCell)
+		new public static void UpdateProperties(Cell cell, AView nativeCell)
 		{
-			Apply(cell, nativeCell, () => new DroidXFGlossSwitchCellTracker(cell));
+			UpdateProperties(cell, nativeCell, () => new DroidXFGlossSwitchCellRenderer(cell));
 		}
 
-		protected override void CellPropertyChanged(object sender, PropertyChangedEventArgs args)
+		protected override void ElementPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			// Check all the properties that this implementation supports for changes
 			if (args.PropertyName == CellGloss.TintColorProperty.PropertyName ||
@@ -118,71 +160,71 @@ namespace XFGloss.Droid.Renderers
 			    args.PropertyName == SwitchCellGloss.ThumbTintColorProperty.PropertyName ||
 			    args.PropertyName == SwitchCellGloss.ThumbOnTintColorProperty.PropertyName)
 			{
-				Reapply(args.PropertyName);
+				UpdateProperties(args.PropertyName);
 			}
 
-			base.CellPropertyChanged(sender, args);
+			base.ElementPropertyChanged(sender, args);
 		}
 
-		protected override void ReapplyProperties(Xamarin.Forms.Cell cell, AView nativeCell, string propertyName)
+		protected override void UpdateProperties(Cell cell, AView nativeCell, string propertyName)
 		{
-			if (nativeCell is SwitchCellView && (nativeCell as SwitchCellView).AccessoryView is global::Android.Widget.Switch)
+			if (nativeCell is SwitchCellView && (nativeCell as SwitchCellView).AccessoryView is Android.Widget.Switch)
 			{
-				var aSwitch = (nativeCell as SwitchCellView).AccessoryView as global::Android.Widget.Switch;
+				var aSwitch = (nativeCell as SwitchCellView).AccessoryView as Android.Widget.Switch;
 				aSwitch.UpdateColorProperty(_properties, propertyName);
 			}
 
-			base.ReapplyProperties(cell, nativeCell, propertyName);
+			base.UpdateProperties(cell, nativeCell, propertyName);
 		}
 	}
 
 	public class XFGlossEntryCellRenderer : EntryCellRenderer
 	{
-		protected override Android.Views.View GetCellCore(Xamarin.Forms.Cell item, Android.Views.View convertView, Android.Views.ViewGroup parent, Android.Content.Context context)
+		protected override AView GetCellCore(Cell item, AView convertView, AViewGroup parent, Context context)
 		{
-			var cell = base.GetCellCore(item, convertView, parent, context);
-			DroidXFGlossCellTracker.Apply(item, cell);
-			return cell;
+			var nativeCell = base.GetCellCore(item, convertView, parent, context);
+			DroidXFGlossCellRenderer.UpdateProperties(item, nativeCell);
+			return nativeCell;
 		}
 	}
 
 	public class XFGlossSwitchCellRenderer : SwitchCellRenderer
 	{
-		protected override Android.Views.View GetCellCore(Xamarin.Forms.Cell item, Android.Views.View convertView, Android.Views.ViewGroup parent, Android.Content.Context context)
+		protected override AView GetCellCore(Cell item, AView convertView, AViewGroup parent, Context context)
 		{
-			var cell = base.GetCellCore(item, convertView, parent, context);
-			DroidXFGlossSwitchCellTracker.Apply(item, cell);
-			return cell;
+			var nativeCell = base.GetCellCore(item, convertView, parent, context);
+			DroidXFGlossSwitchCellRenderer.UpdateProperties(item, nativeCell);
+			return nativeCell;
 		}
 	}
 
 	public class XFGlossTextCellRenderer : TextCellRenderer
 	{
-		protected override Android.Views.View GetCellCore(Xamarin.Forms.Cell item, Android.Views.View convertView, Android.Views.ViewGroup parent, Android.Content.Context context)
+		protected override AView GetCellCore(Cell item, AView convertView, AViewGroup parent, Context context)
 		{
-			var cell = base.GetCellCore(item, convertView, parent, context);
-			DroidXFGlossCellTracker.Apply(item, cell);
-			return cell;
+			var nativeCell = base.GetCellCore(item, convertView, parent, context);
+			DroidXFGlossCellRenderer.UpdateProperties(item, nativeCell);
+			return nativeCell;
 		}
 	}
 
 	public class XFGlossImageCellRenderer : ImageCellRenderer
 	{
-		protected override Android.Views.View GetCellCore(Xamarin.Forms.Cell item, Android.Views.View convertView, Android.Views.ViewGroup parent, Android.Content.Context context)
+		protected override AView GetCellCore(Cell item, AView convertView, AViewGroup parent, Context context)
 		{
-			var cell = base.GetCellCore(item, convertView, parent, context);
-			DroidXFGlossCellTracker.Apply(item, cell);
-			return cell;
+			var nativeCell = base.GetCellCore(item, convertView, parent, context);
+			DroidXFGlossCellRenderer.UpdateProperties(item, nativeCell);
+			return nativeCell;
 		}
 	}
 
 	public class XFGlossViewCellRenderer : ViewCellRenderer
 	{
-		protected override Android.Views.View GetCellCore(Xamarin.Forms.Cell item, Android.Views.View convertView, Android.Views.ViewGroup parent, Android.Content.Context context)
+		protected override AView GetCellCore(Cell item, AView convertView, AViewGroup parent, Context context)
 		{
-			var cell = base.GetCellCore(item, convertView, parent, context);
-			DroidXFGlossCellTracker.Apply(item, cell);
-			return cell;
+			var nativeCell = base.GetCellCore(item, convertView, parent, context);
+			DroidXFGlossCellRenderer.UpdateProperties(item, nativeCell);
+			return nativeCell;
 		}
 	}
 }

@@ -22,11 +22,11 @@ namespace XFGloss.Droid.Extensions
 {
 	public static class XFGlossGradientExtensions
 	{
-		static public int[] ToAndroidColorValues(this GlossGradient self)
+		static public int[] ToAndroidColorValues(this Gradient self)
 		{
 			List<int> result = new List<int>();
 
-			foreach (GlossGradientStep step in self.Steps)
+			foreach (GradientStep step in self.Steps)
 			{
 				result.Add(step.StepColor.ToAndroid());
 			}
@@ -34,12 +34,12 @@ namespace XFGloss.Droid.Extensions
 			return result.ToArray();
 		}
 
-		static public float[] ToAndroidPercentages(this GlossGradient self)
+		static public float[] ToAndroidPercentages(this Gradient self)
 		{
 			List<float> result = new List<float>();
 
 			float lastStep = float.MinValue;
-			foreach (GlossGradientStep step in self.Steps)
+			foreach (GradientStep step in self.Steps)
 			{
 				if (lastStep > step.StepPercentage)
 				{

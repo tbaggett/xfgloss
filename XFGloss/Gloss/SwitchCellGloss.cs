@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-using System;
 using Xamarin.Forms;
 
 namespace XFGloss
@@ -24,16 +23,17 @@ namespace XFGloss
 		#region OnTintColor
 
 		public static readonly BindableProperty OnTintColorProperty =
-			BindableProperty.CreateAttached("OnTintColor", typeof(Color), typeof(Xamarin.Forms.SwitchCell), Color.Default);
+			BindableProperty.CreateAttached("OnTintColor", typeof(Color), typeof(SwitchCell), Color.Default);
 
 		public static Color GetOnTintColor(BindableObject bindable)
 		{
-			return (Color)bindable.GetValue(OnTintColorProperty);
+			return (Color)(bindable?.GetValue(OnTintColorProperty) ??
+						   OnTintColorProperty.DefaultValue);
 		}
 
 		public static void SetOnTintColor(BindableObject bindable, Color value)
 		{
-			bindable.SetValue(OnTintColorProperty, value);
+			bindable?.SetValue(OnTintColorProperty, value);
 		}
 
 		#endregion
@@ -41,16 +41,17 @@ namespace XFGloss
 		#region ThumbTintColor
 
 		public static readonly BindableProperty ThumbTintColorProperty =
-			BindableProperty.CreateAttached("ThumbTintColor", typeof(Color), typeof(Xamarin.Forms.SwitchCell), Color.Default);
+			BindableProperty.CreateAttached("ThumbTintColor", typeof(Color), typeof(SwitchCell), Color.Default);
 
 		public static Color GetThumbTintColor(BindableObject bindable)
 		{
-			return (Color)bindable.GetValue(ThumbTintColorProperty);
+			return (Color)(bindable?.GetValue(ThumbTintColorProperty) ??
+						   ThumbTintColorProperty.DefaultValue);
 		}
 
 		public static void SetThumbTintColor(BindableObject bindable, Color value)
 		{
-			bindable.SetValue(ThumbTintColorProperty, value);
+			bindable?.SetValue(ThumbTintColorProperty, value);
 		}
 
 		#endregion
@@ -58,16 +59,17 @@ namespace XFGloss
 		#region ThumbOnTintColor
 
 		public static readonly BindableProperty ThumbOnTintColorProperty =
-			BindableProperty.CreateAttached("ThumbOnTintColor", typeof(Color), typeof(Xamarin.Forms.SwitchCell), Color.Default);
+			BindableProperty.CreateAttached("ThumbOnTintColor", typeof(Color), typeof(SwitchCell), Color.Default);
 
 		public static Color GetThumbOnTintColor(BindableObject bindable)
 		{
-			return (Color)bindable.GetValue(ThumbOnTintColorProperty);
+			return (Color)(bindable?.GetValue(ThumbOnTintColorProperty) ??
+						   ThumbOnTintColorProperty.DefaultValue);
 		}
 
 		public static void SetThumbOnTintColor(BindableObject bindable, Color value)
 		{
-			bindable.SetValue(ThumbOnTintColorProperty, value);
+			bindable?.SetValue(ThumbOnTintColorProperty, value);
 		}
 
 		#endregion
@@ -80,56 +82,20 @@ namespace XFGloss
 
 		public Color OnTintColor
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : GetOnTintColor(bindable);
-			}
-
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SetOnTintColor(bindable, value);
-				}
-			}
+			get { return GetOnTintColor(Bindable); }
+			set { SetOnTintColor(Bindable, value); }
 		}
 
 		public Color ThumbTintColor
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : GetThumbTintColor(bindable);
-			}
-
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SetThumbTintColor(bindable, value);
-				}
-			}
+			get { return GetThumbTintColor(Bindable); }
+			set { SetThumbTintColor(Bindable, value); }
 		}
 
 		public Color ThumbOnTintColor
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : GetThumbOnTintColor(bindable);
-			}
-
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SetThumbOnTintColor(bindable, value);
-				}
-			}
+			get { return GetThumbOnTintColor(Bindable); }
+			set { SetThumbOnTintColor(Bindable, value); }
 		}
 
 		#endregion

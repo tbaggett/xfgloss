@@ -23,20 +23,26 @@ namespace XFGlossSample.Examples.Views.Xaml
 	public partial class BackgroundGradientPage : ContentPage
 	{
 		Timer updater;
-		GlossGradient spareGradient;
+		bool updateGradient;
 
 		public BackgroundGradientPage()
 		{
 			InitializeComponent();
-
-			spareGradient = new GlossGradient(rotatingGradient);
 		}
 
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
 
+			updateGradient = true;
 			UpdateGradient();
+		}
+
+		protected override void OnDisappearing()
+		{
+			base.OnDisappearing();
+
+			updateGradient = false;
 		}
 
 		/******************************************
@@ -50,35 +56,20 @@ namespace XFGlossSample.Examples.Views.Xaml
 		{
 			Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
 			{
-				GlossGradient crntGradient = CellGloss.GetBackgroundGradient(rotatingCell);
-				if (crntGradient.Angle >= 355)
+				if (rotatingGradient.Rotation >= 355)
 				{
-					crntGradient.Angle = 0;
+					rotatingGradient.Rotation = 0;
 				}
 				else
 				{
-					crntGradient.Angle += 5;
+					rotatingGradient.Rotation += 5;
 				}
-
-				// Swap gradients
-				GlossGradient newGradient;
-				if (crntGradient == rotatingGradient)
-				{
-					newGradient = spareGradient;
-				}
-				else
-				{
-					newGradient = rotatingGradient;
-				}
-
-				newGradient.ShallowCopy(crntGradient);
-
-				CellGloss.SetBackgroundGradient(rotatingCell, newGradient);
 			});
 
 			updater?.Dispose();
 			// Continue updating the gradient as long as we're visible
-			updater = (IsVisible) ? new Timer(UpdateGradient, rotatingGradient, 100, -1) : null;
+			// Note that checking IsVisible was always returning true.
+			updater = (updateGradient) ? new Timer(UpdateGradient, rotatingGradient, 100, -1) : null;
 		}
 	}
 }

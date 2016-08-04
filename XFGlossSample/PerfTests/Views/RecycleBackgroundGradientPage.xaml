@@ -14,7 +14,7 @@
 			<DataTemplate>
 				<TextCell Text="{Binding Title}" TextColor="Yellow">
 					<xfg:CellGloss.BackgroundGradient>
-						<xfg:GlossGradient StartColor="Purple" EndColor="Black"/>
+						<xfg:Gradient StartColor="Purple" EndColor="Black"/>
 					</xfg:CellGloss.BackgroundGradient>
 				</TextCell>
 			</DataTemplate>
@@ -24,7 +24,7 @@
 			<DataTemplate>
 				<TextCell Text="{Binding Title}" TextColor="White">
 					<xfg:CellGloss.BackgroundGradient>
-						<xfg:GlossGradient StartColor="Blue" EndColor="Black"/>
+						<xfg:Gradient StartColor="Blue" EndColor="Black"/>
 					</xfg:CellGloss.BackgroundGradient>
 				</TextCell>
 			</DataTemplate>

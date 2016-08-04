@@ -15,7 +15,10 @@
  */
 
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using CoreGraphics;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using XFGloss.iOS.Views;
@@ -24,13 +27,68 @@ using XFGloss.iOS.Views;
 
 namespace XFGloss.iOS.Renderers
 {
-	public class XFGlossContentPageRenderer : PageRenderer
+	public class XFGlossContentPageRenderer : PageRenderer, IGradientRenderer
 	{
+		#region IGradientRenderer implementation
+
+		public void CreateNativeElement<TElement>(string propertyName, TElement element) where TElement : XFGlossElement
+		{
+			if (element is Gradient)
+			{
+				// No need to check property name yet, BackgroundGradient is the only one being handled here.
+				XFGlossGradientLayer.CreateGradientLayer(NativeView, element as Gradient);
+			}
+		}
+
+		public bool IsUpdating(string propertyName)
+		{
+			// No need to check property name yet, BackgroundGradient is the only one being handled here.
+			return XFGlossGradientLayer.GetGradientLayer(NativeView) != null;
+		}
+
+		public void RemoveNativeElement(string gradientPropertyName)
+		{
+			// No need to check property name yet, BackgroundGradient is the only one being handled here.
+			XFGlossGradientLayer.RemoveGradientLayer(NativeView);
+		}
+
+		public void UpdateRotation(string gradientPropertyName, int rotation)
+		{
+			// No need to check property name yet, BackgroundGradient is the only one being handled here.
+			XFGlossGradientLayer.GetGradientLayer(NativeView)?.UpdateRotation(rotation);
+		}
+
+		public void UpdateSteps(string gradientPropertyName, GradientStepCollection steps)
+		{
+			// No need to check property name yet, BackgroundGradient is the only one being handled here.
+			XFGlossGradientLayer.GetGradientLayer(NativeView)?.UpdateSteps(steps);
+		}
+
+		#endregion
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				Gradient bkgrndGradient = ContentPageGloss.GetBackgroundGradient(Element);
+				if (bkgrndGradient != null)
+				{
+					bkgrndGradient.DetachRenderer(this);
+				}
+			}
+
+			base.Dispose(disposing);
+		}
+
 		public override void ViewDidLayoutSubviews()
 		{
-			base.ViewDidLayoutSubviews();
+			var layer = XFGlossGradientLayer.GetGradientLayer(NativeView);
+			if (layer != null)
+			{
+				layer.Frame = new CGRect(CGPoint.Empty, NativeView.Frame.Size);
+			}
 
-			XFGlossGradientLayer.UpdateGradientLayer(NativeView);
+			base.ViewDidLayoutSubviews();
 		}
 
 		protected override void OnElementChanged(VisualElementChangedEventArgs e)
@@ -39,36 +97,53 @@ namespace XFGloss.iOS.Renderers
 
 			if (e.OldElement != null)
 			{
+				e.OldElement.PropertyChanging -= OnElementPropertyChanging;
 				e.OldElement.PropertyChanged -= OnElementPropertyChanged;
+
+				Gradient bkgrndGradient = ContentPageGloss.GetBackgroundGradient(e.OldElement);
+				if (bkgrndGradient != null)
+				{
+					bkgrndGradient.DetachRenderer(this);
+				}
 			}
 
 			if (e.NewElement != null)
 			{
+				e.NewElement.PropertyChanging += OnElementPropertyChanging;
 				e.NewElement.PropertyChanged += OnElementPropertyChanged;
-				UpdateBackgroundGradient();
+
+				Gradient bkgrndGradient = ContentPageGloss.GetBackgroundGradient(Element);
+				if (bkgrndGradient != null)
+				{
+					bkgrndGradient.AttachRenderer(ContentPageGloss.BackgroundGradientProperty.PropertyName,
+														   this);
+				}
 			}
 		}
 
-		void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		void OnElementPropertyChanging(object sender, Xamarin.Forms.PropertyChangingEventArgs args)
 		{
-			if (e.PropertyName == null || e.PropertyName == ContentPageGloss.BackgroundGradientProperty.PropertyName)
+			if (args.PropertyName == ContentPageGloss.BackgroundGradientProperty.PropertyName)
 			{
-				UpdateBackgroundGradient();
+				Gradient bkgrndGradient = ContentPageGloss.GetBackgroundGradient(Element);
+				if (bkgrndGradient != null)
+				{
+					bkgrndGradient.DetachRenderer(this);
+				}
 			}
 		}
 
-		void UpdateBackgroundGradient()
+		void OnElementPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
-			var gradientSource = (GlossGradient)Element.GetValue(ContentPageGloss.BackgroundGradientProperty);
-			if (gradientSource == null)
+			if (args.PropertyName == ContentPageGloss.BackgroundGradientProperty.PropertyName)
 			{
-				XFGlossGradientLayer.RemoveGradientLayer(NativeView);
-			}
-			else
-			{
-				XFGlossGradientLayer.UpdateGradientLayer(NativeView, gradientSource);
+				Gradient bkgrndGradient = ContentPageGloss.GetBackgroundGradient(Element);
+				if (bkgrndGradient != null)
+				{
+					bkgrndGradient.AttachRenderer(ContentPageGloss.BackgroundGradientProperty.PropertyName, 
+					                                       this);
+				}
 			}
 		}
 	}
 }
-

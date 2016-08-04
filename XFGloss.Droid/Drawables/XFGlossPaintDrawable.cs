@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.ObjectModel;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Graphics.Drawables.Shapes;
@@ -24,50 +25,73 @@ namespace XFGloss.Droid.Drawables
 {
 	internal class XFGlossPaintDrawable : PaintDrawable
 	{
-		public XFGlossPaintDrawable(GlossGradient xfgGradient)
+		readonly Gradient _xfgGradient;
+		Matrix _shaderMatrix;
+
+		public XFGlossPaintDrawable(Gradient xfgGradient)
 		{
+			_xfgGradient = xfgGradient;
+			_shaderMatrix = new Matrix();
+
 			Paint.Dither = true;
 			Shape = new RectShape();
 
-			UpdateXFGlossGradientSteps(xfgGradient);
+			UpdateSteps(xfgGradient.Steps);
 		}
 
-		public void UpdateXFGlossGradientSteps(GlossGradient xfgGradient)
+		public void UpdateSteps(GradientStepCollection steps)
 		{
+			if (_xfgGradient == null)
+			{
+				return;
+			}
+
 			var sf = GetShaderFactory();
 			sf?.Dispose();
 
-			sf = new XFGlossShaderFactory(xfgGradient);
+			_xfgGradient.Steps = steps;
+
+			sf = new XFGlossShaderFactory(_xfgGradient, _shaderMatrix);
 			SetShaderFactory(sf);
 
 			Paint.Shader?.Dispose();
 			Paint.SetShader(sf.Resize(Bounds.Width(), Bounds.Height()));
 		}
 
-		public void UpdateXFGlossGradientRotation(int angle)
+		public void UpdateRotation(int rotation)
 		{
+			if (_xfgGradient != null)
+			{
+				_xfgGradient.Rotation = rotation;
+			}
+
 			// An XFGlossShaderFactory instance should be assigned if we've been properly initialized.
 			// Don't make any changes if this sanity check fails.
-			if (GetShaderFactory() is XFGlossShaderFactory == false)
+			var sf = GetShaderFactory();
+			if (sf is XFGlossShaderFactory == false)
 			{
 				return;
 			}
 
-			XFGlossShaderFactory.UpdateXFGlossGradientAngle(Paint.Shader, Bounds.Width(), Bounds.Height(), angle);
+			(sf as XFGlossShaderFactory).UpdateRotation(Paint.Shader, Bounds.Width(), Bounds.Height(), rotation);
+			InvalidateSelf();
 		}
 	}
 
-	internal class XFGlossShaderFactory : ShapeDrawable.ShaderFactory
+	class XFGlossShaderFactory : ShapeDrawable.ShaderFactory
 	{
-		int angle;
+		Matrix _shaderMatrix;
+		int rotation;
 		int[] androidColorValues;
 		float[] androidPercentages;
 
-		public XFGlossShaderFactory(GlossGradient xfgGradient)
+		public XFGlossShaderFactory(Gradient xfgGradient, Matrix shaderMatrix)
 		{
-			angle = xfgGradient.Angle;
+			rotation = xfgGradient.Rotation;
 			androidColorValues = xfgGradient.ToAndroidColorValues();
 			androidPercentages = xfgGradient.ToAndroidPercentages();
+
+			_shaderMatrix = shaderMatrix;
 		}
 
 		protected override void Dispose(bool disposing)
@@ -76,6 +100,7 @@ namespace XFGloss.Droid.Drawables
 			{
 				androidColorValues = null;
 				androidPercentages = null;
+				_shaderMatrix = null;
 			}
 
 			base.Dispose(disposing);
@@ -88,31 +113,24 @@ namespace XFGloss.Droid.Drawables
 			                                androidPercentages,
 			                                Shader.TileMode.Clamp);
 
-			UpdateXFGlossGradientAngle(result, width, height, angle);
+			UpdateRotation(result, width, height, rotation);
 
 			return result;
 		}
 
-		internal static void UpdateXFGlossGradientAngle(Shader shader, float width, float height, int angle)
+		public void UpdateRotation(Shader shader, float width, float height, int rotation)
 		{
 			// No point in setting up the matrix if we're dealing with an invalid shader or empty rect
 			if (shader != null && height > 0 && width > 0)
 			{
-				Matrix matrix = null;
-				if (!shader.GetLocalMatrix(matrix))
-				{
-					matrix = new Matrix();
-				}
-				else
-				{
-					matrix.Reset();
-				}
-
 				var maxDim = Math.Max(width, height);
-				float halfMaxDim = (float)maxDim / 2;
-				matrix.SetRotate(angle, halfMaxDim, halfMaxDim);
-				matrix.PostScale(Math.Min(width / height, 1), Math.Min(height / width, 1));
-				shader.SetLocalMatrix(matrix);
+				float halfMaxDim = maxDim / 2;
+				shader.GetLocalMatrix(_shaderMatrix);
+				_shaderMatrix.Reset();
+				_shaderMatrix.SetRotate(rotation, halfMaxDim, halfMaxDim);
+				_shaderMatrix.PostScale(Math.Min(width / height, 1), Math.Min(height / width, 1));
+
+				shader.SetLocalMatrix(_shaderMatrix);
 			}
 		}
 	}

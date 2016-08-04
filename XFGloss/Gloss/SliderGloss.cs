@@ -28,12 +28,13 @@ namespace XFGloss
 
 		public static Color GetMaxTrackTintColor(BindableObject bindable)
 		{
-			return (Color)bindable.GetValue(MaxTrackTintColorProperty);
+			return (Color)(bindable?.GetValue(MaxTrackTintColorProperty) ??
+						   MaxTrackTintColorProperty.DefaultValue);
 		}
 
 		public static void SetMaxTrackTintColor(BindableObject bindable, Color value)
 		{
-			bindable.SetValue(MaxTrackTintColorProperty, value);
+			bindable?.SetValue(MaxTrackTintColorProperty, value);
 		}
 
 		#endregion
@@ -45,12 +46,13 @@ namespace XFGloss
 
 		public static Color GetMinTrackTintColor(BindableObject bindable)
 		{
-			return (Color)bindable.GetValue(MinTrackTintColorProperty);
+			return (Color)(bindable?.GetValue(MinTrackTintColorProperty) ??
+						   MinTrackTintColorProperty.DefaultValue);
 		}
 
 		public static void SetMinTrackTintColor(BindableObject bindable, Color value)
 		{
-			bindable.SetValue(MinTrackTintColorProperty, value);
+			bindable?.SetValue(MinTrackTintColorProperty, value);
 		}
 
 		#endregion
@@ -62,12 +64,13 @@ namespace XFGloss
 
 		public static Color GetThumbTintColor(BindableObject bindable)
 		{
-			return (Color)bindable.GetValue(ThumbTintColorProperty);
+			return (Color)(bindable?.GetValue(ThumbTintColorProperty) ??
+						   ThumbTintColorProperty.DefaultValue);
 		}
 
 		public static void SetThumbTintColor(BindableObject bindable, Color value)
 		{
-			bindable.SetValue(ThumbTintColorProperty, value);
+			bindable?.SetValue(ThumbTintColorProperty, value);
 		}
 
 		#endregion
@@ -101,56 +104,20 @@ namespace XFGloss
 
 		public Color MaxTrackTintColor
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : SliderGloss.GetMaxTrackTintColor(bindable);
-			}
-
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SliderGloss.SetMaxTrackTintColor(bindable, value);
-				}
-			}
+			get { return GetMaxTrackTintColor(Bindable); }
+			set { SetMaxTrackTintColor(Bindable, value); }
 		}
 
 		public Color MinTrackTintColor
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : SliderGloss.GetMinTrackTintColor(bindable);
-			}
-
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SliderGloss.SetMinTrackTintColor(bindable, value);
-				}
-			}
+			get { return GetMinTrackTintColor(Bindable); }
+			set { SetMinTrackTintColor(Bindable, value); }
 		}
 
 		public Color ThumbTintColor
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : SliderGloss.GetThumbTintColor(bindable);
-			}
-
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SliderGloss.SetThumbTintColor(bindable, value);
-				}
-			}
+			get { return GetThumbTintColor(Bindable); }
+			set { SetThumbTintColor(Bindable, value); }
 		}
 
 		#endregion

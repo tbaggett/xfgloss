@@ -24,16 +24,17 @@ namespace XFGloss
 		#region BackgroundGradient
 
 		public static readonly BindableProperty BackgroundGradientProperty =
-			BindableProperty.CreateAttached("BackgroundGradient", typeof(GlossGradient), typeof(Xamarin.Forms.Page), null);
+			BindableProperty.CreateAttached("BackgroundGradient", typeof(Gradient), typeof(Cell), null);
 
-		public static GlossGradient GetBackgroundGradient(BindableObject bindable)
+		public static Gradient GetBackgroundGradient(BindableObject bindable)
 		{
-			return (GlossGradient)bindable.GetValue(BackgroundGradientProperty);
+			return (Gradient)(bindable?.GetValue(BackgroundGradientProperty) ??
+							  BackgroundGradientProperty.DefaultValue);
 		}
 
-		public static void SetBackgroundGradient(BindableObject bindable, GlossGradient value)
+		public static void SetBackgroundGradient(BindableObject bindable, Gradient value)
 		{
-			bindable.SetValue(BackgroundGradientProperty, value);
+			bindable?.SetValue(BackgroundGradientProperty, value);
 		}
 
 		#endregion
@@ -66,21 +67,10 @@ namespace XFGloss
 			}
 		}
 
-		public GlossGradient BackgroundGradient
+		public Gradient BackgroundGradient
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? null : GetBackgroundGradient(bindable);
-			}
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SetBackgroundGradient(bindable, value);
-				}
-			}
+			get { return GetBackgroundGradient(Bindable); }
+			set { SetBackgroundGradient(Bindable, value); }
 		}
 
 		#endregion

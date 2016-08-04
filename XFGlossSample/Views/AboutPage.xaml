@@ -8,20 +8,22 @@
 
 	<xfg:ContentPageGloss.BackgroundGradient>
 		<!-- 
-		Just want a basic 2 color vertical gradient? This does it. You can also add
-		IsHorizontal="true", IsReverseHorizontal="true" or IsReverseVertical="true" to
-		change the gradient direction.
+		Just want a basic 2 color top-to-bottom gradient? This does it. You can also add
+		IsRotationLeftToRight="true", IsRotationRightToLeft="true" or IsRotationBottomToTop="true" to
+		change the gradient direction. You can also explicitly set a top-to-bottom gradient by
+		setting IsRotationTopToBottom="true".
 
-		<xfg:GlossGradient StartColor="White" EndColor="Red"/>
+		<xfg:Gradient StartColor="White" EndColor="Red"/>
 		-->
-		<!-- In this case, I want to limit the gradient to the bottom half of the page and also angle it -->
-		<xfg:GlossGradient Angle="150">
-			<xfg:GlossGradient.Steps>
-				<xfg:GlossGradientStep StepColor="White" StepPercentage="0" />
-				<xfg:GlossGradientStep StepColor="White" StepPercentage=".5" />
-				<xfg:GlossGradientStep StepColor="#ccd9ff" StepPercentage="1" />
-			</xfg:GlossGradient.Steps>
-		</xfg:GlossGradient>
+		<!-- 
+		In this case, I want to limit the gradient to the bottom half of the page and also 
+		set a custom rotation angle.
+		-->
+		<xfg:Gradient Rotation="150">
+			<xfg:GradientStep StepColor="White" StepPercentage="0" />
+			<xfg:GradientStep StepColor="White" StepPercentage=".5" />
+			<xfg:GradientStep StepColor="#ccd9ff" StepPercentage="1" />
+		</xfg:Gradient>
 	</xfg:ContentPageGloss.BackgroundGradient>
 
 	<ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">

@@ -68,7 +68,6 @@
     <Compile Include="Extensions\XFGlossUISwitchExtensions.cs" />
     <Compile Include="XFGlossInit.cs" />
     <Compile Include="Renderers\XFGlossSwitchRenderer.cs" />
-    <Compile Include="Extensions\XFGlossGradientExtensions.cs" />
     <Compile Include="Views\UIBackgroundGradientView.cs" />
     <Compile Include="Renderers\XFGlossContentPageRenderer.cs" />
     <Compile Include="Renderers\XFGlossSliderRenderer.cs" />

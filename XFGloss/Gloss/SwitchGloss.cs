@@ -28,12 +28,13 @@ namespace XFGloss
 
 		public static Color GetTintColor(BindableObject bindable)
 		{
-			return (Color)bindable.GetValue(TintColorProperty);
+			return (Color)(bindable?.GetValue(TintColorProperty) ??
+						   TintColorProperty.DefaultValue);
 		}
 
 		public static void SetTintColor(BindableObject bindable, Color value)
 		{
-			bindable.SetValue(TintColorProperty, value);
+			bindable?.SetValue(TintColorProperty, value);
 		}
 
 		#endregion
@@ -45,12 +46,13 @@ namespace XFGloss
 
 		public static Color GetOnTintColor(BindableObject bindable)
 		{
-			return (Color)bindable.GetValue(OnTintColorProperty);
+			return (Color)(bindable?.GetValue(OnTintColorProperty) ??
+						   OnTintColorProperty.DefaultValue);
 		}
 
 		public static void SetOnTintColor(BindableObject bindable, Color value)
 		{
-			bindable.SetValue(OnTintColorProperty, value);
+			bindable?.SetValue(OnTintColorProperty, value);
 		}
 
 		#endregion
@@ -62,12 +64,13 @@ namespace XFGloss
 
 		public static Color GetThumbTintColor(BindableObject bindable)
 		{
-			return (Color)bindable.GetValue(ThumbTintColorProperty);
+			return (Color)(bindable?.GetValue(ThumbTintColorProperty) ??
+						   ThumbTintColorProperty.DefaultValue);
 		}
 
 		public static void SetThumbTintColor(BindableObject bindable, Color value)
 		{
-			bindable.SetValue(ThumbTintColorProperty, value);
+			bindable?.SetValue(ThumbTintColorProperty, value);
 		}
 
 		#endregion
@@ -79,12 +82,13 @@ namespace XFGloss
 
 		public static Color GetThumbOnTintColor(BindableObject bindable)
 		{
-			return (Color)bindable.GetValue(ThumbOnTintColorProperty);
+			return (Color)(bindable?.GetValue(ThumbOnTintColorProperty) ??
+						   ThumbOnTintColorProperty.DefaultValue);
 		}
 
 		public static void SetThumbOnTintColor(BindableObject bindable, Color value)
 		{
-			bindable.SetValue(ThumbOnTintColorProperty, value);
+			bindable?.SetValue(ThumbOnTintColorProperty, value);
 		}
 
 		#endregion
@@ -118,74 +122,26 @@ namespace XFGloss
 
 		public Color TintColor
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : SwitchGloss.GetTintColor(bindable);
-			}
-
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SwitchGloss.SetTintColor(bindable, value);
-				}
-			}
+			get { return GetTintColor(Bindable); }
+			set { SetTintColor(Bindable, value); }
 		}
 
 		public Color OnTintColor
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : SwitchGloss.GetOnTintColor(bindable);
-			}
-
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SwitchGloss.SetOnTintColor(bindable, value);
-				}
-			}
+			get { return GetOnTintColor(Bindable); }
+			set { SetOnTintColor(Bindable, value); }
 		}
 
 		public Color ThumbTintColor
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : SwitchGloss.GetThumbTintColor(bindable);
-			}
-
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SwitchGloss.SetThumbTintColor(bindable, value);
-				}
-			}
+			get { return GetThumbTintColor(Bindable); }
+			set { SetThumbTintColor(Bindable, value); }
 		}
 
 		public Color ThumbOnTintColor
 		{
-			get
-			{
-				var bindable = Bindable;
-				return (bindable == null) ? Color.Default : SwitchGloss.GetThumbOnTintColor(bindable);
-			}
-
-			set
-			{
-				var bindable = Bindable;
-				if (bindable != null)
-				{
-					SwitchGloss.SetThumbOnTintColor(bindable, value);
-				}
-			}
+			get { return GetThumbOnTintColor(Bindable); }
+			set { SetThumbOnTintColor(Bindable, value); }
 		}
 		#endregion
 	}
