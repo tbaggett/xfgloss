@@ -16,13 +16,11 @@ In the above screenshots, a gradient background was added to the bottom half of 
              >
     
     <xfg:ContentPageGloss.BackgroundGradient>
-        <xfg:GlossGradient Angle="150">
-            <xfg:GlossGradient.Steps>
-                <xfg:GlossGradientStep StepColor="White" StepPercentage="0" />
-                <xfg:GlossGradientStep StepColor="White" StepPercentage=".5" />
-                <xfg:GlossGradientStep StepColor="#ccd9ff" StepPercentage="1" />
-            </xfg:GlossGradient.Steps>
-        </xfg:GlossGradient>
+        <xfg:Gradient Angle="150">
+            <xfg:GradientStep StepColor="White" StepPercentage="0" />
+            <xfg:GradientStep StepColor="White" StepPercentage=".5" />
+            <xfg:GradientStep StepColor="#ccd9ff" StepPercentage="1" />
+        </xfg:Gradient>
     </xfg:ContentPageGloss.BackgroundGradient>
     ...
 </ContentPage>
@@ -40,14 +38,14 @@ namespace XFGlossSample.Views
             Title = "XFGloss Sample App";
             Padding = 10;
     
-            var bkgrndGradient = new GlossGradient()
+            var bkgrndGradient = new Gradient()
             {
                 Angle = 150,
-                Steps = new List<GlossGradientStep>()
+                Steps = new List<GradientStep>()
                 {
-                    new GlossGradientStep(Color.White, 0),
-                    new GlossGradientStep(Color.White, .5),
-                    new GlossGradientStep(Color.FromHex("#ccd9ff"), 1)
+                    new GradientStep(Color.White, 0),
+                    new GradientStep(Color.White, .5),
+                    new GradientStep(Color.FromHex("#ccd9ff"), 1)
                 }
             };
     
@@ -147,7 +145,7 @@ CellGloss.SetBackgroundColor(cell, Color.Red);
 ###BackgroundGradient
 ![BackgroundGradient Example](images/prop_background_gradient.jpg)
 
-**Type:** XFGloss.GlossGradient  
+**Type:** XFGloss.Gradient  
 **Added to:** ContentPage, EntryCell, ImageCell, SwitchCell, TextCell and ViewCell
 
 Allows a multiple-color linear gradient to be specified as a content page or cells' background. You can specify as many colors as you like and control their distribution across the fill at any angle. Convenience properties and constructors also make it easy to create two-color horizontal or vertical fills.
@@ -156,23 +154,21 @@ Allows a multiple-color linear gradient to be specified as a content page or cel
 ```
 <TextCell Text="Red" TextColor="White">
     <xfg:CellGloss.BackgroundGradient>
-        <xfg:GlossGradient StartColor="Red" EndColor="Maroon" IsVertical="true" />
+        <xfg:Gradient StartColor="Red" EndColor="Maroon" IsRotationTopToBottom="true" />
     </xfg:CellGloss.BackgroundGradient>
 </TextCell>
 
 <TextCell Text="All Three" TextColor="White" x:Name="rotatingCell">
     <!-- You can also create gradients at any angle with as many steps as you want. -->
     <xfg:CellGloss.BackgroundGradient>
-        <xfg:GlossGradient Angle="135" x:Name="rotatingGradient">
-            <xfg:GlossGradient.Steps>
-                <xfg:GlossGradientStep StepColor="Red" StepPercentage="0" />
-                <xfg:GlossGradientStep StepColor="Maroon" StepPercentage=".25" />
-                <xfg:GlossGradientStep StepColor="Lime" StepPercentage=".4" />
-                <xfg:GlossGradientStep StepColor="Green" StepPercentage=".6" />
-                <xfg:GlossGradientStep StepColor="Blue" StepPercentage=".75" />
-                <xfg:GlossGradientStep StepColor="Navy" StepPercentage="1" />
-            </xfg:GlossGradient.Steps>
-        </xfg:GlossGradient>
+        <xfg:Gradient Angle="135" x:Name="rotatingGradient">
+            <xfg:GradientStep StepColor="Red" StepPercentage="0" />
+            <xfg:GradientStep StepColor="Maroon" StepPercentage=".25" />
+            <xfg:GradientStep StepColor="Lime" StepPercentage=".4" />
+            <xfg:GradientStep StepColor="Green" StepPercentage=".6" />
+            <xfg:GradientStep StepColor="Blue" StepPercentage=".75" />
+            <xfg:GradientStep StepColor="Navy" StepPercentage="1" />
+        </xfg:Gradient>
     </xfg:CellGloss.BackgroundGradient>
 </TextCell>
 ```
@@ -183,14 +179,14 @@ var cell = new TextCell();
 cell.Text = "Red";
 cell.TextColor = Color.White;
 
-CellGloss.SetBackgroundGradient(cell, new GlossGradient(Color.Red, Color.Maroon, GlossGradient.VERTICAL_ANGLE));
+CellGloss.SetBackgroundGradient(cell, new Gradient(Color.Red, Color.Maroon, Gradient.RotationTopToBottom));
 
 // Manually construct a multi-color gradient at an angle of our choosing
 var rotatingCell = new TextCell();
 rotatingCell.Text = "All Three";
 rotatingCell.TextColor = Color.White;
 
-var rotatingGradient = new GlossGradient(135); // 135 degree angle
+var rotatingGradient = new Gradient(135); // 135 degree angle
 rotatingGradient.AddStep(Color.Red, 0);
 rotatingGradient.AddStep(Color.Maroon, .25);
 rotatingGradient.AddStep(Color.Lime, .4);
