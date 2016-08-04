@@ -18,13 +18,11 @@ using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using XFGloss;
-using XFGlossSample.Utils;
 
 namespace XFGlossSample.Examples.Views.CSharp
 {
 	public class BackgroundGradientPage : ContentPage
 	{
-		Timer updater;
 		bool updateGradient;
 
 		Gradient rotatingGradient;
@@ -83,7 +81,8 @@ namespace XFGlossSample.Examples.Views.CSharp
 			base.OnAppearing();
 
 			updateGradient = true;
-			UpdateGradient();
+
+			Device.StartTimer(new TimeSpan(1000000), UpdateGradient);
 		}
 
 		protected override void OnDisappearing()
@@ -154,7 +153,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 		 * 
 		 ******************************************/
 
-		void UpdateGradient(object gradient = null)
+		bool UpdateGradient()
 		{
 			Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
 			{
@@ -169,9 +168,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 				//CellGloss.SetBackgroundGradient(rotatingCell, newGradient);
 			});
 
-			updater?.Dispose();
-			// Continue updating the gradient as long as we're visible
-			updater = (updateGradient) ? new Timer(UpdateGradient, rotatingGradient, 100, -1) : null;
+			return updateGradient;
 		}
 	}
 }

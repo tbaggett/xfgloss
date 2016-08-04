@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
+using System;
 using Xamarin.Forms;
-using XFGloss;
-using XFGlossSample.Utils;
 
 namespace XFGlossSample.Examples.Views.Xaml
 {
 	public partial class BackgroundGradientPage : ContentPage
 	{
-		Timer updater;
 		bool updateGradient;
 
 		public BackgroundGradientPage()
@@ -35,7 +33,8 @@ namespace XFGlossSample.Examples.Views.Xaml
 			base.OnAppearing();
 
 			updateGradient = true;
-			UpdateGradient();
+
+			Device.StartTimer(new TimeSpan(1000000), UpdateGradient);
 		}
 
 		protected override void OnDisappearing()
@@ -52,7 +51,7 @@ namespace XFGlossSample.Examples.Views.Xaml
 		 * 
 		 ******************************************/
 
-		void UpdateGradient(object gradient = null)
+		bool UpdateGradient()
 		{
 			Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
 			{
@@ -66,10 +65,7 @@ namespace XFGlossSample.Examples.Views.Xaml
 				}
 			});
 
-			updater?.Dispose();
-			// Continue updating the gradient as long as we're visible
-			// Note that checking IsVisible was always returning true.
-			updater = (updateGradient) ? new Timer(UpdateGradient, rotatingGradient, 100, -1) : null;
+			return updateGradient;
 		}
 	}
 }
