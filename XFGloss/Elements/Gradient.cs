@@ -167,10 +167,10 @@ namespace XFGloss
 		}
 
 		/// <summary>
-		/// Determines whether the specified <see cref="XFGloss.Gradient"/> is equal to the current <see cref="T:XFGloss.Gradient"/>.
+		/// Determines whether the specified <see cref="T:XFGloss.Gradient"/> is equal to the current <see cref="T:XFGloss.Gradient"/>.
 		/// </summary>
-		/// <param name="other">The <see cref="XFGloss.Gradient"/> to compare with the current <see cref="T:XFGloss.Gradient"/>.</param>
-		/// <returns><c>true</c> if the specified <see cref="XFGloss.Gradient"/> is equal to the current
+		/// <param name="other">The <see cref="T:XFGloss.Gradient"/> to compare with the current <see cref="T:XFGloss.Gradient"/>.</param>
+		/// <returns><c>true</c> if the specified <see cref="T:XFGloss.Gradient"/> is equal to the current
 		/// <see cref="T:XFGloss.Gradient"/>; otherwise, <c>false</c>.</returns>
 		public bool Equals(Gradient other)
 		{
@@ -208,11 +208,11 @@ namespace XFGloss
 			return Equals(obj as Gradient);
 		}
 
+		int _rotation = UndefinedRotation;
 		/// <summary>
 		/// The rotation angle to orient the gradient fill in a desired direction. Must be an integer value between 0
 		/// and 359. Values outside that range will cause an ArgumentOutOfRangeException exception to be thrown.
 		/// </summary>
-		int _rotation = UndefinedRotation;
 		public int Rotation
 		{
 			get { return _rotation; }
@@ -288,11 +288,11 @@ namespace XFGloss
 			Rotation = shouldSet ? rotation : UndefinedRotation;
 		}
 
+		// No property change notifications needed for StartColor. Changes to Steps will handle notifications.
 		/// <summary>
 		/// Gets or sets the start/first color of the gradient fill.
 		/// </summary>
 		/// <value>The start color.</value>
-		// No property change notifications needed for StartColor. Changes to Steps will handle notifications.
 		public Color StartColor
 		{
 			get
@@ -329,11 +329,11 @@ namespace XFGloss
 			}
 		}
 
+		// No property change notifications needed for EndColor. Changes to Steps will handle notifications.
 		/// <summary>
 		/// Gets or sets the end/last color of the gradient fill.
 		/// </summary>
 		/// <value>The end color.</value>
-		// No property change notifications needed for EndColor. Changes to Steps will handle notifications.
 		public Color EndColor
 		{
 			get
@@ -378,11 +378,11 @@ namespace XFGloss
 			}
 		}
 
+		GradientStepCollection _steps;
 		/// <summary>
 		/// Specifies the steps in the gradient fill. Each step is defined by a <see cref="T:XFGloss.GradientStep"/> 
 		/// instance.
 		/// </summary>
-		GradientStepCollection _steps;
 		public GradientStepCollection Steps
 		{
 			get { return _steps; }
@@ -421,12 +421,11 @@ namespace XFGloss
 		}
 
 		/// <summary>
-		/// Faux property used along with the [ChildProperty] attribute on the <see cref="Gradient"/> class to allow 
-		/// GradientStep instances to be directly assigned in Xaml instead of having to wrap them in a 
-		/// &lt;<see cref="GradientStepCollection"/>&gt; node.
+		/// Faux property used along with the [ChildProperty] attribute on the <see cref="T:XFGloss.Gradient"/> class to 
+		/// allow <see cref="T:XFGloss.GradientStep" /> instances to be directly assigned in Xaml instead of having to 
+		/// wrap them in a &lt;<see cref="T:XFGloss.GradientStepCollection"/>&gt; node.
 		/// </summary>
-		/// <value>The child step. A <see cref="GradientStep"/> instance.</value>
-		// 
+		/// <value>The child step. A <see cref="T:XFGloss.GradientStep"/> instance.</value>
 		public GradientStep ChildStep
 		{
 			set
@@ -452,18 +451,30 @@ namespace XFGloss
 
 		// Follow this pattern in derived classes to handle checking property names
 		static readonly HashSet<string> _propertyNames = new HashSet<string> { nameof(Rotation), nameof(Steps) };
+		/// <summary>
+		/// Indicates if the provided propertyName string is the name of a property of the 
+		/// <see cref="T:XFGloss.Gradient"/> class.
+		/// </summary>
+		/// <returns><c>true</c>, if property name is a property of the class, <c>false</c> otherwise.</returns>
+		/// <param name="propertyName">Property name.</param>
 		public override bool IsPropertyOf(string propertyName)
 		{
 			// StartColor and EndColor are computed properties that impact Steps, so they aren't checked for changes.
 			return _propertyNames.Contains(propertyName);
 		}
 
-		// Helper called by parent/containing elements to create/update gradients.
-		// Returns true if a gradient was created or updated, false otherwise.
-		public override bool UpdateProperties(string elementName, IGradientRenderer renderer, string elementPropertyChangedName = null)
+		/// <summary>
+		/// Helper called by parent/containing elements to create/update gradients.
+		/// </summary>
+		/// <returns><c>true</c>, if a gradient was created or updated, <c>false</c> otherwise.</returns>
+		/// <param name="glossPropertyName">Name of the XFGloss bindable property being updated</param>
+		/// <param name="renderer">Reference to class instance that implements the XFGloss 
+		/// <see cref="T:XFGloss.IGradientRenderer"/> interface.</param>
+		/// <param name="elementPropertyChangedName">Element property changed name.</param>
+		public override bool UpdateProperties(string glossPropertyName, IGradientRenderer renderer, string elementPropertyChangedName = null)
 		{
 			// Check for this being the first time application of a gradient or an update
-			if (!renderer.IsUpdating(elementName))
+			if (!renderer.IsUpdating(glossPropertyName))
 			{
 				// If this is the first time application, check for all the needed properties having values assigned
 				if (elementPropertyChangedName == null || IsPropertyOf(elementPropertyChangedName))
@@ -472,7 +483,7 @@ namespace XFGloss
 					{
 						// Steps has either been set directly by the user or we've populated it from the start and end 
 						// colors.
-						renderer.CreateNativeElement(elementName, this);
+						renderer.CreateNativeElement(glossPropertyName, this);
 						return true;
 					}
 				}
@@ -488,18 +499,18 @@ namespace XFGloss
 					// Update everything
 					if (Rotation != UndefinedRotation)
 					{
-						renderer.UpdateRotation(elementName, Rotation);
+						renderer.UpdateRotation(glossPropertyName, Rotation);
 						result = true;
 					}
 
 					if ((bool)(Steps?.IsValid))
 					{
-						renderer.UpdateSteps(elementName, Steps);
+						renderer.UpdateSteps(glossPropertyName, Steps);
 						result = true;
 					}
 					else
 					{
-						renderer.RemoveNativeElement(elementName);
+						renderer.RemoveNativeElement(glossPropertyName);
 					}
 
 					return result;
@@ -509,13 +520,13 @@ namespace XFGloss
 					switch (elementPropertyChangedName)
 					{
 						case nameof(Rotation):
-							renderer.UpdateRotation(elementName, Rotation);
+							renderer.UpdateRotation(glossPropertyName, Rotation);
 							return true;
 
 						case nameof(Steps):
 							if ((bool)(Steps?.IsValid))
 							{
-								renderer.UpdateSteps(elementName, Steps);
+								renderer.UpdateSteps(glossPropertyName, Steps);
 								return true;
 							}
 							break;
@@ -535,10 +546,10 @@ namespace XFGloss
 	/// </summary>
 	public class GradientStep : ObservableObject, IEquatable<GradientStep>
 	{
-		/// <summary>
-		/// Color value for this <see cref="XFGloss.Gradient"/> step.
-		/// </summary>
 		Color _stepColor = Color.Default;
+		/// <summary>
+		/// Color value for this <see cref="T:XFGloss.Gradient"/> step.
+		/// </summary>
 		public Color StepColor
 		{
 			get
@@ -553,6 +564,12 @@ namespace XFGloss
 
 		// Gradient fill percentage to stop at for this step, between 0.0 and 1.0
 		double _stepPercentage;
+		/// <summary>
+		/// Gets or sets the step percentage, which is a double value between 0 and 1. 0 represents the start of the
+		/// fill while 1 represents the end of it.
+		/// </summary>
+		/// <value>The step percentage, a double between 0 and 1. 0 represents the start of the fill while 1
+		/// represents the end of it.</value>
 		public double StepPercentage
 		{
 			get
@@ -572,22 +589,45 @@ namespace XFGloss
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.GradientStep"/> class.
+		/// </summary>
 		public GradientStep()
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.GradientStep"/> class by copying the assigned values
+		/// from another <see cref="T:XFGloss.GradientStep"/> class instance.
+		/// </summary>
+		/// <param name="other">Other.</param>
 		public GradientStep(GradientStep other)
 		{
 			StepColor = other.StepColor;
 			StepPercentage = other.StepPercentage;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.GradientStep"/> class using the passed color and 
+		/// percentage values.
+		/// </summary>
+		/// <param name="stepColor">Step color. A <see cref="T:Xamarin.Forms.Color"/> instance</param>
+		/// <param name="stepPercentage">Step percentage. A double value between 0 and 1. 0 represents the start of the
+		/// fill and 1 represents the end of the fill.</param>
 		public GradientStep(Color stepColor, double stepPercentage)
 		{
 			StepColor = stepColor;
 			StepPercentage = stepPercentage;
 		}
 
+		/// <summary>
+		/// Determines whether the specified <see cref="T:XFGloss.GradientStep"/> is equal to the current 
+		/// <see cref="T:XFGloss.GradientStep"/>.
+		/// </summary>
+		/// <param name="other">The <see cref="XFGloss.GradientStep"/> to compare with the current 
+		/// <see cref="T:XFGloss.GradientStep"/>.</param>
+		/// <returns><c>true</c> if the specified <see cref="XFGloss.GradientStep"/> is equal to the current
+		/// <see cref="T:XFGloss.GradientStep"/>; otherwise, <c>false</c>.</returns>
 		public bool Equals(GradientStep other)
 		{
 			if (other == null ||
@@ -600,6 +640,15 @@ namespace XFGloss
 			return true;
 		}
 
+		/// <summary>
+		/// Determines whether the specified <see cref="object"/> is equal to the current 
+		/// <see cref="T:XFGloss.GradientStep"/>.
+		/// </summary>
+		/// <param name="obj">The <see cref="object"/> to compare with the current 
+		/// <see cref="T:XFGloss.GradientStep"/>.</param>
+		/// <returns><c>true</c> if the specified <see cref="object"/> is equal to the current 
+		/// <see cref="T:XFGloss.GradientStep"/>;
+		/// otherwise, <c>false</c>.</returns>
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj))
@@ -615,13 +664,24 @@ namespace XFGloss
 		}
 	}
 
-	// ObservableCollection-based collection to store a gradient's steps in
+	/// <summary>
+	/// ObservableCollection-based collection used to store a gradient's steps.
+	/// </summary>
 	public class GradientStepCollection : ObservableCollection<GradientStep>, IEquatable<GradientStepCollection>
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.GradientStepCollection"/> class.
+		/// </summary>
 		public GradientStepCollection()
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.GradientStepCollection"/> class by making copies of
+		/// the <see cref="T:XFGloss.GradientStep"/> instances in another <see cref="T:XFGloss.GradientStepCollection"/> 
+		/// instance.
+		/// </summary>
+		/// <param name="other">Other.</param>
 		public GradientStepCollection(IEnumerable<GradientStep> other)
 		{
 			foreach (var step in other)
@@ -630,6 +690,11 @@ namespace XFGloss
 			}
 		}
 
+		/// <summary>
+		/// Adds a range of <see cref="T:XFGloss.GradientStep"/> instances to the 
+		/// <see cref="T:XFGloss.GradientStepCollection"/> without making copies of them.
+		/// </summary>
+		/// <param name="collection">Collection.</param>
 		public void AddRange(IEnumerable<GradientStep> collection)
 		{
 			foreach (var item in collection)
@@ -638,6 +703,12 @@ namespace XFGloss
 			}
 		}
 
+		/// <summary>
+		/// Determines whether the specified <see cref="XFGloss.GradientStepCollection"/> is equal to the current <see cref="T:XFGloss.GradientStepCollection"/>.
+		/// </summary>
+		/// <param name="other">The <see cref="XFGloss.GradientStepCollection"/> to compare with the current <see cref="T:XFGloss.GradientStepCollection"/>.</param>
+		/// <returns><c>true</c> if the specified <see cref="XFGloss.GradientStepCollection"/> is equal to the current
+		/// <see cref="T:XFGloss.GradientStepCollection"/>; otherwise, <c>false</c>.</returns>
 		public bool Equals(GradientStepCollection other)
 		{
 			if (other == null ||
@@ -657,7 +728,13 @@ namespace XFGloss
 			return true;
 		}
 
-		// Verify the passed steps array is either null or contains at least two instances.
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="T:XFGloss.GradientStepCollection"/> is valid. A
+		/// <see cref="T:XFGloss.GradientStepCollection"/> is considered to be valid if it contains at least two steps,
+		/// none of the steps' color values are set to Color.Default, and each step's percentage value is equal to or
+		/// greater than the previous step's percentage value.
+		/// </summary>
+		/// <value><c>true</c> if is valid; otherwise, <c>false</c>.</value>
 		public bool IsValid
 		{
 			get
@@ -682,15 +759,38 @@ namespace XFGloss
 		}
 	}
 
-	// Helper class used to convert from an angle in degrees to start and end point X/Y values between 0.0 and 1.0,
-	// currently needed for iOS platform renderer, may be needed for other XF platforms in the future.
+	/// <summary>
+	/// Helper class used to convert from an angle in degrees to start and end point X/Y values between 0.0 and 1.0.
+	/// Currently needed for the iOS platform renderer, may be needed for other XF-supported platforms in the future.
+	/// </summary>
 	public class RotationToPositionsConverter
 	{
+		/// <summary>
+		/// Gets the start point. Both the X and Y positions will be values between 0.0 and 1.0.
+		/// </summary>
+		/// <value>The start point.</value>
 		public Point StartPoint { get; private set; }
+
+		/// <summary>
+		/// Gets the end point. Both the X and Y positions will be values between 0.0 and 1.0.
+		/// </summary>
+		/// <value>The end point.</value>
 		public Point EndPoint { get; private set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.RotationToPositionsConverter"/> class. An integer
+		/// number between 0 and 359 is expected to be passed as the rotation parameter. An
+		/// ArgumentOutOfRangeException is thrown if the rotation parameter is outside of the expected range.
+		/// </summary>
+		/// <param name="rotation">Rotation.</param>
 		public RotationToPositionsConverter(int rotation)
 		{
+			if (rotation < 0 || rotation > 359)
+			{
+				throw new ArgumentOutOfRangeException(nameof(rotation), rotation, "Expected rotation value is between " +
+													  "0 and 359.");
+			}
+
 			// Values need to be between 0 and 1
 			double startRadians = (360 - rotation) * Math.PI / 180;
 			double startX = (Math.Sin(startRadians) / 2) + 0.5;
