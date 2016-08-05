@@ -20,10 +20,21 @@ using Xamarin.Forms;
 
 namespace XFGloss
 {
+	/// <summary>
+	/// Static extension method helper class to make it easier to register/deregister a property changed handler for a 
+	/// property from a bindable object.
+	/// </summary>
 	public static class XFGlossEventUtilities
 	{
 		#region BindableObject Weak Event Extensions
 
+		/// <summary>
+		/// Registers a property changed handler for the specified bindable object's property.
+		/// </summary>
+		/// <returns>The bindable property changed handler.</returns>
+		/// <param name="bindable">Bindable.</param>
+		/// <param name="bindableProperty">Bindable property.</param>
+		/// <param name="handler">Handler.</param>
 		public static INotifyPropertyChanged RegisterBindablePropertyChangedHandler(this BindableObject bindable,
 																  BindableProperty bindableProperty,
 																  EventHandler<PropertyChangedEventArgs> handler)
@@ -39,6 +50,13 @@ namespace XFGloss
 			return changeableProperty;
 		}
 
+		/// <summary>
+		/// Deregisters a property changed handler for the specified bindable object's property.
+		/// </summary>
+		/// <returns>The bindable property changed handler.</returns>
+		/// <param name="bindable">Bindable.</param>
+		/// <param name="bindableProperty">Bindable property.</param>
+		/// <param name="handler">Handler.</param>
 		public static INotifyPropertyChanged DeregisterBindablePropertyChangedHandler(this BindableObject bindable,
 																	BindableProperty bindableProperty,
 																	EventHandler<PropertyChangedEventArgs> handler)
@@ -57,4 +75,3 @@ namespace XFGloss
 		#endregion
 	}
 }
-
