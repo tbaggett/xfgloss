@@ -23,8 +23,19 @@ using AColor = Android.Graphics.Color;
 [assembly: ExportRenderer(typeof(Slider), typeof(XFGloss.Droid.Renderers.XFGlossSliderRenderer))]
 namespace XFGloss.Droid.Renderers
 {
+	/// <summary>
+	/// The Android platform-specific Xamarin.Forms renderer used for all <see cref="T:Xamarin.Forms.Slider"/>
+	/// derived classes.
+	/// </summary>
 	public class XFGlossSliderRenderer : SliderRenderer
 	{
+		/// <summary>
+		/// <see cref="T:Xamarin.Forms.Platform.Android.SliderRenderer"/> override that is called whenever the associated
+		/// <see cref="T:Xamarin.Forms.Slider"/> instance changes
+		/// </summary>
+		/// <param name="e"><see cref="T:Xamarin.Forms.Platform.Android.ElementChangedEventArgs"/> that specifies the
+		/// previously and newly assigned <see cref="T:Xamarin.Forms.Slider"/> instances
+		/// </param>
 		protected override void OnElementChanged(ElementChangedEventArgs<Slider> e)
 		{
 			base.OnElementChanged(e);
@@ -32,6 +43,12 @@ namespace XFGloss.Droid.Renderers
 			UpdateSliderProperties();
 		}
 
+		/// <summary>
+		/// <see cref="T:Xamarin.Forms.Platform.Android.SliderRenderer"/> override that is called whenever the
+		/// <see cref="T:Xamarin.Forms.Slider.PropertyChanged"/> event is fired
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
 		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);
@@ -44,6 +61,11 @@ namespace XFGloss.Droid.Renderers
 			}
 		}
 
+		/// <summary>
+		/// Private helper method used to apply the <see cref="T:Xamarin.Forms.Slider"/> properties to the native
+		/// <see cref="T:Android.Widget.Seekbar"/> control.
+		/// </summary>
+		/// <param name="propertyName">Name of the <see cref="T:XFGloss.SliderGloss"/> property whose value changed</param>
 		void UpdateSliderProperties(string propertyName = null)
 		{
 			if (Element == null || Control == null)

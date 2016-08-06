@@ -21,10 +21,21 @@ using XFGloss.Droid.Extensions;
 [assembly: ExportRenderer(typeof(Switch), typeof(XFGloss.Droid.Renderers.XFGlossSwitchRenderer))]
 namespace XFGloss.Droid.Renderers
 {
+	/// <summary>
+	/// The Android platform-specific Xamarin.Forms renderer used for all <see cref="T:Xamarin.Forms.Switch"/>
+	/// derived classes.
+	/// </summary>
 	public class XFGlossSwitchRenderer : SwitchRenderer
 	{
         SwitchGloss _properties;
 
+		/// <summary>
+		/// <see cref="T:Xamarin.Forms.Platform.Android.SwitchRenderer"/> override that is called whenever the associated
+		/// <see cref="T:Xamarin.Forms.Switch"/> instance changes
+		/// </summary>
+		/// <param name="e"><see cref="T:Xamarin.Forms.Platform.Android.ElementChangedEventArgs"/> that specifies the
+		/// previously and newly assigned <see cref="T:Xamarin.Forms.Switch"/> instances
+		/// </param>
 		protected override void OnElementChanged(ElementChangedEventArgs<Switch> e)
 		{
 			base.OnElementChanged(e);
@@ -34,6 +45,12 @@ namespace XFGloss.Droid.Renderers
 			Control.UpdateColorProperty(_properties, null);
 		}
 
+		/// <summary>
+		/// <see cref="T:Xamarin.Forms.Platform.Android.SwitchRenderer"/> override that is called whenever the
+		/// <see cref="T:Xamarin.Forms.Switch.PropertyChanged"/> event is fired
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
 		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			if (_properties != null)

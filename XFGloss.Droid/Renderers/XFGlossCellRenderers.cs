@@ -40,7 +40,7 @@ namespace XFGloss.Droid.Renderers
 
 		/// <summary>
 		/// Implementation of method required by the <see cref="T:XFGloss.IXFGlossRenderer"/> interface that the
-		/// <see cref="T:XFGloss.IXFGradientRenderer"/> interface extends. Applies the passed 
+		/// <see cref="T:XFGloss.IGradientRenderer"/> interface extends. Applies the passed 
 		/// <see cref="T:XFGloss.XFGlossElement"/> properties to the Android cell controls.
 		/// </summary>
 		/// <param name="propertyName">The name of the XFGloss attached BindableProperty that changed</param>
@@ -60,7 +60,7 @@ namespace XFGloss.Droid.Renderers
 
 		/// <summary>
 		/// Implementation of method required by the <see cref="T:XFGloss.IXFGlossRenderer"/> interface that the
-		/// <see cref="T:XFGloss.IXFGradientRenderer"/> interface extends. Indicates if there is an existing 
+		/// <see cref="T:XFGloss.IGradientRenderer"/> interface extends. Indicates if there is an existing 
 		/// implementation of the property specified by the propertyName parameter.
 		/// </summary>
 		/// <returns><c>true</c>, if an existing implementation is found, <c>false</c> otherwise.</returns>
@@ -79,7 +79,7 @@ namespace XFGloss.Droid.Renderers
 
 		/// <summary>
 		/// Implementation of method required by the <see cref="T:XFGloss.IXFGlossRenderer"/> interface that the
-		/// <see cref="T:XFGloss.IXFGradientRenderer"/> interface extends. Removes any existing implementation of
+		/// <see cref="T:XFGloss.IGradientRenderer"/> interface extends. Removes any existing implementation of
 		/// the property specified by the propertyName parameter.
 		/// </summary>
 		/// <param name="propertyName">The name of the XFGloss attached BindableProperty that changed</param>
