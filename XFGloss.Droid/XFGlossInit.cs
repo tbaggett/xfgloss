@@ -20,8 +20,18 @@ using Android.OS;
 
 namespace XFGloss.Droid
 {
+	/// <summary>
+	/// Library class used to provide static initializer to be called from XFGloss Android client projects to insure
+	/// the XFGloss library is included in the client project's build.
+	/// </summary>
 	public class Library
 	{
+		/// <summary>
+		/// Initializer to be called from XFGloss Android client project to insure the XFGloss library is inclued in the
+		/// client project's build.
+		/// </summary>
+		/// <param name="context">Context.</param>
+		/// <param name="bundle">Bundle.</param>
 		public static void Init(Context context, Bundle bundle)
 		{
 			// We don't currently need access to the context or bundle, but we probably will in the future. Requiring
