@@ -18,8 +18,16 @@ using System;
 
 namespace XFGloss.iOS
 {
+	/// <summary>
+	/// Library class used to provide static initializer to be called from XFGloss iOS client projects to insure
+	/// the XFGloss library is included in the client project's build.
+	/// </summary>
 	public class Library
 	{
+		/// <summary>
+		/// Initializer to be called from XFGloss iOS client project to insure the XFGloss library is inclued in the
+		/// client project's build.
+		/// </summary>
 		public static void Init()
 		{
 		}

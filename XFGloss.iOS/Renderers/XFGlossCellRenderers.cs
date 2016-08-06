@@ -33,10 +33,21 @@ namespace XFGloss.iOS.Renderers
 {
 	#region iOSXFGlossCellRenderer
 
+	/// <summary>
+	/// The iOS platform-specific XFGlossRenderer base class used for all <see cref="T:Xamarin.Forms.Cell"/> types.
+	/// </summary>
 	internal class iOSXFGlossCellRenderer : XFGlossCellRenderer<UITableViewCell>, IGradientRenderer
 	{
 		#region IGradientRenderer implementation
 
+		/// <summary>
+		/// Implementation of method required by the <see cref="T:XFGloss.IXFGlossRenderer"/> interface that the
+		/// <see cref="T:XFGloss.IGradientRenderer"/> interface extends. Applies the passed 
+		/// <see cref="T:XFGloss.XFGlossElement"/> properties to the iOS UITableViewCell controls.
+		/// </summary>
+		/// <param name="propertyName">The name of the XFGloss attached BindableProperty that changed</param>
+		/// <param name="element">The <see cref="T:XFGloss.XFGlossElement"/> instance that changed</param>
+		/// <typeparam name="TElement">The type <see cref="T:XFGloss.XFGlossElement"/> that changed</typeparam>
 		public virtual void CreateNativeElement<TElement>(string propertyName, TElement element) where TElement : XFGlossElement
 		{
 			// No need to check property name yet. BackgroundGradient is the only property currently supported.
@@ -49,6 +60,13 @@ namespace XFGloss.iOS.Renderers
 			//}
 		}
 
+		/// <summary>
+		/// Implementation of method required by the <see cref="T:XFGloss.IXFGlossRenderer"/> interface that the
+		/// <see cref="T:XFGloss.IGradientRenderer"/> interface extends. Indicates if there is an existing 
+		/// implementation of the property specified by the propertyName parameter.
+		/// </summary>
+		/// <returns><c>true</c>, if an existing implementation is found, <c>false</c> otherwise.</returns>
+		/// <param name="propertyName">The name of the XFGloss attached BindableProperty that changed</param>
 		public virtual bool CanUpdate(string propertyName)
 		{
 			// No need to check property name yet. BackgroundGradient is the only property currently supported.
@@ -61,6 +79,12 @@ namespace XFGloss.iOS.Renderers
 			return false;
 		}
 
+		/// <summary>
+		/// Implementation of method required by the <see cref="T:XFGloss.IXFGlossRenderer"/> interface that the
+		/// <see cref="T:XFGloss.IGradientRenderer"/> interface extends. Removes any existing implementation of
+		/// the property specified by the propertyName parameter.
+		/// </summary>
+		/// <param name="propertyName">The name of the XFGloss attached BindableProperty that changed</param>
 		public virtual void RemoveNativeElement(string propertyName)
 		{
 			// No need to check property name yet. BackgroundGradient is the only property currently supported.
@@ -71,6 +95,13 @@ namespace XFGloss.iOS.Renderers
 			}
 		}
 
+		/// <summary>
+		/// Implementation of method required by the <see cref="T:XFGloss.IGradientRenderer"/> interface. Updates
+		/// the rotation angle being used by any existing implementation of the property specified by the propertyName
+		/// parameter.
+		/// </summary>
+		/// <param name="propertyName">The name of the XFGloss attached BindableProperty that changed</param>
+		/// <param name="rotation">The new rotation value, an integer number between 0 and 359</param>
 		public void UpdateRotation(string propertyName, int rotation)
 		{
 			// No need to check property name yet, BackgroundGradient is the only one being handled here.
@@ -81,6 +112,14 @@ namespace XFGloss.iOS.Renderers
 			}
 		}
 
+		/// <summary>
+		/// Implementation of method required by the <see cref="T:XFGloss.IGradientRenderer"/> interface. Updates
+		/// the gradient fill steps being used by any existing implementation of the property specified by the 
+		/// propertyName parameter.
+		/// </summary>
+		/// <param name="propertyName">The name of the XFGloss attached BindableProperty that changed</param>
+		/// <param name="steps">The new collection of <see cref="T:XFGloss.GradientStep"/> instances that specify the
+		/// colors and positions of each step of the gradient fill</param>
 		public void UpdateSteps(string propertyName, GradientStepCollection steps)
 		{
 			// No need to check property name yet, BackgroundGradient is the only one being handled here.
@@ -91,7 +130,13 @@ namespace XFGloss.iOS.Renderers
 			}
 		}
 
-		// Helper func to create new background gradient view if one is assigned
+		/// <summary>
+		/// Creates a new <see cref="T:XFGloss.iOS.Views.UIBackgroundGradientView"/> instance and assigns it as the
+		/// background view to the passed UITableViewCell instance.
+		/// </summary>
+		/// <returns>The new <see cref="T:XFGloss.iOS.Views.UIBackgroundGradientView"/> instance</returns>
+		/// <param name="nativeCell">The native UITableViewCell instance to attach the gradient view to</param>
+		/// <param name="gradient">The <see cref="T:XFGloss.Gradient"/> instance to copy properties from</param>
 		UIBackgroundGradientView CreateBackgroundGradientView(UITableViewCell nativeCell, Gradient gradient)
 		{
 			RemoveBackgroundGradientView(nativeCell);
@@ -103,7 +148,12 @@ namespace XFGloss.iOS.Renderers
 			return nativeCell?.BackgroundView as UIBackgroundGradientView;
 		}
 
-		// Helper func to get existing background gradient view if one is assigned
+		/// <summary>
+		/// Private helper method used to find and return a previously-created 
+		/// <see cref="T:XFGloss.iOS.Views.UIBackgroundGradientView"/> instance if found, null if not found.
+		/// </summary>
+		/// <returns>The background gradient view if found, null if not.</returns>
+		/// <param name="nativeCell">The native UITableViewCell view used to display the cell contents</param>
 		UIBackgroundGradientView GetBackgroundGradientView(UITableViewCell nativeCell)
 		{
 			if (nativeCell != null && nativeCell.BackgroundView is UIBackgroundGradientView)
@@ -114,6 +164,11 @@ namespace XFGloss.iOS.Renderers
 			return null;
 		}
 
+		/// <summary>
+		/// Private helper method used to remove any previously-created 
+		/// <see cref="T:XFGloss.iOS.Views.UIBackgroundGradientView"/> instance if found.
+		/// </summary>
+		/// <param name="nativeCell">The native iOS UITableViewCell used to display the cell contents</param>
 		void RemoveBackgroundGradientView(UITableViewCell nativeCell)
 		{
 			if (nativeCell != null)
@@ -127,11 +182,24 @@ namespace XFGloss.iOS.Renderers
 
 		#region UpdateProperties
 
+		/// <summary>
+		/// Static method called by custom Xamarin.Forms renderers, used to direct the call to the cross-platform base 
+		/// class and provide the required <see cref="T:XFGloss.XFGlossCellRenderer"/> factory method.
+		/// </summary>
+		/// <param name="cell">The associated <see cref="T:Xamarin.Forms.Cell"/> instance</param>
+		/// <param name="nativeCell">The native UITableViewCell used to display the cell contents</param>
 		public static void UpdateProperties(Cell cell, UITableViewCell nativeCell)
 		{
 			UpdateProperties(cell, nativeCell, () => new iOSXFGlossCellRenderer());
 		}
 
+		/// <summary>
+		/// Implementation of the cross-platform base class's abstract UpdateProperties method. Used to apply the
+		/// XFGloss attached BindableProperty values for the property specified by the propertyName parameter.
+		/// </summary>
+		/// <param name="cell">The associated <see cref="T:Xamarin.Forms.Cell"/> instance</param>
+		/// <param name="nativeCell">The native UITableViewCell used to display the cell contents</param>
+		/// <param name="propertyName">The name of the XFGloss attached BindableProperty that changed</param>
 		protected override void UpdateProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
 		{
 			// TintColor property - to be passed to CreateEditIndicatorAccessoryView and possibly others in the future
@@ -200,7 +268,9 @@ namespace XFGloss.iOS.Renderers
 			}
 		}
 
-		// Creating a marker class so we can confirm if an instance is assigned to the UINativeCell.BackgroundView property
+		/// <summary>
+		/// A marker class used to confirm if an instance is assigned to the UINativeCell.BackgroundView property
+		/// </summary>
 		class UIBackgroundColorView : UIView
 		{
 			public UIBackgroundColorView(CGRect rect) : base(rect) { }
@@ -211,15 +281,34 @@ namespace XFGloss.iOS.Renderers
 	#endregion
 
 	#region iOSXFGlossAccessoryCellRenderer
+
+	/// <summary>
+	/// The iOS platform-specific XFGloss cell renderer class used for the <see cref="T:Xamarin.Forms.Cell"/> based
+	/// classes that support customizing the accessory view on the iOS platform.
+	/// </summary>
 	internal class iOSXFGlossAccessoryCellRenderer : iOSXFGlossCellRenderer
 	{
 		WeakReference<UIView> _accessoryView;
 
+		/// <summary>
+		/// Static method called by the custom <see cref="T:Xamarin.Forms.Cell"/> renderer, used to direct the 
+		/// call to the cross-platform base class and provide the required 
+		/// <see cref="T:XFGloss.XFGlossCellRenderer"/> factory method. Hides the
+		/// <see cref="T:XFGloss.iOS.Renderers.iOSXFGlossCellRenderer"/> base class's implementation of this method.
+		/// </summary>
+		/// <param name="cell">The associated <see cref="T:Xamarin.Forms.Cell"/> instance</param>
+		/// <param name="nativeCell">The native UITableViewCell used to display the cell contents</param>
 		new public static void UpdateProperties(Cell cell, UITableViewCell nativeCell)
 		{
 			UpdateProperties(cell, nativeCell, () => new iOSXFGlossAccessoryCellRenderer());
 		}
 
+		/// <summary>
+		/// Override of the <see cref="T:XFGloss.iOS.Renderers.iOSXFGlossCellRenderer"/> base class's implementation
+		/// of the ElementPropertyChanged method, checks the <see cref="T:XFGloss.CellGloss.AccessoryType"/> property
+		/// </summary>
+		/// <param name="sender">The object instance the notification was received from</param>
+		/// <param name="args">The PropertyChanged event arguments</param>
 		protected override void ElementPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			// Check all the properties that this implementation supports for changes
@@ -231,6 +320,14 @@ namespace XFGloss.iOS.Renderers
 			base.ElementPropertyChanged(sender, args);
 		}
 
+		/// <summary>
+		/// Override of the <see cref="T:XFGloss.iOS.Renderers.iOSXFGlossCellRenderer"/> base class's implementation
+		/// of the UpdateProperties method, applies any <see cref="T:XFGloss.CellGloss.AccessoryType"/> property changes
+		/// to the native UITableViewCell.
+		/// </summary>
+		/// <param name="cell">Cell.</param>
+		/// <param name="nativeCell">Native cell.</param>
+		/// <param name="propertyName">Property name.</param>
 		protected override void UpdateProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
 		{
 			// AccessoryType property
@@ -291,12 +388,22 @@ namespace XFGloss.iOS.Renderers
 			base.UpdateProperties(cell, nativeCell, propertyName);
 		}
 
-		// Creating a marker class so we can confirm if an instance is assigned to the UINativeCell.AccessoryView property
+		// 
+		/// <summary>
+		/// Marker class used to confirm if an instance is assigned to the UINativeCell.AccessoryView property
+		/// </summary>
 		class EditIndicatorView : UIImageView
 		{
 			public EditIndicatorView(UIImage image) : base(image) { }
 		}
 
+		/// <summary>
+		/// Private helper method to create an <see cref="T:XFGloss.iOS.Renderers.EditIndicatorView"/> instance to be
+		/// assigned to the accessory view if the <see cref="T:XFGloss.CellGlossAccessoryType.EditIndicator"/> value is
+		/// assigned as the accessory type.
+		/// </summary>
+		/// <returns>The edit indicator accessory view.</returns>
+		/// <param name="tintColor">Current accessory view tint color.</param>
 		EditIndicatorView CreateEditIndicatorAccessoryView(Color tintColor)
 		{
 			// Load our custom edit indicator image
@@ -320,20 +427,44 @@ namespace XFGloss.iOS.Renderers
 	#endregion
 
 	#region iOSXFGlossSwitchCellRenderer
+
+	/// <summary>
+	/// The iOS platform-specific XFGloss cell renderer class used for the <see cref="T:Xamarin.Forms.SwitchCell"/>
+	/// class.
+	/// </summary>
 	internal class iOSXFGlossSwitchCellRenderer : iOSXFGlossCellRenderer
 	{
 		SwitchCellGloss _properties;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.iOS.Renderers.iOSXFGlossSwitchCellRenderer"/> class.
+		/// </summary>
+		/// <param name="bindable">Bindable.</param>
 		public iOSXFGlossSwitchCellRenderer(BindableObject bindable)
 		{
 			_properties = new SwitchCellGloss(bindable);
 		}
 
+		/// <summary>
+		/// Static method called by the custom <see cref="T:Xamarin.Forms.SwitchCell"/> renderer, used to direct the 
+		/// call to the cross-platform base class and provide the required 
+		/// <see cref="T:XFGloss.XFGlossCellRenderer"/> factory method. Hides the
+		/// <see cref="T:XFGloss.iOS.Renderers.iOSXFGlossCellRenderer"/> base class's implementation of this method.
+		/// </summary>
+		/// <param name="cell">The associated <see cref="T:Xamarin.Forms.Cell"/> instance</param>
+		/// <param name="nativeCell">The native iOS UITableViewCell used to display the cell contents</param>
 		new public static void UpdateProperties(Cell cell, UITableViewCell nativeCell)
 		{
 			UpdateProperties(cell, nativeCell, () => new iOSXFGlossSwitchCellRenderer(cell));
 		}
 
+		/// <summary>
+		/// Override of the <see cref="T:XFGloss.iOS.Renderers.iOSXFGlossCellRenderer"/> base class's implementation
+		/// of the ElementPropertyChanged method, checks the XFGloss properties that are unique to the 
+		/// <see cref="T:Xamarin.Forms.SwitchCell"/> class.
+		/// </summary>
+		/// <param name="sender">The object instance the notification was received from</param>
+		/// <param name="args">The PropertyChanged event arguments</param>
 		protected override void ElementPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			// Check all the properties that this implementation supports for changes
@@ -353,6 +484,14 @@ namespace XFGloss.iOS.Renderers
 			base.ElementPropertyChanged(sender, args);
 		}
 
+		/// <summary>
+		/// Override of the <see cref="T:XFGloss.iOS.Renderers.iOSXFGlossCellRenderer"/> base class's implementation
+		/// of the UpdateProperties method, applies XFGloss property changes that are unique to the 
+		/// <see cref="T:Xamarin.Forms.SwitchCell"/> class.
+		/// </summary>
+		/// <param name="cell">Cell.</param>
+		/// <param name="nativeCell">Native cell.</param>
+		/// <param name="propertyName">Property name.</param>
 		protected override void UpdateProperties(Cell cell, UITableViewCell nativeCell, string propertyName)
 		{
 			if (nativeCell.AccessoryView is UISwitch)
@@ -367,8 +506,23 @@ namespace XFGloss.iOS.Renderers
 	#endregion
 
 	#region Xamarin.Forms renderers
+
+	/// <summary>
+	/// Custom <see cref="T:Xamarin.Forms.EntryCellRenderer"/>-based renderer class used to apply the custom XFGloss
+	/// properties to the iOS platform-specific implementation
+	/// </summary>
 	public class XFGlossEntryCellRenderer : EntryCellRenderer
 	{
+		/// <summary>
+		/// Override of the <see cref="Xamarin.Forms.EntryCellRenderer"/> GetCell method, used to apply any custom 
+		/// settings to the iOS platform-specific cell display element.
+		/// </summary>
+		/// <returns>The iOS platform-specific cell display element after applying any custom settings to it</returns>
+		/// <param name="item">The <see cref="T:Xamarin.Forms.Cell"/> instance whose properties need to be transferred 
+		/// from</param>
+		/// <param name="reusableCell">A previously-created iOS UITableViewCell if this cell has been rendered before
+		/// </param>
+		/// <param name="tv">The parent iOS UITableView</param>
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var nativeCell = base.GetCell(item, reusableCell, tv);
@@ -378,8 +532,22 @@ namespace XFGloss.iOS.Renderers
 		}
 	}
 
+	/// <summary>
+	/// Custom <see cref="T:Xamarin.Forms.SwitchCellRenderer"/>-based renderer class used to apply the custom XFGloss
+	/// properties to the iOS platform-specific implementation
+	/// </summary>
 	public class XFGlossSwitchCellRenderer : SwitchCellRenderer
 	{
+		/// <summary>
+		/// Override of the <see cref="Xamarin.Forms.SwitchCellRenderer"/> GetCell method, used to apply any custom 
+		/// settings to the iOS platform-specific cell display element.
+		/// </summary>
+		/// <returns>The iOS platform-specific cell display element after applying any custom settings to it</returns>
+		/// <param name="item">The <see cref="T:Xamarin.Forms.Cell"/> instance whose properties need to be transferred 
+		/// from</param>
+		/// <param name="reusableCell">A previously-created iOS UITableViewCell if this cell has been rendered before
+		/// </param>
+		/// <param name="tv">The parent iOS UITableView</param>
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var nativeCell = base.GetCell(item, reusableCell, tv);
@@ -388,8 +556,22 @@ namespace XFGloss.iOS.Renderers
 		}
 	}
 
+	/// <summary>
+	/// Custom <see cref="T:Xamarin.Forms.TextCellRenderer"/>-based renderer class used to apply the custom XFGloss
+	/// properties to the iOS platform-specific implementation
+	/// </summary>
 	public class XFGlossTextCellRenderer : TextCellRenderer
 	{
+		/// <summary>
+		/// Override of the <see cref="Xamarin.Forms.TextCellRenderer"/> GetCell method, used to apply any custom 
+		/// settings to the iOS platform-specific cell display element.
+		/// </summary>
+		/// <returns>The iOS platform-specific cell display element after applying any custom settings to it</returns>
+		/// <param name="item">The <see cref="T:Xamarin.Forms.Cell"/> instance whose properties need to be transferred 
+		/// from</param>
+		/// <param name="reusableCell">A previously-created iOS UITableViewCell if this cell has been rendered before
+		/// </param>
+		/// <param name="tv">The parent iOS UITableView</param>
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var nativeCell = base.GetCell(item, reusableCell, tv);
@@ -398,8 +580,22 @@ namespace XFGloss.iOS.Renderers
 		}
 	}
 
+	/// <summary>
+	/// Custom <see cref="T:Xamarin.Forms.ImageCellRenderer"/>-based renderer class used to apply the custom XFGloss
+	/// properties to the iOS platform-specific implementation
+	/// </summary>
 	public class XFGlossImageCellRenderer : ImageCellRenderer
 	{
+		/// <summary>
+		/// Override of the <see cref="Xamarin.Forms.ImageCellRenderer"/> GetCell method, used to apply any custom 
+		/// settings to the iOS platform-specific cell display element.
+		/// </summary>
+		/// <returns>The iOS platform-specific cell display element after applying any custom settings to it</returns>
+		/// <param name="item">The <see cref="T:Xamarin.Forms.Cell"/> instance whose properties need to be transferred 
+		/// from</param>
+		/// <param name="reusableCell">A previously-created iOS UITableViewCell if this cell has been rendered before
+		/// </param>
+		/// <param name="tv">The parent iOS UITableView</param>
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var nativeCell = base.GetCell(item, reusableCell, tv);
@@ -408,8 +604,22 @@ namespace XFGloss.iOS.Renderers
 		}
 	}
 
+	/// <summary>
+	/// Custom <see cref="T:Xamarin.Forms.ViewCellRenderer"/>-based renderer class used to apply the custom XFGloss
+	/// properties to the iOS platform-specific implementation
+	/// </summary>
 	public class XFGlossViewCellRenderer : ViewCellRenderer
 	{
+		/// <summary>
+		/// Override of the <see cref="Xamarin.Forms.ViewCellRenderer"/> GetCell method, used to apply any custom 
+		/// settings to the iOS platform-specific cell display element.
+		/// </summary>
+		/// <returns>The iOS platform-specific cell display element after applying any custom settings to it</returns>
+		/// <param name="item">The <see cref="T:Xamarin.Forms.Cell"/> instance whose properties need to be transferred 
+		/// from</param>
+		/// <param name="reusableCell">A previously-created iOS UITableViewCell if this cell has been rendered before
+		/// </param>
+		/// <param name="tv">The parent iOS UITableView</param>
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var nativeCell = base.GetCell(item, reusableCell, tv);

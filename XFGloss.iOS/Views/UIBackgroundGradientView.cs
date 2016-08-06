@@ -24,16 +24,27 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace XFGloss.iOS.Views
 {
-	// UIBackgroundGradientView is a helper class used to resize background gradient layer when the cell size changes.
-	// This class is NOT used in the ContentPage renderer. The XFGlossGradientLayer is directly attached to the page's
-	// main view in that case.
+	/// <summary>
+	/// UIBackgroundGradientView is a helper class used to resize background gradient layer when the cell size changes.
+	/// This class is NOT used in the ContentPage renderer. The XFGlossGradientLayer is directly attached to the page's
+	/// main view in that case.
+	/// </summary>
 	class UIBackgroundGradientView : UIView
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.iOS.Views.UIBackgroundGradientView"/> class.
+		/// </summary>
+		/// <param name="rect">Rect.</param>
+		/// <param name="gradientSource">Gradient source.</param>
 		public UIBackgroundGradientView(CGRect rect, Gradient gradientSource) : base(rect)
 		{
 			XFGlossGradientLayer.CreateGradientLayer(this, gradientSource);
 		}
 
+		/// <summary>
+		/// Dispose any created resources and prepare the instance for garbage collection
+		/// </summary>
+		/// <param name="disposing">If set to <c>true</c>, dispose any created resources</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
@@ -44,7 +55,10 @@ namespace XFGloss.iOS.Views
 			base.Dispose(disposing);
 		}
 
-		// Update our gradient layer's size to match our view's bounds whenever the bounds are changing
+		/// <summary>
+		/// UIView override to update our gradient layer's size to match our view's bounds whenever the bounds are 
+		/// changing
+		/// </summary>
 		public override void LayoutSubviews()
 		{
 			var layer = XFGlossGradientLayer.GetGradientLayer(this);
@@ -56,12 +70,20 @@ namespace XFGloss.iOS.Views
 			base.LayoutSubviews();
 		}
 
+		/// <summary>
+		/// Updates the associated <see cref="T:XFGloss.iOS.Views.XFGlossGradientLayer"/> instance's rotation value.
+		/// </summary>
+		/// <param name="rotation">An integer number between 0 and 359</param>
 		public void UpdateRotation(int rotation)
 		{
 			var layer = XFGlossGradientLayer.GetGradientLayer(this);
 			layer?.UpdateRotation(rotation);
 		}
 
+		/// <summary>
+		/// Updates the associated <see cref="T:XFGloss.iOS.Views.XFGlossGradientLayer"/> instance's steps collection.
+		/// </summary>
+		/// <param name="rotation">The steps collection to assign</param>
 		public void UpdateSteps(GradientStepCollection steps)
 		{
 			var layer = XFGlossGradientLayer.GetGradientLayer(this);
@@ -69,12 +91,20 @@ namespace XFGloss.iOS.Views
 		}
 	}
 
+	/// <summary>
+	/// A <see cref="T:CoreAnimation.CAGradientLayer"/> derived class that implements the gradient fill on the iOS
+	/// platform
+	/// </summary>
 	class XFGlossGradientLayer : CAGradientLayer
 	{
 		#region Static methods
 
-		// Creates a new gradient layer and inserts it as a subview if a gradient layer doesn't already exist.
-		// If one does exist, the existing one is updated.
+		/// <summary>
+		/// Creates a new gradient layer and inserts it as a subview if a gradient layer doesn't already exist.
+		/// If one does exist, the existing one is updated.
+		/// </summary>
+		/// <param name="view">The native view the gradient fill is being applied to</param>
+		/// <param name="gradient">The <see cref="T:XFGloss.Gradient"/> instance to copy the fill parameters from</param>
 		static public void CreateGradientLayer(UIView view, Gradient gradient)
 		{
 			// Clear any previously-assigned background color
@@ -98,11 +128,12 @@ namespace XFGloss.iOS.Views
 			{
 				view.Layer.InsertSublayer(gradientLayer, 0);
 			}
-
-			//// Update the gradient layer's frame
-			//gradientLayer.Frame = view.Bounds;
 		}
 
+		/// <summary>
+		/// Removes a previously-created <see cref="T:XFGloss.iOS.XFGlossGradientLayer"/> instance if found
+		/// </summary>
+		/// <param name="view">The native view that the gradient layer is expected to be attached to</param>
 		static public void RemoveGradientLayer(UIView view)
 		{
 			var layer = GetGradientLayer(view);
@@ -114,6 +145,11 @@ namespace XFGloss.iOS.Views
 			}
 		}
 
+		/// <summary>
+		/// Attempts to locate and return a previously-created <see cref="T:XFGloss.iOS.XFGlossGradientLayer"/> instance
+		/// </summary>
+		/// <returns>The <see cref="T:XFGloss.iOS.XFGlossGradientLayer"/> instance if found</returns>
+		/// <param name="view">The native view that the gradient layer is expected to be attached to</param>
 		static public XFGlossGradientLayer GetGradientLayer(UIView view)
 		{
 			if (view.Layer.Sublayers != null && view.Layer.Sublayers.Length > 0 && view.Layer.Sublayers[0] is XFGlossGradientLayer)
@@ -124,7 +160,11 @@ namespace XFGloss.iOS.Views
 			return null;
 		}
 
-		// Helper function that converts a list of Xamarin.Forms.Color instances to iOS CGColor instances
+		/// <summary>
+		/// Helper function that converts a list of Xamarin.Forms.Color instances to iOS CGColor instances
+		/// </summary>
+		/// <returns>An array of CGColor instances</returns>
+		/// <param name="steps">The colection of <see cref="T:XFGloss.GradientStep"/> instances to be converted</param>
 		static CGColor[] ToCGColors(GradientStepCollection steps)
 		{
 			List<CGColor> result = new List<CGColor>();
@@ -137,7 +177,11 @@ namespace XFGloss.iOS.Views
 			return result.ToArray();
 		}
 
-		// Helper function that converts a list of float instances to NSNumbers
+		/// <summary>
+		/// Helper function that converts a list of step percentages to NSNumbers
+		/// </summary>
+		/// <returns>An array of NSNumber instances</returns>
+		/// <param name="steps">The colection of <see cref="T:XFGloss.GradientStep"/> instances to be converted</param>
 		static public NSNumber[] ToNSNumbers(GradientStepCollection steps)
 		{
 			List<NSNumber> result = new List<NSNumber>();
@@ -165,6 +209,11 @@ namespace XFGloss.iOS.Views
 		Gradient _gradientSource;
 		WeakReference<UIView> _gradientView;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.iOS.Views.XFGlossGradientLayer"/> class.
+		/// </summary>
+		/// <param name="gradientView">The native UIView to attach the gradient layer to</param>
+		/// <param name="gradient">The <see cref="T:XFGloss.Gradient"/> instance to copy property values from</param>
 		public XFGlossGradientLayer(UIView gradientView, Gradient gradient)
 		{
 			_gradientSource = new Gradient();
@@ -173,6 +222,10 @@ namespace XFGloss.iOS.Views
 			UpdateGradientLayerParams(gradient);
 		}
 
+		/// <summary>
+		/// Dispose any created resources and prepare the instance for garbage collection
+		/// </summary>
+		/// <param name="disposing">If set to <c>true</c>, dispose any created resources</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
@@ -184,6 +237,10 @@ namespace XFGloss.iOS.Views
 			base.Dispose(disposing);
 		}
 
+		/// <summary>
+		/// Gets or sets the gradient source.
+		/// </summary>
+		/// <value>The <see cref="T:XFGloss.Gradient"/> source.</value>
 		public Gradient GradientSource
 		{
 			get
@@ -203,6 +260,11 @@ namespace XFGloss.iOS.Views
 			}
 		}
 
+		/// <summary>
+		/// Updates an existing gradient layer's parameters, if found, from the provided <see cref="T:XFGloss.Gradient"/>
+		/// instance.
+		/// </summary>
+		/// <param name="gradient">Gradient.</param>
 		void UpdateGradientLayerParams(Gradient gradient)
 		{
 			// If a layer currently exists but the gradient is being set to null...
@@ -220,6 +282,10 @@ namespace XFGloss.iOS.Views
 			UpdateSteps(gradient.Steps);
 		}
 
+		/// <summary>
+		/// Updates an existing gradient layer's rotation value, if found.
+		/// </summary>
+		/// <param name="rotation">An integer number between 0 and 359</param>
 		public void UpdateRotation(int rotation)
 		{
 			var gradient = GradientSource ?? new Gradient();
@@ -242,6 +308,11 @@ namespace XFGloss.iOS.Views
 			}
 		}
 
+		/// <summary>
+		/// Updates an existing gradient layer's colors and position percentage values, if found
+		/// </summary>
+		/// <param name="steps">The <see cref="T:XFGloss.GradientStepCollection"/> of 
+		/// <see cref="T:XFGloss.GradientStep"/> instances</param>
 		public void UpdateSteps(GradientStepCollection steps)
 		{
 			var gradient = GradientSource ?? new Gradient();

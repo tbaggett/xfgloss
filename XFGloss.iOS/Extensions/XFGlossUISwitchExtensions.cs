@@ -22,8 +22,19 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace XFGloss.iOS.Extensions
 {
+	/// <summary>
+	/// Extension methods for the <see cref="T:Xamarin.Forms.Switch"/> control to apply the
+	/// <see cref="T:Xamarin.Forms.Color"/> values to an iOS UISwitch control
+	/// </summary>
 	public static class XFGlossUISwitchExtensions
 	{
+		/// <summary>
+		/// An extension method that applies all of the current properties defined by the passed
+		/// <see cref="T:XFGloss.ISwitchGloss"/> interface implementation to the iOS UISwitch control
+		/// </summary>
+		/// <param name="control">Control.</param>
+		/// <param name="properties">Properties.</param>
+		/// <param name="propertyName">Property name.</param>
 		public static void UpdateColorProperty(this UISwitch control, ISwitchGloss properties, string propertyName)
 		{
 			if (control == null || properties == null)
