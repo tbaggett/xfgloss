@@ -20,10 +20,18 @@ namespace XFGloss
 {
 	// Supported on iOS only currently
 
-	// DetailDisclosureButton and DetailButton are disabled until we can access the detail button 
-	// tapped method in the table view source for both the ListView (currently not possible) and 
-	// TableView (currently possible) classes.
+	// 
+	// 
+	// 
 
+	/// <summary>
+	/// An enumeration that specifies the accessory view type for a <see cref="T:Xamarin.Forms.Cell"/> on the iOS
+	/// platform. The enumeration values are based on the available accessory view types on the iOS platform's
+	/// <see cref="T:UIKit.UITableViewCell"/> class, however the DetailDisclosureButton and DetailButton are disabled 
+	/// until we can access the detail button tapped method in the table view source for both the 
+	/// <see cref="T:Xamarin.Forms.ListView"/> (currently not possible) and <see cref="T:Xamarin.Forms.TableView"/>
+	/// (currently possible) classes. This enumeration is not used on the Android platform.
+	/// </summary>
 	public enum CellGlossAccessoryType
 	{
 		None,

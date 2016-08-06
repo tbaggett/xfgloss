@@ -22,8 +22,19 @@ using XFGloss.Droid.Utils;
 
 namespace XFGloss.Droid.Extensions
 {
+	/// <summary>
+	/// Extension methods for the <see cref="T:Xamarin.Forms.Switch"/> control to apply the
+	/// <see cref="T:Xamarin.Forms.Color"/> values to an Android Switch control
+	/// </summary>
 	public static class XFGlossSwitchExtensions
 	{
+		/// <summary>
+		/// An extension method that applies all of the current properties defined by the passed
+		/// <see cref="T:XFGloss.ISwitchGloss"/> interface implementation to the Android Switch control
+		/// </summary>
+		/// <param name="control">Control.</param>
+		/// <param name="properties">Properties.</param>
+		/// <param name="propertyName">Property name.</param>
 		public static void UpdateColorProperty(this Android.Widget.Switch control, ISwitchGloss properties, string propertyName)
 		{
 			// We have to create a multiple state color list to set both the "off" and "on" (checked/unchecked)

@@ -474,7 +474,7 @@ namespace XFGloss
 		public override bool UpdateProperties(string glossPropertyName, IGradientRenderer renderer, string elementPropertyChangedName = null)
 		{
 			// Check for this being the first time application of a gradient or an update
-			if (!renderer.IsUpdating(glossPropertyName))
+			if (!renderer.CanUpdate(glossPropertyName))
 			{
 				// If this is the first time application, check for all the needed properties having values assigned
 				if (elementPropertyChangedName == null || IsPropertyOf(elementPropertyChangedName))

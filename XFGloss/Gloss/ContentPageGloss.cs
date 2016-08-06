@@ -19,10 +19,18 @@ using Xamarin.Forms;
 
 namespace XFGloss
 {
+	/// <summary>
+	/// Provides attached bindable properties for use with <see cref="T:Xamarin.Forms.ContentPage"/> derived classes and
+	/// CellGloss instance-based accessors.
+	/// </summary>
 	public class ContentPageGloss
 	{
 		#region BackgroundGradient
 
+		/// <summary>
+		/// Allows a <see cref="T:XFGloss.Gradient"/> instance to be assigned as a multiple step gradient fill to
+		/// <see cref="T:Xamarin.Forms.ContentPage"/> derived classes.
+		/// </summary>
 		public static readonly BindableProperty BackgroundGradientProperty =
 			BindableProperty.CreateAttached("BackgroundGradient", typeof(Gradient), typeof(Cell), null);
 
@@ -43,11 +51,21 @@ namespace XFGloss
 
 		WeakReference<BindableObject> _bindable;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.ContentPageGloss"/> class. Used as a convenient way 
+		/// to assign multiple XFGloss property values to the target <see cref="Xamarin.Forms.BindableObject"/> instance.
+		/// </summary>
+		/// <param name="bindable">Bindable.</param>
 		public ContentPageGloss(BindableObject bindable)
 		{
 			_bindable = new WeakReference<BindableObject>(bindable);
 		}
 
+		/// <summary>
+		/// Gets or sets the <see cref="T:Xamarin.Forms.BindableObject"/> that the 
+		/// <see cref="T:XFGloss.ContentPageGloss"/> instance methods will retrieve values from or assign values to.
+		/// </summary>
+		/// <value>The bindable.</value>
 		public BindableObject Bindable
 		{
 			get
@@ -67,6 +85,11 @@ namespace XFGloss
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the <see cref="T:XFGloss.Gradient"/> instance of the background gradient for the assigned
+		/// <see cref="T:XFGloss.ContentPageGloss.Bindable"/> instance.
+		/// </summary>
+		/// <value>The background gradient.</value>
 		public Gradient BackgroundGradient
 		{
 			get { return GetBackgroundGradient(Bindable); }

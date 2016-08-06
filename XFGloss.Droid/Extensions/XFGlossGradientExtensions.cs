@@ -20,8 +20,18 @@ using Xamarin.Forms.Platform.Android;
 
 namespace XFGloss.Droid.Extensions
 {
+	/// <summary>
+	/// Extension methods for the <see cref="T:XFGloss.Gradient"/> class to convert <see cref="T:Xamarin.Forms.Color"/>
+	/// and step percentage values to Android-specific data values.
+	/// </summary>
 	public static class XFGlossGradientExtensions
 	{
+		/// <summary>
+		/// Converts each of the <see cref="T:XFGloss.Gradient"/> steps' <see cref="T:Xamarin.Forms.Color"/> values to
+		/// Android color values
+		/// </summary>
+		/// <returns>An array of Android color values</returns>
+		/// <param name="self">The <see cref="T:XFGloss.Gradient"/> instance to apply the method to</param>
 		static public int[] ToAndroidColorValues(this Gradient self)
 		{
 			List<int> result = new List<int>();
@@ -34,6 +44,11 @@ namespace XFGloss.Droid.Extensions
 			return result.ToArray();
 		}
 
+		/// <summary>
+		/// Converts each of the <see cref="T:XFGloss.Gradient"/> steps' percentage values to Android step values
+		/// </summary>
+		/// <returns>An array of floats that represents the <see cref="T:XFGloss.Gradient"/> steps' percentages</returns>
+		/// <param name="self">The <see cref="T:XFGloss.Gradient"/> instance to apply the method to</param>
 		static public float[] ToAndroidPercentages(this Gradient self)
 		{
 			List<float> result = new List<float>();
@@ -43,7 +58,7 @@ namespace XFGloss.Droid.Extensions
 			{
 				if (lastStep > step.StepPercentage)
 				{
-					throw new ArgumentOutOfRangeException("GradientStep.StepPercentage", "The current StepPercentage " +
+					throw new ArgumentOutOfRangeException(nameof(GradientStep.StepPercentage), "The current StepPercentage " +
 														  "value must be greater than zero and the previous " +
 														  " StepPercentage value.");
 				}

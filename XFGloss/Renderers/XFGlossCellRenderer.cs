@@ -23,12 +23,27 @@ namespace XFGloss
 {
 	#region XFGlossCellRenderer base class
 
-	// Empty base class used for list in the above locator and inherited from below in the cross-platform implementation
-	public class XFGlossCellRenderer { }
+	/// <summary>
+	/// Empty base class used by XFGlossCellRendererLocator and inherited from below in the cross-platform implementation
+	/// </summary>
+	public abstract class XFGlossCellRenderer { }
 
+	/// <summary>
+	/// The base cross-platform XFGloss cell renderer class used by the platform-specific implementations. Used to 
+	/// manage tracking of property changes in the associated <see cref="T:Xamarin.Forms.Cell"/>-derived classes and
+	/// their platform-specific implementations.
+	/// </summary>
 	public abstract class XFGlossCellRenderer<TNativeView> : XFGlossCellRenderer, IDisposable where TNativeView : class 
 	{
 		// Static method intended for calling from platform-specific XF cell renderers
+		/// <summary>
+		/// Static method called from the platform-specific XFGlossCellRenderer classes to apply current or updated
+		/// property values to the platform-specific feature implementations
+		/// </summary>
+		/// <param name="cell">The associated <see cref="T:Xamarin.Forms.Cell"/> instance</param>
+		/// <param name="nativeCell">The platform-specific native cell component instance</param>
+		/// <param name="createRendererFunc">A factory function used to create a new platform-specific 
+		/// XFGlossCellRenderer-derived class instance if one doesn't currently exist.</param>
 		public static void UpdateProperties(Cell cell, TNativeView nativeCell, Func<XFGlossCellRenderer<TNativeView>> createRendererFunc)
 		{
 			XFGlossCellRenderer<TNativeView> renderer = XFGlossCellRendererLocator<TNativeView>.GetRenderer(cell, nativeCell);
@@ -75,8 +90,11 @@ namespace XFGloss
 			renderer.UpdateProperties();
 		}
 
-		// Convenience method to retrieve XF and native cell instance references when only the property being changed is
-		// available
+		/// <summary>
+		/// Convenience method to retrieve XF and native cell instance references when only the property being changed 
+		/// is available.
+		/// </summary>
+		/// <param name="propertyName">Property name.</param>
 		protected virtual void UpdateProperties(string propertyName = null)
 		{
 			Cell cell;
@@ -88,11 +106,23 @@ namespace XFGloss
 			}
 		}
 
-		// This method should be implemented by inheriting platform-specific classes and properties should be applied
-		// to the native elements.
+		/// <summary>
+		/// This method should be implemented by inheriting platform-specific classes and properties should be applied
+		/// to the native elements.
+		/// </summary>
+		/// <param name="cell">The associated <see cref="T:Xamarin.Forms.Cell"/>-derived class instance</param>
+		/// <param name="nativeCell">The platform-specific native cell control class instance</param>
+		/// <param name="propertyName">The name of the property whose value has changed</param>
 		protected abstract void UpdateProperties(Cell cell, TNativeView nativeCell, string propertyName);
 
-		// Detach ourselves from any remaining XFGlossElement instances
+		/// <summary>
+		/// Releases all resources used by the <see cref="T:XFGloss.XFGlossCellRenderer"/> object.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="T:XFGloss.XFGlossCellRenderer"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="T:XFGloss.XFGlossCellRenderer"/> in an unusable state. After
+		/// calling <see cref="Dispose"/>, you must release all references to the
+		/// <see cref="T:XFGloss.XFGlossCellRenderer"/> so the garbage collector can reclaim the memory that the
+		/// <see cref="T:XFGloss.XFGlossCellRenderer"/> was occupying.</remarks>
 		public virtual void Dispose()
 		{
 			if (this is IGradientRenderer)
@@ -106,6 +136,12 @@ namespace XFGloss
 		#region XF and native cell access
 
 		WeakReference<Cell> _cell;
+		/// <summary>
+		/// Gets a strong reference to the <see cref="T:Xamarin.Forms.Cell"/>-based class instance if it is still
+		/// available.
+		/// </summary>
+		/// <returns>A <see cref="T:Xamarin.Forms.Cell/> instance if the associated cell hasn't been garbage 
+		/// collected."/></returns>
 		public Cell GetCell()
 		{
 			Cell result;
@@ -126,6 +162,12 @@ namespace XFGloss
 		}
 
 		WeakReference<TNativeView> _nativeCell;
+		/// <summary>
+		/// Gets a strong reference to the platform-specific cell control-based class instance if it is still
+		/// available.
+		/// </summary>
+		/// <returns>A platform-specific cell control's instance if the associated instance hasn't been garbage 
+		/// collected."/></returns>
 		public TNativeView GetNativeCell()
 		{
 			TNativeView result;
@@ -139,6 +181,15 @@ namespace XFGloss
 		}
 
 		// Returns true if both cells are valid
+		/// <summary>
+		/// Gets strong references to both the <see cref="T:Xamarin.Forms.Cell"/>-derived class instance and the
+		/// platform-specific cell control instance if they haven't been garbage collected.
+		/// </summary>
+		/// <returns><c>true</c>, if both cell controls are still available, <c>false</c> otherwise.</returns>
+		/// <param name="cell">A <see cref="T:Xamarin.Forms.Cell"/> field/property to assign the Cell to if it is
+		/// still available</param>
+		/// <param name="nativeCell">A platform-specific field/property to assign the native cell to if it is still
+		/// available.</param>
 		protected bool GetCells(out Cell cell, out TNativeView nativeCell)
 		{
 			// Do a little locator management here in the base class implementation. Derived classes are responsible for
@@ -156,31 +207,47 @@ namespace XFGloss
 
 		#region PropertyChanging/Changed Handlers
 
-		// Private event handler needed to redirect call to method that returns a bool to indicate if overridden versions
-		// should continue processing.
+		/// <summary>
+		/// Private event handler needed to redirect call to a virtual method that can be overridden by deriving classes.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="args">Arguments.</param>
 		void BindablePropertyChangingHandler(object sender, PropertyChangingEventArgs args)
 		{
 			ElementPropertyChanging(sender, args);
 		}
 
-		protected virtual bool ElementPropertyChanging(object sender, PropertyChangingEventArgs args)
+		/// <summary>
+		/// A virtual method that is called whenever the PropertyChanging event has been fired for the associated
+		/// <see cref="T:Xamarin.Forms.Cell"/> instance.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="args">Arguments.</param>
+		protected virtual void ElementPropertyChanging(object sender, PropertyChangingEventArgs args)
 		{
 			if (args.PropertyName == CellGloss.BackgroundGradientProperty.PropertyName)
 			{
 				var bkgrndGradient = (Gradient)GetCell()?.GetValue(CellGloss.BackgroundGradientProperty);
 				bkgrndGradient?.DetachRenderer(this as IGradientRenderer);
 			}
-
-			return true;
 		}
 
-		// Private event handler needed to redirect call to method that returns a bool to indicate if overridden versions
-		// should continue processing.
+		/// <summary>
+		/// Private event handler needed to redirect call to a virtual method that can be overridden by deriving classes.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="args">Arguments.</param>
 		void BindablePropertyChangedHandler(object sender, PropertyChangedEventArgs args)
 		{
 			ElementPropertyChanged(sender, args);
 		}
 
+		/// <summary>
+		/// A virtual method that is called whenever the PropertyChanged event has been fired for the associated
+		/// <see cref="T:Xamarin.Forms.Cell"/> instance.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="args">Arguments.</param>
 		protected virtual void ElementPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			// Check all the properties that all cell types support for changes
@@ -206,13 +273,27 @@ namespace XFGloss
 
 	#region XFGlossCellRendererLocator
 
-	public abstract class XFGlossCellRendererLocator
+	/// <summary>
+	/// Locator base class containing a single static list of <see cref="T:XFGloss.XFGlossCellRenderer"/> instances
+	/// </summary>
+	abstract class XFGlossCellRendererLocator
 	{
 		static protected readonly List<XFGlossCellRenderer> _renderers = new List<XFGlossCellRenderer>();
 	}
 
-	public class XFGlossCellRendererLocator<TNativeView> : XFGlossCellRendererLocator where TNativeView : class
+	/// <summary>
+	/// XFGlossCellRenderer locator class used to track and locate <see cref="T:XFGloss.XFGlossCellRenderer"/> 
+	/// instances when needed.
+	/// </summary>
+	class XFGlossCellRendererLocator<TNativeView> : XFGlossCellRendererLocator where TNativeView : class
 	{
+		/// <summary>
+		/// Locates a previously created <see cref="T:XFGloss.XFGlossCellRenderer"/> instance for the provided
+		/// <see cref="T:Xamarin.Forms.Cell"/> and platform-specific native cell component instance if one exists.
+		/// </summary>
+		/// <returns>The <see cref="T:XFGloss.XFGlossCellRenderer"/> instance if found or null if not found.</returns>
+		/// <param name="cell">The <see cref="T:Xamarin.Forms.Cell"/> instance</param>
+		/// <param name="nativeCell">The platform-specific native cell component instance</param>
 		public static XFGlossCellRenderer<TNativeView> GetRenderer(Cell cell, TNativeView nativeCell)
 		{
 			XFGlossCellRenderer<TNativeView> renderer = null;
@@ -234,11 +315,21 @@ namespace XFGloss
 			return renderer;
 		}
 
+		/// <summary>
+		/// Adds a <see cref="T:XFGloss.XFGlossCellRenderer"/> instance to the locator for tracking
+		/// </summary>
+		/// <param name="renderer">The <see cref="T:XFGloss.XFGlossCellRenderer"/> to be tracked.</param>
 		public static void AddRenderer(XFGlossCellRenderer<TNativeView> renderer)
 		{
 			_renderers.Add(renderer);
 		}
 
+		/// <summary>
+		/// Removes the <see cref="T:XFGloss.XFGlossCellRenderer"/> instance from the locator list if found.
+		/// </summary>
+		/// <returns><c>true</c>, if renderer was removed, <c>false</c> otherwise.</returns>
+		/// <param name="renderer">The <see cref="T:XFGloss.XFGlossCellRenderer"/> that should no longer be tracked.
+		/// </param>
 		public static bool RemoveRenderer(XFGlossCellRenderer<TNativeView> renderer)
 		{
 			return _renderers.Remove(renderer);

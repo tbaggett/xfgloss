@@ -49,7 +49,7 @@ namespace XFGloss.iOS.Renderers
 			//}
 		}
 
-		public virtual bool IsUpdating(string propertyName)
+		public virtual bool CanUpdate(string propertyName)
 		{
 			// No need to check property name yet. BackgroundGradient is the only property currently supported.
 			var nativeCell = GetNativeCell();

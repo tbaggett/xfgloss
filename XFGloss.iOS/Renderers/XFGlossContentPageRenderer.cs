@@ -40,7 +40,7 @@ namespace XFGloss.iOS.Renderers
 			}
 		}
 
-		public bool IsUpdating(string propertyName)
+		public bool CanUpdate(string propertyName)
 		{
 			// No need to check property name yet, BackgroundGradient is the only one being handled here.
 			return XFGlossGradientLayer.GetGradientLayer(NativeView) != null;
