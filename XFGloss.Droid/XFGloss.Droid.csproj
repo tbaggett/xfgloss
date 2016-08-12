@@ -92,6 +92,7 @@
     <Compile Include="Drawables\XFGlossPaintDrawable.cs" />
     <Compile Include="Renderers\XFGlossContentPageRenderer.cs" />
     <Compile Include="Renderers\XFGlossSliderRenderer.cs" />
+    <Compile Include="Renderers\XFGlossSwitchCompatRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

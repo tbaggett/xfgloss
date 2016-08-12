@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System;
 using Android.Content.Res;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -80,10 +81,20 @@ namespace XFGloss.Droid.Renderers
 			{
 				var maxTrackTintColor = (Color)Element.GetValue(SliderGloss.MaxTrackTintColorProperty);
 
-				Control.ProgressBackgroundTintList = 
-					ColorStateList.ValueOf((maxTrackTintColor == Color.Default) ? 
-					                       ThemeUtil.IntToColor(ThemeUtil.ColorControlNormal(Control.Context, defaultColor)) : 
-				    						maxTrackTintColor.ToAndroid());
+				if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+				{
+					Control.ProgressBackgroundTintList =
+						ColorStateList.ValueOf((maxTrackTintColor == Color.Default) ?
+											   ThemeUtil.IntToColor(ThemeUtil.ColorControlNormal(Control.Context, defaultColor)) :
+												maxTrackTintColor.ToAndroid());
+				}
+				else
+				{
+					#if DEBUG
+					Console.WriteLine("XFGloss: Android.Widget.Slider tinting isn't supported prior to Android API 23" +
+									  " (Marshmallow).");
+					#endif
+				}
 			}
 
 			// MinTrackTintColor Property
@@ -91,10 +102,20 @@ namespace XFGloss.Droid.Renderers
 			{
 				var minTrackTintColor = (Color)Element.GetValue(SliderGloss.MinTrackTintColorProperty);
 
-				Control.ProgressTintList = 
-					ColorStateList.ValueOf((minTrackTintColor == Color.Default) ?
-					                       ThemeUtil.IntToColor(ThemeUtil.ColorAccent(Control.Context, defaultColor)) :
-										   minTrackTintColor.ToAndroid());
+				if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+				{
+					Control.ProgressTintList = 
+						ColorStateList.ValueOf((minTrackTintColor == Color.Default) ?
+						                       ThemeUtil.IntToColor(ThemeUtil.ColorAccent(Control.Context, defaultColor)) :
+											   minTrackTintColor.ToAndroid());
+				}
+				else
+				{
+					#if DEBUG
+					Console.WriteLine("XFGloss: Android.Widget.Slider tinting isn't supported prior to Android API 23" +
+									  " (Marshmallow).");
+					#endif
+				}
 			}
 
 			// ThumbTintColor Property
@@ -102,10 +123,20 @@ namespace XFGloss.Droid.Renderers
 			{
 				var thumbTintColor = (Color)Element.GetValue(SliderGloss.ThumbTintColorProperty);
 
-				Control.ThumbTintList = 
-					ColorStateList.ValueOf((thumbTintColor == Color.Default) ?
-										   ThemeUtil.IntToColor(ThemeUtil.ColorAccent(Control.Context, defaultColor)) :
-					                       thumbTintColor.ToAndroid());
+				if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+				{
+					Control.ThumbTintList = 
+						ColorStateList.ValueOf((thumbTintColor == Color.Default) ?
+											   ThemeUtil.IntToColor(ThemeUtil.ColorAccent(Control.Context, defaultColor)) :
+						                       thumbTintColor.ToAndroid());
+				}
+			}
+			else
+			{
+				#if DEBUG
+				Console.WriteLine("XFGloss: Android.Widget.Slider tinting isn't supported prior to Android API 23" +
+								  " (Marshmallow).");
+				#endif
 			}
 		}
 	}
