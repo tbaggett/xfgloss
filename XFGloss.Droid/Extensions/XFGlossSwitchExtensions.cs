@@ -60,10 +60,6 @@ namespace XFGloss.Droid.Extensions
 			XFGlossSwitchExtensions.ApplyColorProperty(control, properties, propertyName);
 		}
 
-		const string appCompatWarning = "XFGloss: Android control tinting isn't supported prior to Android API 23" +
-										" (Marshmallow) unless you're using the Android AppCompat library, which " +
-										"provides support back to API 16 (JellyBean).";
-
 		/// <summary>
 		/// Internal method used to do the work on behalf of the UpdateColorProperty extension method for both
 		/// XFGlossSwitchExtensions and XFGlossSwitchCompatExtensions
@@ -98,42 +94,48 @@ namespace XFGloss.Droid.Extensions
 				var tintColor = properties.TintColor;
 				var onTintColor = properties.OnTintColor;
 
-				// Clamp the track tint colors to 30% opacity - API 24 automatically does this. AppCompat doesn't.
-				if (isSwitchCompat)
+				// Skip assigning anything if all properties are being applied and the color is set to the default value
+				if (propertyName != null || tintColor != Color.Default || onTintColor != Color.Default)
 				{
-					if (tintColor != Color.Default)
+					// Clamp the track tint colors to 30% opacity - API 24 automatically does this. AppCompat doesn't.
+					if (isSwitchCompat)
 					{
-						tintColor = new Color(tintColor.R, tintColor.G, tintColor.B, 0.3);
+						if (tintColor != Color.Default)
+						{
+							tintColor = new Color(tintColor.R, tintColor.G, tintColor.B, 0.3);
+						}
+						if (onTintColor != Color.Default)
+						{
+							onTintColor = new Color(onTintColor.R, onTintColor.G, onTintColor.B, 0.3);
+						}
 					}
-					if (onTintColor != Color.Default)
+
+					states[0] = new int[] { -Android.Resource.Attribute.StateChecked };
+					colors[0] = (tintColor != Color.Default) ?
+								tintColor.ToAndroid() :
+								new AColor(ThemeUtil.ColorControlNormal(controlContext,
+																		ThemeUtil.DefaultColorControlTrack));
+
+					states[1] = new int[] { Android.Resource.Attribute.StateChecked };
+					colors[1] = (onTintColor != Color.Default) ?
+								onTintColor.ToAndroid() :
+								new AColor(ThemeUtil.ColorControlActivated(controlContext,
+																		   ThemeUtil.DefaultColorControlTrackActivated));
+
+					var colorList = new ColorStateList(states, colors);
+
+					if (isSwitch)
 					{
-						onTintColor = new Color(onTintColor.R, onTintColor.G, onTintColor.B, 0.3);
+						(control as ASwitch).TrackTintList = colorList;
 					}
-				}
-
-				states[0] = new int[] { -Android.Resource.Attribute.StateChecked };
-				colors[0] = (tintColor != Color.Default) ?
-							tintColor.ToAndroid() :
-							new AColor(ThemeUtil.ColorControlNormal(controlContext, new AColor(175, 175, 175, 77)));
-
-				states[1] = new int[] { Android.Resource.Attribute.StateChecked };
-				colors[1] = (onTintColor != Color.Default) ?
-							onTintColor.ToAndroid() :
-							new AColor(ThemeUtil.ColorControlActivated(controlContext, new AColor(252, 69, 125, 77)));
-
-				var colorList = new ColorStateList(states, colors);
-
-				if (isSwitch)
-				{
-					(control as ASwitch).TrackTintList = colorList;
-				}
-				else if (isSwitchCompat)
-				{
-					DrawableCompat.SetTintList((control as ASwitchCompat).TrackDrawable, colorList);
-				}
-				else
-				{
-					Console.WriteLine(appCompatWarning);
+					else if (isSwitchCompat)
+					{
+						DrawableCompat.SetTintList((control as ASwitchCompat).TrackDrawable, colorList);
+					}
+					else
+					{
+						Console.WriteLine(XFGloss.Droid.Library.appCompatWarning);
+					}
 				}
 			}
 
@@ -144,33 +146,34 @@ namespace XFGloss.Droid.Extensions
 				var thumbTintColor = properties.ThumbTintColor;
 				var thumbOnTintColor = properties.ThumbOnTintColor;
 
-				states[0] = new int[] { -Android.Resource.Attribute.StateChecked };
-				colors[0] = (thumbTintColor != Color.Default) ?
-							thumbTintColor.ToAndroid() :
-							// Default thumb color...
-							// Xamarin.Android doesn't have the needed ColorSwitchThumbNormal ID defined yet
-							new AColor(175, 175, 175, 255);
-
-				states[1] = new int[] { Android.Resource.Attribute.StateChecked };
-				colors[1] = (thumbOnTintColor != Color.Default) ?
-							thumbOnTintColor.ToAndroid() :
-							new AColor(ThemeUtil.ColorControlActivated(controlContext, 
-				                                                       // Default Thumb On color
-				                                                       new AColor(252, 69, 125, 255)));
-
-				var colorList = new ColorStateList(states, colors);
-
-				if (isSwitch)
+				// Skip assigning anything if all properties are being applied and the color is set to the default value
+				if (propertyName != null || thumbTintColor != Color.Default || thumbOnTintColor != Color.Default)
 				{
-					(control as ASwitch).ThumbTintList = colorList;
-				}
-				else if (isSwitchCompat)
-				{
-					DrawableCompat.SetTintList((control as ASwitchCompat).ThumbDrawable, colorList);
-				}
-				else
-				{
-					Console.WriteLine(appCompatWarning);
+					states[0] = new int[] { -Android.Resource.Attribute.StateChecked };
+					colors[0] = (thumbTintColor != Color.Default) ?
+								thumbTintColor.ToAndroid() :
+							  	ThemeUtil.DefaultColorControlThumb;
+
+					states[1] = new int[] { Android.Resource.Attribute.StateChecked };
+					colors[1] = (thumbOnTintColor != Color.Default) ?
+								thumbOnTintColor.ToAndroid() :
+								new AColor(ThemeUtil.ColorControlActivated(controlContext,
+																		   ThemeUtil.DefaultColorControlThumbActivated));
+
+					var colorList = new ColorStateList(states, colors);
+
+					if (isSwitch)
+					{
+						(control as ASwitch).ThumbTintList = colorList;
+					}
+					else if (isSwitchCompat)
+					{
+						DrawableCompat.SetTintList((control as ASwitchCompat).ThumbDrawable, colorList);
+					}
+					else
+					{
+						Console.WriteLine(XFGloss.Droid.Library.appCompatWarning);
+					}
 				}
 			}
 		}

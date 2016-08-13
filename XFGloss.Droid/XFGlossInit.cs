@@ -60,6 +60,10 @@ namespace XFGloss.Droid
 			}
 		}
 
+		internal const string appCompatWarning = "XFGloss: Android control tinting isn't supported prior to Android " +
+												 "API 23 (Marshmallow) unless you're using the Android AppCompat " +
+												 "library, which provides support back to API 16 (JellyBean).";
+
 		static FormsAppCompatActivity ContextAsAppCompatActivity(Context context)
 		{
 			return context as FormsAppCompatActivity;

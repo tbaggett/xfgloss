@@ -16,8 +16,11 @@
 
 using System;
 using Android.Content;
+using Android.Content.Res;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.Support.V4.Content;
+using Android.Support.V4.Graphics.Drawable;
 using Android.Util;
 
 namespace XFGloss.Droid.Utils
@@ -224,5 +227,32 @@ namespace XFGloss.Droid.Utils
 		{
 			return ColorFromResourceId(context, Android.Resource.Attribute.ColorButtonNormal, defaultValue);
 		}
+
+		public static void SetLayerTint(LayerDrawable drawable, int index, Color color)
+		{
+			if (drawable?.NumberOfLayers > index)
+			{
+				var layer = drawable.GetDrawable(index);
+				var wrapper = DrawableCompat.Wrap(layer);
+				DrawableCompat.SetTint(wrapper, color);
+			}
+		}
+
+		public static void SetLayerTintList(LayerDrawable drawable, int index, ColorStateList colorList)
+		{
+			if (drawable?.NumberOfLayers > index)
+			{
+				var layer = drawable.GetDrawable(index);
+				var wrapper = DrawableCompat.Wrap(layer);
+				DrawableCompat.SetTintList(wrapper, colorList);
+			}
+		}
+
+		// Helper values for use with the AppCompat library
+		public static readonly int DefaultColorControlThumb = new Color(175, 175, 175, 255).ToArgb();
+		public static readonly int DefaultColorControlThumbActivated = new Color(252, 69, 125, 255).ToArgb();
+
+		public static readonly int DefaultColorControlTrack = new Color(175, 175, 175, 77).ToArgb();
+		public static readonly int DefaultColorControlTrackActivated = new Color(252, 69, 125, 77).ToArgb();
 	}
 }

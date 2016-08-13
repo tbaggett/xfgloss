@@ -54,6 +54,7 @@
     <Folder Include="Events\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Elements\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
