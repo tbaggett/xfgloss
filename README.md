@@ -435,7 +435,9 @@ XFGloss also provides a new SwitchCell renderer for the Android platform when us
 
 *Default XF SwitchCell renderer under Android Jellybean on the left, XFGloss SwitchCompat-based renderer on the right*
 
-**This option can be disabled** by setting the *XFGloss.Droid.Library.UsingSwitchCompatCell* property to false BEFORE calling the Init method, like so:
+**This option can be disabled** if the previous styling is preferred. However, the custom XFGloss tinting properties will not be applied if the standard SwitchCell renderer is used.
+
+To disable the use of the SwitchCompat-based renderer, set the *XFGloss.Droid.Library.UsingSwitchCompatCell* property to false **BEFORE** calling the Init method, like so:
 
 **Android MainActivity.cs:**
 ```csharp
