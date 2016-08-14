@@ -491,37 +491,46 @@ A complete list of the XF renderers that are customized by XFGloss is provided b
 	<tr>
 		<th>XF Renderer</th>
 		<th>XFG Renderer</th>
+		<th>XFG Renderer on Android API < 23 w/AppCompat
 	</tr>
 	<tr>
 		<td>EntryCellRenderer</td>
 		<td>XFGlossEntryCellRenderer</td>
+		<td/>
 	</tr>
 	<tr>
 		<td>ImageCellRenderer</td>
 		<td>XFGlossImageCellRenderer</td>
+		<td/>
 	</tr>
 	<tr>
 		<td>PageRenderer*</td>
 		<td>XFGlossContentPageRenderer</td>
+		<td/>
 	</tr>
 	<tr>
 		<td>SliderRenderer</td>
 		<td>XFGlossSliderRenderer</td>
+		<td/>
 	<tr>
 		<td>SwitchRenderer</td>
 		<td>XFGlossSwitchRenderer</td>
+		<td>XFGlossSwitchCompatRenderer</td>
 	</tr>
 	<tr>
 		<td>SwitchCellRenderer</td>
 		<td>XFGlossSwitchCellRenderer</td>
+		<td>XFGlossSwitchCompatCellRenderer</td>
 	</tr>
 	<tr>
 		<td>TextCellRenderer</td>
 		<td>XFGlossTextCellRenderer</td>
+		<td/>
 	</tr>
 	<tr>
 		<td>ViewCellRenderer</td>
 		<td>XFGlossViewCellRenderer</td>
+		<td/>
 	</tr>
 </table>
 
