@@ -427,11 +427,13 @@ Using statement needed in C# files:
 	using XFGloss;
 
 ## Using XFGloss With the Android AppCompat Package
-XFGloss has been tested with Android APIs 16 (Jellybean) through 23 (Marshmallow). The Android AppCompat library must be used on Android devices running an OS prior to Marshmallow in order for all of the custom XFGloss properties to work correctly.
+XFGloss has been tested with Android APIs 16 (Jellybean) through 23 (Marshmallow). The Android AppCompat library must be used on Android devices running an OS prior to Marshmallow in order for the custom XFGloss properties to work correctly.
 
 XFGloss also provides a new SwitchCell renderer for the Android platform when using the AppCompat library. The new renderer utilizes the SwitchCompat component instead of the standard Android Switch control, resulting in a material design styled switch instead of the previous styling, as seen below.
 
 ![TintColor Example](images/android_api16_switchcompatcell.jpg)
+
+*Default XF SwitchCell renderer on the left, XFGloss SwitchCompat-based renderer on the right*
 
 **This option can be disabled** by setting the *XFGloss.Droid.Library.UsingSwitchCompatCell* property to false BEFORE calling the Init method, like so:
 
