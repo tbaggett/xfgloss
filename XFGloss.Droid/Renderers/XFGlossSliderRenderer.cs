@@ -33,23 +33,14 @@ namespace XFGloss.Droid.Renderers
 	/// The Android platform-specific Xamarin.Forms renderer used for all <see cref="T:Xamarin.Forms.Slider"/>
 	/// derived classes.
 	/// </summary>
-	public class XFGlossSliderRenderer : ViewRenderer<Slider, SeekBar>, SeekBar.IOnSeekBarChangeListener, IJavaObject, IDisposable
+	public class XFGlossSliderRenderer : ViewRenderer<Slider, SeekBar>, SeekBar.IOnSeekBarChangeListener
 	{
-		//
-		// Fields
-		//
-		private double _max;
-		private double _min;
+		double _max;
+		double _min;
 
-		//
-		// Properties
-		//
-		private double Value
+		double Value
 		{
-			get
-			{
-				return _min + (_max - _min) * ((double)base.Control.Progress / 1000.0);
-			}
+			get { return _min + (_max - _min) * ((double)base.Control.Progress / 1000.0); }
 			set
 			{
 				if (Math.Abs(value - Value) > Double.Epsilon)
@@ -59,12 +50,9 @@ namespace XFGloss.Droid.Renderers
 			}
 		}
 
-		//
-		// Constructors
-		//
 		public XFGlossSliderRenderer()
 		{
-			base.AutoPackage = false;
+			AutoPackage = false;
 		}
 
 		/// <summary>
@@ -87,17 +75,17 @@ namespace XFGloss.Droid.Renderers
 				{
 					// We want to create an AppCompatSeekBar instance if we're running on pre-Marshmallow and using the
 					// AppCompat library
-					ctrl = new AppCompatSeekBar(base.Context);
+					ctrl = new AppCompatSeekBar(Context);
 				}
 				else
 				{
 					// If we're running on Marshmallow or newer, or aren't using the AppCompat library, create a
 					// standard SeekBar control
-					ctrl = new SeekBar(base.Context);
+					ctrl = new SeekBar(Context);
 				}
 				if (ctrl != null)
 				{
-					base.SetNativeControl(ctrl);
+					SetNativeControl(ctrl);
 					ctrl.Max = 1000;
 					ctrl.SetOnSeekBarChangeListener(this);
 				}
@@ -123,7 +111,7 @@ namespace XFGloss.Droid.Renderers
 			base.OnElementPropertyChanged(sender, e);
 
 			// BEGIN default XF SliderRenderer implementation
-			Slider element = base.Element;
+			Slider element = Element;
 			switch (e.PropertyName)
 			{
 				case nameof(Slider.Maximum):
@@ -160,16 +148,20 @@ namespace XFGloss.Droid.Renderers
 		protected override void OnLayout(bool changed, int l, int t, int r, int b)
 		{
 			base.OnLayout(changed, l, t, r, b);
+
 			if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.JellyBean)
 			{
-				if (base.Control == null)
+				if (Control == null)
 				{
 					return;
 				}
-				SeekBar ctrl = base.Control;
+
+				SeekBar ctrl = Control;
 				Drawable thumb = ctrl.Thumb;
-				int num = ctrl.Height / 2 - thumb.IntrinsicHeight / 2;
-				thumb.SetBounds(thumb.Bounds.Left, num, thumb.Bounds.Left + thumb.IntrinsicWidth, num + thumb.IntrinsicHeight);
+				int thumbTop = ctrl.Height / 2 - thumb.IntrinsicHeight / 2;
+
+				thumb.SetBounds(thumb.Bounds.Left, thumbTop, 
+				                thumb.Bounds.Left + thumb.IntrinsicWidth, thumbTop + thumb.IntrinsicHeight);
 			}
 		}
 
@@ -180,7 +172,7 @@ namespace XFGloss.Droid.Renderers
 		/// <param name="seekBar">Seek bar.</param>
 		void SeekBar.IOnSeekBarChangeListener.OnProgressChanged(SeekBar seekBar, int progress, bool fromUser)
 		{
-			((IElementController)base.Element).SetValueFromRenderer(Slider.ValueProperty, this.Value);
+			((IElementController)Element).SetValueFromRenderer(Slider.ValueProperty, Value);
 		}
 
 		/// <summary>

@@ -36,6 +36,16 @@ namespace XFGloss.Droid
 		public static bool UsingAppCompat { get; private set; }
 
 		/// <summary>
+		/// Gets or sets a value indicating whether the regular XF SwitchCell should use the custom XFGloss
+		/// SwitchCompatCellRenderer so the cell's Switch component will have the material design style. This property
+		/// is set to true by default. Set it to false if you do NOT want the SwitchCompat new style look in older
+		/// (pre-21) Android systems. This value is checked when the Init method is executed. It must be changed to
+		/// false prior to calling the Init method if you don't want the SwitchCompatCellRenderer to be used.
+		/// </summary>
+		/// <value><c>true</c> if using the SwitchCompatCellRenderer; otherwise, <c>false</c>.</value>
+		public static bool UsingSwitchCompatCell { get; set; } = true;
+
+		/// <summary>
 		/// Initializer to be called from XFGloss Android client project to insure the XFGloss library is inclued in the
 		/// client project's build.
 		/// </summary>
@@ -125,7 +135,15 @@ namespace XFGloss.Droid
 			}
 
 			// Replace the regular XFGloss renderers with the AppCompat versions
-			registerMi.Invoke(registrar, new object[] { typeof(Xamarin.Forms.Switch), typeof(XFGloss.Droid.Renderers.XFGlossSwitchCompatRenderer) });
+			registerMi.Invoke(registrar, new object[] { typeof(Xamarin.Forms.Switch), 
+														typeof(XFGloss.Droid.Renderers.XFGlossSwitchCompatRenderer) });
+
+			// Only register our custom XFGlossSwitchCompatCellRenderer if the boolean property is set to true.
+			if (UsingSwitchCompatCell)
+			{
+				registerMi.Invoke(registrar, new object[] { typeof(Xamarin.Forms.SwitchCell),
+													typeof(XFGloss.Droid.Renderers.XFGlossSwitchCompatCellRenderer) });
+			}
 		}
 	}
 }

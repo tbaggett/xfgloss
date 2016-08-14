@@ -300,7 +300,11 @@ namespace XFGloss.Droid.Renderers
 
 	/// <summary>
 	/// Custom <see cref="T:Xamarin.Forms.SwitchCellRenderer"/>-based renderer class used to apply the custom XFGloss
-	/// properties to the Android platform-specific implementation
+	/// properties to the Android platform-specific implementation. This implementation may be superceded by the
+	/// <see cref="T:XFGloss.Droid.Renderers.XFGlossSwitchCompatCellRenderer"/> implementation if the Android AppCompat
+	/// library is being used, the app is being run on an older API, and the XFGloss.Droid.Library.UsingSwitchCompatCell
+	/// boolean property is set to true when the XFGloss.Droid.Library.Init(...) method is executed by the app's main
+	/// activity. 
 	/// </summary>
 	public class XFGlossSwitchCellRenderer : SwitchCellRenderer
 	{
