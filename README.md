@@ -427,7 +427,7 @@ Using statement needed in C# files:
 	using XFGloss;
 
 ## Using XFGloss With the Android AppCompat Package
-XFGloss has been tested with Android APIs 16 (Jellybean) through 23 (Marshmallow). The Android AppCompat library must be used on Android devices running an OS prior to Marshmallow in order for the custom XFGloss properties to work correctly.
+XFGloss has been tested with Android APIs 16 (Jellybean) through 23 (Marshmallow). The Android AppCompat library is required for Android devices running APIs prior to Marshmallow. In such cases, the XFGloss features that depend on the AppCompat library will fail gracefully if the application's main activity doesn't extend the XF FormsAppCompatActivity class.
 
 XFGloss also provides a new SwitchCell renderer for the Android platform when using the AppCompat library. The new renderer utilizes the SwitchCompat component instead of the standard Android Switch control, resulting in a material design styled switch instead of the previous styling, as seen below.
 
