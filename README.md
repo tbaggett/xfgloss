@@ -403,10 +403,10 @@ namespace XFGlossSample.iOS
     {
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.Init();
+            Xamarin.Forms.Forms.Init();
     
             /********** ADD THIS CALL TO INITIALIZE XFGloss *********/
-            global::XFGloss.iOS.Library.Init();
+            XFGloss.iOS.Library.Init();
     
             LoadApplication(new App());
     
