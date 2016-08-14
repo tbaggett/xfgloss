@@ -2,7 +2,9 @@
 
 ![XFGloss icon](images/phoneshot.jpg)
 
-**XFGloss** adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms. It uses attached bindable properties and enhanced platform-specific renderers to work its magic. 
+**XFGloss** adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms. It uses attached bindable properties and enhanced platform-specific renderers to work its magic. More details are available in ***this blog post***.
+
+Building XFGloss requires Visual Studio 2015 with update 3 installed on the Windows platform, or Xamarin Studio 6.0 on the Mac platform. A ***nuget package*** is also available for easy inclusion into your Xamarin.Forms projects.
 
 In the above screenshots, a gradient background was added to the bottom half of the XF ContentPage by adding this code to the Xaml declaration:
 
@@ -366,7 +368,7 @@ SwitchGloss.SetTintColor(switchCtrl, Color.Red);
 
 # Adding XFGloss to Your Xamarin.Forms-Based App
 
-Integrating XFGloss into your XF-based app is easy. First, add the XFGloss NuGet package to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects, like so:
+Integrating XFGloss into your XF-based app is easy. First, add the ***XFGloss NuGet package*** to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects, like so:
 
 **Android MainActivity.cs:**
 ```csharp
@@ -424,7 +426,22 @@ Using statement needed in C# files:
 
 	using XFGloss;
 
-Finally, have fun with all the cool new ways you can style the Xamarin.Forms components!
+## Using XFGloss With the Android AppCompat Package
+XFGloss has been tested with Android APIs 16 (Jellybean) through 23 (Marshmallow). The Android AppCompat library must be used on Android devices running an OS prior to Marshmallow in order for all of the custom XFGloss properties to work correctly.
+
+XFGloss also provides a new SwitchCell renderer for the Android platform when using the AppCompat library. The new renderer utilizes the SwitchCompat component instead of the standard Android Switch control, resulting in a material design styled switch instead of the previous styling, as seen below.
+
+![TintColor Example](images/android_api16_switchcompatcell.jpg)
+
+**This option can be disabled** by setting the *XFGloss.Droid.Library.UsingSwitchCompatCell* property to false BEFORE calling the Init method, like so:
+
+**Android MainActivity.cs:**
+```csharp
+XFGloss.Droid.Library.UsingSwitchCompatCell = false;
+
+// IMPORTANT: Initialize XFGloss AFTER calling LoadApplication on the Android platform
+XFGloss.Droid.Library.Init(this, savedInstanceState);
+```
 
 ---
 

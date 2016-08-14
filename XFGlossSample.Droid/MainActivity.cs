@@ -39,12 +39,10 @@ namespace XFGlossSample.Droid
 			// material design styling on older Android APIs (16+) when the AppCompat library is being used.
 			// NOTE: The SwitchGloss tinting properties WILL NOT WORK on older Android APIs if you set this
 			// property to false.
-
-			//XFGloss.Droid.Library.UsingSwitchCompatCell = false;
+			XFGloss.Droid.Library.UsingSwitchCompatCell = false;
 
 			// IMPORTANT: Initialize XFGloss AFTER calling LoadApplication on the Android platform
 			XFGloss.Droid.Library.Init(this, savedInstanceState);
 		}
 	}
 }
-
