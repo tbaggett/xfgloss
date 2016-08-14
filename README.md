@@ -433,7 +433,7 @@ XFGloss also provides a new SwitchCell renderer for the Android platform when us
 
 ![TintColor Example](images/android_api16_switchcompatcell.jpg)
 
-*Default XF SwitchCell renderer under Android Jellybean on the left, XFGloss SwitchCompat-based renderer on the right*
+*Default XF SwitchCell renderer running on Android Jellybean on the left, XFGloss SwitchCompat-based renderer on the right*
 
 **This option can be disabled** if the previous styling is preferred. However, the custom XFGloss tinting properties will not be applied if the standard SwitchCell renderer is used.
 
