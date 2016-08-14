@@ -384,12 +384,12 @@ namespace XFGlossSample.Droid
     
             base.OnCreate(bundle);
     
-            global::Xamarin.Forms.Forms.Init(this, bundle);
-    
-            /********** ADD THIS CALL TO INITIALIZE XFGloss *********/
-            global::XFGloss.Droid.Library.Init(this, bundle);
+            Xamarin.Forms.Forms.Init(this, bundle);
     
             LoadApplication(new App());
+            
+            // IMPORTANT: Initialize XFGloss AFTER calling LoadApplication on the Android platform
+            XFGloss.Droid.Library.Init(this, savedInstanceState);
         }
     }
 }
