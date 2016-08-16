@@ -406,19 +406,28 @@ namespace XFGloss.iOS.Renderers
 		/// <param name="tintColor">Current accessory view tint color.</param>
 		EditIndicatorView CreateEditIndicatorAccessoryView(Color tintColor)
 		{
+			EditIndicatorView view = null;
+
 			// Load our custom edit indicator image
-			UIImage image = new UIImage("acc_edit_indicator.png");
-
-			// Set custom tint color if one was passed to us
-			if (tintColor != Color.Default)
+			using (UIImage image = new UIImage("acc_edit_indicator.png"))
 			{
-				image = image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
-			}
+				// Set custom tint color if one was passed to us
+				UIImage tintImage = null;
+				if (tintColor != Color.Default)
+				{
+					tintImage = image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+				}
 
-			EditIndicatorView view = new EditIndicatorView(image);
-			if (tintColor != Color.Default)
-			{
-				view.TintColor = tintColor.ToUIColor();
+				view = new EditIndicatorView(tintImage ?? image);
+				if (tintImage != null)
+				{
+					tintImage.Dispose();
+				}
+
+				if (tintColor != Color.Default)
+				{
+					view.TintColor = tintColor.ToUIColor();
+				}
 			}
 
 			return view;

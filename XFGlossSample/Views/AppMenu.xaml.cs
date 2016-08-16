@@ -34,7 +34,10 @@ namespace XFGlossSample
 		void ShowAbout(object sender, System.EventArgs e)
 		{
 			MenuItemsList.SelectedItem = _lastSelectedItem = null;
+			var prevDetail = Detail as ContentPage;
 			Detail = new NavigationPage(new AboutPage());
+			CleanupPreviousDetailPage(prevDetail);
+
 			IsPresented = false;
 		}
 
@@ -60,7 +63,9 @@ namespace XFGlossSample
 			var examplePage = XFGlossSampleViewFactory.CreateSampleAppPage(propertyName, pageTitle);
 			if (examplePage != null)
 			{
+				var prevDetail = Detail as ContentPage;
 				Detail = examplePage;
+				CleanupPreviousDetailPage(prevDetail);
 				result = true;
 			}
 			else
@@ -74,6 +79,19 @@ namespace XFGlossSample
 			IsPresented = false;
 
 			return result;
+		}
+
+		void CleanupPreviousDetailPage(ContentPage prevPage)
+		{
+			if (prevPage is IDisposable)
+			{
+				(prevPage as IDisposable).Dispose();
+			}
+
+			if (prevPage != null)
+			{
+				prevPage.Content = null;
+			}
 		}
 
 		void DisplayPageError(string propertyName = "")
