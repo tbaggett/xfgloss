@@ -249,10 +249,10 @@ namespace XFGloss.Droid.Utils
 		}
 
 		// Helper values for use with the AppCompat library
-		public static readonly int DefaultColorControlThumb = new Color(175, 175, 175, 255).ToArgb();
+		public static readonly int DefaultColorControlThumb = new Color(236, 236, 236, 255).ToArgb();
 		public static readonly int DefaultColorControlThumbActivated = new Color(252, 69, 125, 255).ToArgb();
 
-		public static readonly int DefaultColorControlTrack = new Color(175, 175, 175, 77).ToArgb();
+		public static readonly int DefaultColorControlTrack = new Color(216, 216, 216, 77).ToArgb();
 		public static readonly int DefaultColorControlTrackActivated = new Color(252, 69, 125, 77).ToArgb();
 	}
 }

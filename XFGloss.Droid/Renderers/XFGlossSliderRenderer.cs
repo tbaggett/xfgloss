@@ -232,7 +232,6 @@ namespace XFGloss.Droid.Renderers
 				{
 					if (maxTrackTintColor != Color.Default)
 					{
-						// Clamp the track tint colors to 30% opacity - API 24 automatically does this. AppCompat doesn't.
 						maxTrackTintColor = new Color(maxTrackTintColor.R, maxTrackTintColor.G, maxTrackTintColor.B, 0.3);
 					}
 
@@ -242,8 +241,16 @@ namespace XFGloss.Droid.Renderers
 										ThemeUtil.DefaultColorControlTrack)) :
 												 maxTrackTintColor.ToAndroid();
 
-					if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+					// Clamp the track tint colors to 30% opacity - API 24 automatically does this. AppCompat doesn't.
+					aMaxTrackTintColor = new AColor(aMaxTrackTintColor.R, 
+					                                aMaxTrackTintColor.G, 
+					                                aMaxTrackTintColor.B, 
+					                                (byte)77);
+
+					if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
 					{
+						// FYI: Lollipop (API 21) has the ProgressBackgroundTintList implemented but it is broken.
+						// Assigning a value to the property has no effect on API 21. It works as expected on API 22+.
 						Control.ProgressBackgroundTintList = ColorStateList.ValueOf(aMaxTrackTintColor);
 					}
 					else if (XFGloss.Droid.Library.UsingAppCompat)
@@ -271,13 +278,11 @@ namespace XFGloss.Droid.Renderers
 															 ThemeUtil.DefaultColorControlTrackActivated)) :
 															 minTrackTintColor.ToAndroid();
 
-					int[][] states = new int[1][] { new int[] { Android.Resource.Attribute.StateEnabled } };
-					int[] colors = new int[1] { aMinTrackTintColor };
-
-					var colorList = new ColorStateList(states, colors);
-
-					if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+					if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
 					{
+						// FYI: Lollipop (API 21) has a broken implementation for the ProgressTintList property.
+						// Assigning a value to the property causes the entire track to be colored with the assigned
+						// value, instead of just the track to the left of the thumb. It works as expected on API 22+.
 						Control.ProgressTintList = ColorStateList.ValueOf(aMinTrackTintColor);
 					}
 					else if (XFGloss.Droid.Library.UsingAppCompat)
@@ -309,7 +314,7 @@ namespace XFGloss.Droid.Renderers
 										  ThemeUtil.DefaultColorControlThumb)) :
 										  thumbTintColor.ToAndroid();
 
-					if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.M)
+					if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
 					{
 						Control.ThumbTintList = ColorStateList.ValueOf(aThumbTintColor);
 

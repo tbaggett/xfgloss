@@ -95,32 +95,30 @@ namespace XFGloss.Droid.Extensions
 				var onTintColor = properties.OnTintColor;
 
 				// Skip assigning anything if all properties are being applied and the color is set to the default value
-				if (propertyName != null || tintColor != Color.Default || onTintColor != Color.Default)
+				if (isSwitchCompat || propertyName != null || tintColor != Color.Default || onTintColor != Color.Default)
 				{
+					var aTintColor = (tintColor != Color.Default) ?
+									 tintColor.ToAndroid() :
+									 new AColor(ThemeUtil.ColorControlNormal(controlContext,
+									 ThemeUtil.DefaultColorControlTrack));
+
+					var aOnTintColor = (onTintColor != Color.Default) ?
+										onTintColor.ToAndroid() :
+										new AColor(ThemeUtil.ColorControlActivated(controlContext,
+												   ThemeUtil.DefaultColorControlTrackActivated));
+					
 					// Clamp the track tint colors to 30% opacity - API 24 automatically does this. AppCompat doesn't.
 					if (isSwitchCompat)
 					{
-						if (tintColor != Color.Default)
-						{
-							tintColor = new Color(tintColor.R, tintColor.G, tintColor.B, 0.3);
-						}
-						if (onTintColor != Color.Default)
-						{
-							onTintColor = new Color(onTintColor.R, onTintColor.G, onTintColor.B, 0.3);
-						}
+						aTintColor = new AColor(aTintColor.R, aTintColor.G, aTintColor.B, (byte)77);
+						aOnTintColor = new AColor(aOnTintColor.R, aOnTintColor.G, aOnTintColor.B, (byte)77);
 					}
 
 					states[0] = new int[] { -Android.Resource.Attribute.StateChecked };
-					colors[0] = (tintColor != Color.Default) ?
-								tintColor.ToAndroid() :
-								new AColor(ThemeUtil.ColorControlNormal(controlContext,
-																		ThemeUtil.DefaultColorControlTrack));
+					colors[0] = aTintColor;
 
 					states[1] = new int[] { Android.Resource.Attribute.StateChecked };
-					colors[1] = (onTintColor != Color.Default) ?
-								onTintColor.ToAndroid() :
-								new AColor(ThemeUtil.ColorControlActivated(controlContext,
-																		   ThemeUtil.DefaultColorControlTrackActivated));
+					colors[1] = aOnTintColor;
 
 					var colorList = new ColorStateList(states, colors);
 

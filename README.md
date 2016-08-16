@@ -2,7 +2,7 @@
 
 ![XFGloss icon](images/phoneshot.jpg)
 
-**XFGloss** adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms. It uses attached bindable properties and enhanced platform-specific renderers to work its magic. More details are available in ***this blog post***.
+**XFGloss** adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms. It uses attached bindable properties and enhanced platform-specific renderers to work its magic. More details are available ***here***.
 
 Building XFGloss requires Visual Studio 2015 with update 3 installed on the Windows platform, or Xamarin Studio 6.0 on the Mac platform. A ***nuget package*** is also available for easy inclusion into your Xamarin.Forms projects.
 
