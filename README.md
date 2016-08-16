@@ -212,6 +212,8 @@ CellGloss.SetBackgroundGradient(rotatingCell, rotatingGradient);
 
 Allows a color value to be specified for a Slider's right side of the track, beginning at the current thumb position. Possible values are either named colors or numeric color values.
 
+**KNOWN ISSUE:** Modifying this property has no effect on an Android device running API 21 (Lollipop). Android's native support for this property is broken in that API level. This property works as expected on Android devices running all other API levels between 16 (Jelly Bean) and 23 (Marshmallow).
+
 **Xaml Example:**
 ```
 <Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.MaxTrackTintColor="Red" /> 
@@ -232,6 +234,8 @@ SliderGloss.SetMaxTrackTintColor(slider, Color.Red);
 **Added to:** Slider
 
 Allows a color value to be specified for a Slider's left side of the track, up to the current thumb position. Possible values are either named colors or numeric color values.
+
+**KNOWN ISSUE:** Modifying this property causes both the left and right sides of the track's colors to be changed on Android devices running API 21 (Lollipop). Android's native support for this property was incorrectly implemented in that API level. This property works as expected on Android devices running all other API levels between 16 (Jelly Bean) and 23 (Marshmallow).
 
 **Xaml Example:**
 ```
