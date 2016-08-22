@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+   <metadata minClientVersion="2.8.1">
+       <id>XFGloss</id>
+       <version>$version$</version>
+       <title>Add-on properties for the standard Xamarin.Forms components</title>
+       <authors>Tommy Baggett</authors>
+       <owners>Tommy Baggett</owners>
+       <licenseUrl>https://github.com/tbaggett/xfgloss/blob/master/LICENSE.MD</licenseUrl>
+       <projectUrl>https://github.com/tbaggett/xfgloss</projectUrl>
+       <requireLicenseAcceptance>false</requireLicenseAcceptance>
+       <description>
+         XFGloss adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms.
+       </description>
+       <summary>Visual gloss for Xamarin.Forms</summary>
+       <tags>xamarin.forms, gloss, style, styling, xamarin, pcl, xam.pcl, plugin, plugin for xamarin.forms, android, ios</tags>
+       <dependencies>
+         <dependency id="Xamarin.Forms" version="2.3.1.114" />
+       </dependencies>
+       <releaseNotes>
+       </releaseNotes>
+   </metadata>
+   <files>
+     <file src="readme.txt" target="readme.txt" />
+     <!--Core-->
+     <file src="XFGloss/bin/Release/XFGloss.dll" target="lib/portable-net45+wp8+win8+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/XFGloss.dll" />
+     <file src="XFGloss/bin/Release/XFGloss.xml" target="lib/portable-net45+wp8+win8+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/XFGloss.xml" />
+    
+     <!--Xamarin.Android-->
+     <file src="XFGloss.Droid/bin/Release/XFGloss.Droid.dll" target="lib/MonoAndroid10/XFGloss.Droid.dll" />
+     <file src="XFGloss.Droid/bin/Release/XFGloss.Droid.xml" target="lib/MonoAndroid10/XFGloss.Droid.xml" />
+     <file src="XFGloss/bin/Release/XFGloss.dll" target="lib/MonoAndroid10/XFGloss.dll" />
+     <file src="XFGloss/bin/Release/XFGloss.xml" target="lib/MonoAndroid10/XFGloss.xml" />
+
+     <!--Xamarin.iOSUnified-->
+     <file src="XFGloss.iOS/bin/Release/XFGloss.iOS.dll" target="lib/Xamarin.iOS10/XFGloss.iOS.dll" />
+     <file src="XFGloss.iOS/bin/Release/XFGloss.iOS.xml" target="lib/Xamarin.iOS10/XFGloss.iOS.xml" />
+     <file src="XFGloss/bin/Release/XFGloss.dll" target="lib/Xamarin.iOS10/XFGloss.dll" />
+     <file src="XFGloss/bin/Release/XFGloss.xml" target="lib/Xamarin.iOS10/XFGloss.xml" />
+   </files>
+</package>
