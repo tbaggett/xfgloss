@@ -1,5 +1,7 @@
 # XFGloss: Xamarin.Forms UI Enhancements
 
+[![Build status](https://ci.appveyor.com/api/projects/status/i9n3j2m6vxsk4x5s/branch/master?svg=true)](https://ci.appveyor.com/project/tbaggett/xfgloss/branch/master)
+
 ![XFGloss icon](images/phoneshot.jpg)
 
 **XFGloss** adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms. It uses attached bindable properties and enhanced platform-specific renderers to work its magic. More details are available ***here***.
@@ -550,25 +552,21 @@ The XFGloss renderer classes require their overridden versions of OnElementChang
 
  - The default XF EntryCell renderer on iOS doesn't take the accessory view into account when positioning/sizing the text entry field. I plan to submit a PR that corrects this issue.
 
- - OnPlatform won't assign a value to an attached property when the binding is declared in Xaml **if Xaml compilation is enabled** ([verified issue by Xamarin](https://bugzilla.xamarin.com/show_bug.cgi?id=37371)). The workaround for this issue is to disable Xaml compilation for the Xaml files where you want to specify platform-specific binding. Here's a code example taken from the verified issue. The binding won't update when the app is executed if Xaml compilation is enabled.
-
-        <Button>
-        	<Grid.Row>
-        		<OnPlatform x:TypeArguments="x:Int32" iOS="3" Android="0"/>
-        	</Grid.Row>
-        </Button>
-
 ---
 
 # Future Enhancements
 I plan to add support for other properties that aren't offered by the Xamarin.Forms components as my schedule allows. PRs, especially those that add support for other XF-supported platforms, are always welcomed!
+
+I will provide a NETStandard version of the library as soon as Xamarin Studio's stable channel release on the Mac supports building the project. If you need a NETStandard version now, please see the NETStandard branch for code that will build in VS 2015 Update 3 with the DotNetCore VS 2015 Tools Preview 2.0 or newer installed.
 
 ---
 
 # Credits
 XFGloss was inspired by "[Lighting Up Native Platform Features In Xamarin Forms](http://www.wintellect.com/devcenter/krome/lighting-up-native-platform-features-in-xamarin-forms-part-1)." Thanks goes out to the series' author, [Keith Rome](https://twitter.com/keith_rome), for the inspiration and starting point for XFGloss.
 
-Also, my skills with Xamarin were once again greatly improved this year by getting recertified as a [Xamarin Certified Mobile Developer](https://university.xamarin.com/certification) after having been originally certified in 2013. Here's a special shout out to some of my favorite XamU instructors, including [Glenn Stephens](https://twitter.com/glenntstephens), [Kym Phillpotts](https://twitter.com/kphillpotts) and [Judy McNeil](https://twitter.com/flyinggeekette)! They're all seasoned Xamarin developers and great instructors. Thanks to all of you and the other XamU instructors for the great training!
+I was encouraged to take XFGloss to the next level by the excellent [Merge Conflict podcast](http://www.mergeconflict.fm/), in particular episode 3, *[Your First Open Source Project](http://www.mergeconflict.fm/episodes/42594-merge-conflict-3-your-first-open-source-project)*. Thanks to both [Frank A. Krueger](https://twitter.com/praeclarum) and [James Montemagno](https://twitter.com/JamesMontemagno) for your timely guidance. 
+
+My skills with Xamarin were once again greatly improved this year by getting recertified as a [Xamarin Certified Mobile Developer](https://university.xamarin.com/certification) after having been originally certified in 2013. Here's a special shout out to some of my favorite Xamarin University instructors, including [Glenn Stephens](https://twitter.com/glenntstephens), [Kym Phillpotts](https://twitter.com/kphillpotts) and [Judy McNeil](https://twitter.com/flyinggeekette)! They're all seasoned Xamarin developers and great instructors. Thank you all and the other XamU instructors for the great training!
 
 ---
 
