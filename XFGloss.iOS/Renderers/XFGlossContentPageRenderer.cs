@@ -182,7 +182,7 @@ namespace XFGloss.iOS.Renderers
 		/// event is fired.
 		/// </summary>
 		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
+		/// <param name="args">Property changing event arguments</param>
 		void OnElementPropertyChanging(object sender, Xamarin.Forms.PropertyChangingEventArgs args)
 		{
 			if (args.PropertyName == ContentPageGloss.BackgroundGradientProperty.PropertyName)
@@ -200,7 +200,7 @@ namespace XFGloss.iOS.Renderers
 		/// <see cref="T:Xamarin.Forms.ContentPage.PropertyChanged"/> event is fired
 		/// </summary>
 		/// <param name="sender">Sender.</param>
-		/// <param name="e">E.</param>
+		/// <param name="args">Property changing event arguments</param>
 		void OnElementPropertyChanged(object sender, PropertyChangedEventArgs args)
 		{
 			if (args.PropertyName == ContentPageGloss.BackgroundGradientProperty.PropertyName)

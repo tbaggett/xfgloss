@@ -92,6 +92,12 @@ namespace XFGloss.Droid.Renderers
 			Control.UpdateColorProperty(_properties, null);
 		}
 
+		/// <summary>
+		/// <see cref="T:Xamarin.Forms.Platform.Android.AppCompat.SwitchRenderer"/> override that is called whenever the
+		/// <see cref="T:Xamarin.Forms.Switch.PropertyChanged"/> event is fired
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
 		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			if (_properties != null)

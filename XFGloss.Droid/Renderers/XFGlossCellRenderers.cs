@@ -280,7 +280,7 @@ namespace XFGloss.Droid.Renderers
 	public class XFGlossEntryCellRenderer : EntryCellRenderer
 	{
 		/// <summary>
-		/// Override of the <see cref="Xamarin.Forms.EntryCellRenderer"/> GetCellCore method, used to apply any custom 
+		/// Override of the <see cref="EntryCellRenderer"/> GetCellCore method, used to apply any custom 
 		/// settings to the Android platform-specific cell display element.
 		/// </summary>
 		/// <returns>The Android platform-specific cell display element after applying any custom settings to it</returns>
@@ -299,7 +299,7 @@ namespace XFGloss.Droid.Renderers
 	}
 
 	/// <summary>
-	/// Custom <see cref="T:Xamarin.Forms.SwitchCellRenderer"/>-based renderer class used to apply the custom XFGloss
+	/// Custom <see cref="T:SwitchCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the Android platform-specific implementation. This implementation may be superceded by the
 	/// <see cref="T:XFGloss.Droid.Renderers.XFGlossSwitchCompatCellRenderer"/> implementation if the Android AppCompat
 	/// library is being used, the app is being run on an older API, and the XFGloss.Droid.Library.UsingSwitchCompatCell
@@ -309,7 +309,7 @@ namespace XFGloss.Droid.Renderers
 	public class XFGlossSwitchCellRenderer : SwitchCellRenderer
 	{
 		/// <summary>
-		/// Override of the <see cref="Xamarin.Forms.SwitchCellRenderer"/> GetCellCore method, used to apply any custom 
+		/// Override of the <see cref="SwitchCellRenderer"/> GetCellCore method, used to apply any custom 
 		/// settings to the Android platform-specific cell display element.
 		/// </summary>
 		/// <returns>The Android platform-specific cell display element after applying any custom settings to it</returns>
@@ -328,13 +328,13 @@ namespace XFGloss.Droid.Renderers
 	}
 
 	/// <summary>
-	/// Custom <see cref="T:Xamarin.Forms.TextCellRenderer"/>-based renderer class used to apply the custom XFGloss
+	/// Custom <see cref="T:TextCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the Android platform-specific implementation
 	/// </summary>
 	public class XFGlossTextCellRenderer : TextCellRenderer
 	{
 		/// <summary>
-		/// Override of the <see cref="Xamarin.Forms.TextCellRenderer"/> GetCellCore method, used to apply any custom 
+		/// Override of the <see cref="TextCellRenderer"/> GetCellCore method, used to apply any custom 
 		/// settings to the Android platform-specific cell display element.
 		/// </summary>
 		/// <returns>The Android platform-specific cell display element after applying any custom settings to it</returns>
@@ -353,13 +353,13 @@ namespace XFGloss.Droid.Renderers
 	}
 
 	/// <summary>
-	/// Custom <see cref="T:Xamarin.Forms.ImageCellRenderer"/>-based renderer class used to apply the custom XFGloss
+	/// Custom <see cref="T:ImageCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the Android platform-specific implementation
 	/// </summary>
 	public class XFGlossImageCellRenderer : ImageCellRenderer
 	{
 		/// <summary>
-		/// Override of the <see cref="Xamarin.Forms.ImageCellRenderer"/> GetCellCore method, used to apply any custom 
+		/// Override of the <see cref="ImageCellRenderer"/> GetCellCore method, used to apply any custom 
 		/// settings to the Android platform-specific cell display element.
 		/// </summary>
 		/// <returns>The Android platform-specific cell display element after applying any custom settings to it</returns>
@@ -378,13 +378,13 @@ namespace XFGloss.Droid.Renderers
 	}
 
 	/// <summary>
-	/// Custom <see cref="T:Xamarin.Forms.ViewCellRenderer"/>-based renderer class used to apply the custom XFGloss
+	/// Custom <see cref="T:ViewCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the Android platform-specific implementation
 	/// </summary>
 	public class XFGlossViewCellRenderer : ViewCellRenderer
 	{
 		/// <summary>
-		/// Override of the <see cref="Xamarin.Forms.ViewCellRenderer"/> GetCellCore method, used to apply any custom 
+		/// Override of the <see cref="ViewCellRenderer"/> GetCellCore method, used to apply any custom 
 		/// settings to the Android platform-specific cell display element.
 		/// </summary>
 		/// <returns>The Android platform-specific cell display element after applying any custom settings to it</returns>

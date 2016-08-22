@@ -50,6 +50,9 @@ namespace XFGloss.Droid.Renderers
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.Droid.Renderers.XFGlossSliderRenderer"/> class.
+		/// </summary>
 		public XFGlossSliderRenderer()
 		{
 			AutoPackage = false;
@@ -170,6 +173,8 @@ namespace XFGloss.Droid.Renderers
 		/// value changes so we can transfer the new value back to the XF element.
 		/// </summary>
 		/// <param name="seekBar">Seek bar.</param>
+		/// <param name="progress">Current progress value</param>
+		/// <param name="fromUser">From User flag</param>
 		void SeekBar.IOnSeekBarChangeListener.OnProgressChanged(SeekBar seekBar, int progress, bool fromUser)
 		{
 			((IElementController)Element).SetValueFromRenderer(Slider.ValueProperty, Value);

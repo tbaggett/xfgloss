@@ -34,11 +34,23 @@ namespace XFGloss
 	/// </summary>
 	public enum CellGlossAccessoryType
 	{
+		/// <summary>
+		/// Specifies no accessory type should be displayed
+		/// </summary>
 		None,
+		/// <summary>
+		/// Specifies the disclosure indicator type should be displayed
+		/// </summary>
 		DisclosureIndicator,
 		//DetailDisclosureButton,
+		/// <summary>
+		/// Specifies the checkmark indicator type should be displayed
+		/// </summary>
 		Checkmark,
 		//DetailButton,
+		/// <summary>
+		/// Specifies the edit indicator type should be displayed
+		/// </summary>
 		EditIndicator
 	}
 }

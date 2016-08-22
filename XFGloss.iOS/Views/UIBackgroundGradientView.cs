@@ -83,7 +83,7 @@ namespace XFGloss.iOS.Views
 		/// <summary>
 		/// Updates the associated <see cref="T:XFGloss.iOS.Views.XFGlossGradientLayer"/> instance's steps collection.
 		/// </summary>
-		/// <param name="rotation">The steps collection to assign</param>
+		/// <param name="steps">The steps collection to assign</param>
 		public void UpdateSteps(GradientStepCollection steps)
 		{
 			var layer = XFGlossGradientLayer.GetGradientLayer(this);

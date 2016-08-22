@@ -173,6 +173,14 @@ namespace XFGloss
 						   TintColorProperty.DefaultValue);
 		}
 
+		/// <summary>
+		/// Sets the passed <see cref="T:Xamarin.Forms.Color"/> value as the tint color for the accessory view (iOS 
+		/// only) and the <see cref="T:Xamarin.Forms.SwitchCell"/> cell type.
+		/// </summary>
+		/// <param name="bindable">The <see cref="T:Xamarin.Forms.BindableObject"/> that the tint color attached 
+		/// property value should be assigned to.</param>
+		/// <param name="value">The <see cref="T:Xamarin.Forms.Color"/> value that should be assigned to the passed
+		/// <see cref="T:Xamarin.Forms.BindableObject"/>.</param>
 		public static void SetTintColor(BindableObject bindable, Color value)
 		{
 			bindable?.SetValue(TintColorProperty, value);

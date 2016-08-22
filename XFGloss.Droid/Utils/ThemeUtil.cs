@@ -228,6 +228,12 @@ namespace XFGloss.Droid.Utils
 			return ColorFromResourceId(context, Android.Resource.Attribute.ColorButtonNormal, defaultValue);
 		}
 
+		/// <summary>
+		/// Helper method used to assign a tint color to the specified layer if it exists.
+		/// </summary>
+		/// <param name="drawable">Drawable.</param>
+		/// <param name="index">Index.</param>
+		/// <param name="color">Color.</param>
 		public static void SetLayerTint(LayerDrawable drawable, int index, Color color)
 		{
 			if (drawable?.NumberOfLayers > index)
@@ -238,6 +244,12 @@ namespace XFGloss.Droid.Utils
 			}
 		}
 
+		/// <summary>
+		/// Helper method used to assign a color state list to the specified layer if it exists.
+		/// </summary>
+		/// <param name="drawable">Drawable.</param>
+		/// <param name="index">Index.</param>
+		/// <param name="colorList">Color list.</param>
 		public static void SetLayerTintList(LayerDrawable drawable, int index, ColorStateList colorList)
 		{
 			if (drawable?.NumberOfLayers > index)
@@ -249,10 +261,24 @@ namespace XFGloss.Droid.Utils
 		}
 
 		// Helper values for use with the AppCompat library
+
+		/// <summary>
+		/// The default color for the control thumb.
+		/// </summary>
 		public static readonly int DefaultColorControlThumb = new Color(236, 236, 236, 255).ToArgb();
+		/// <summary>
+		/// The default color for the control thumb when it is in the activated state.
+		/// </summary>
 		public static readonly int DefaultColorControlThumbActivated = new Color(252, 69, 125, 255).ToArgb();
 
+		/// <summary>
+		/// The default color for the control track.
+		/// </summary>
 		public static readonly int DefaultColorControlTrack = new Color(216, 216, 216, 77).ToArgb();
+
+		/// <summary>
+		/// The default color for the control track when it is in the activated state.
+		/// </summary>
 		public static readonly int DefaultColorControlTrackActivated = new Color(252, 69, 125, 77).ToArgb();
 	}
 }

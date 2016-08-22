@@ -523,7 +523,7 @@ namespace XFGloss.iOS.Renderers
 	public class XFGlossEntryCellRenderer : EntryCellRenderer
 	{
 		/// <summary>
-		/// Override of the <see cref="Xamarin.Forms.EntryCellRenderer"/> GetCell method, used to apply any custom 
+		/// Override of the <see cref="EntryCellRenderer"/> GetCell method, used to apply any custom 
 		/// settings to the iOS platform-specific cell display element.
 		/// </summary>
 		/// <returns>The iOS platform-specific cell display element after applying any custom settings to it</returns>
@@ -548,7 +548,7 @@ namespace XFGloss.iOS.Renderers
 	public class XFGlossSwitchCellRenderer : SwitchCellRenderer
 	{
 		/// <summary>
-		/// Override of the <see cref="Xamarin.Forms.SwitchCellRenderer"/> GetCell method, used to apply any custom 
+		/// Override of the <see cref="SwitchCellRenderer"/> GetCell method, used to apply any custom 
 		/// settings to the iOS platform-specific cell display element.
 		/// </summary>
 		/// <returns>The iOS platform-specific cell display element after applying any custom settings to it</returns>
@@ -572,7 +572,7 @@ namespace XFGloss.iOS.Renderers
 	public class XFGlossTextCellRenderer : TextCellRenderer
 	{
 		/// <summary>
-		/// Override of the <see cref="Xamarin.Forms.TextCellRenderer"/> GetCell method, used to apply any custom 
+		/// Override of the <see cref="TextCellRenderer"/> GetCell method, used to apply any custom 
 		/// settings to the iOS platform-specific cell display element.
 		/// </summary>
 		/// <returns>The iOS platform-specific cell display element after applying any custom settings to it</returns>
@@ -596,7 +596,7 @@ namespace XFGloss.iOS.Renderers
 	public class XFGlossImageCellRenderer : ImageCellRenderer
 	{
 		/// <summary>
-		/// Override of the <see cref="Xamarin.Forms.ImageCellRenderer"/> GetCell method, used to apply any custom 
+		/// Override of the <see cref="ImageCellRenderer"/> GetCell method, used to apply any custom 
 		/// settings to the iOS platform-specific cell display element.
 		/// </summary>
 		/// <returns>The iOS platform-specific cell display element after applying any custom settings to it</returns>
@@ -620,7 +620,7 @@ namespace XFGloss.iOS.Renderers
 	public class XFGlossViewCellRenderer : ViewCellRenderer
 	{
 		/// <summary>
-		/// Override of the <see cref="Xamarin.Forms.ViewCellRenderer"/> GetCell method, used to apply any custom 
+		/// Override of the <see cref="ViewCellRenderer"/> GetCell method, used to apply any custom 
 		/// settings to the iOS platform-specific cell display element.
 		/// </summary>
 		/// <returns>The iOS platform-specific cell display element after applying any custom settings to it</returns>

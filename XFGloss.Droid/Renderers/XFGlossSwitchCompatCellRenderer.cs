@@ -95,8 +95,17 @@ namespace XFGloss.Droid.Renderers
 		}
 	}
 
+	/// <summary>
+	/// Helper class used by the <see cref="DroidXFGlossSwitchCompatCellRenderer"/> class to house the accessory view
+	/// used to display the <see cref="SwitchCompat"/> control.
+	/// </summary>
 	public class SwitchCompatCellView : BaseCellView, CompoundButton.IOnCheckedChangeListener
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:XFGloss.Droid.Renderers.SwitchCompatCellView"/> class.
+		/// </summary>
+		/// <param name="context">Context.</param>
+		/// <param name="cell">Cell.</param>
 		public SwitchCompatCellView(Context context, Cell cell) : base(context, cell)
 		{
 			var sw = new SwitchCompat(context);
@@ -107,8 +116,17 @@ namespace XFGloss.Droid.Renderers
 			SetImageVisible(false);
 		}
 
+		/// <summary>
+		/// Gets or sets the cell.
+		/// </summary>
+		/// <value>The cell.</value>
 		public SwitchCell Cell { get; set; }
 
+		/// <summary>
+		/// Handler for the cell's checked state being changed
+		/// </summary>
+		/// <param name="buttonView">Button view.</param>
+		/// <param name="isChecked">If set to <c>true</c> is checked.</param>
 		public void OnCheckedChanged(CompoundButton buttonView, bool isChecked)
 		{
 			Cell.On = isChecked;
@@ -159,6 +177,11 @@ namespace XFGloss.Droid.Renderers
 			return _view;
 		}
 
+		/// <summary>
+		/// Override of the <see cref="CellRenderer"/> handler for cell property changes
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">Cell property changed event arguments</param>
 		protected override void OnCellPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == SwitchCell.TextProperty.PropertyName)

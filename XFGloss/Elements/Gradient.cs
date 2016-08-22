@@ -24,17 +24,16 @@ using Xamarin.Forms;
 
 namespace XFGloss
 {
-	[ContentProperty("ChildStep")]
 	/// <summary>
-	/// The <see cref="T:XFGloss.Gradient"/> class manages the property values needed to render gradient fills. It also implements the generic 
-	/// portion of the updating and rendering logic used to respond to property changes and instruct the 
+	/// The XFGloss.Gradient class manages the property values needed to render gradient fills. It also implements the 
+	/// generic portion of the updating and rendering logic used to respond to property changes and instruct the 
 	/// platform-specific renderers when changes need to be applied.
 	/// </summary>
+	[ContentProperty("ChildStep")]
 	public class Gradient : XFGlossElement<IGradientRenderer>, IEquatable<Gradient>, IDisposable
 	{
 		#region Consts
 
-		// 
 		/// <summary>
 		/// Sentinel value so we can detect if angle should be changed to default angle if one isn't explicitly assigned.
 		/// </summary>
@@ -206,6 +205,15 @@ namespace XFGloss
 			}
 
 			return Equals(obj as Gradient);
+		}
+
+		/// <summary>
+		/// Serves as a hash function for a <see cref="T:XFGloss.Gradient"/> object.
+		/// </summary>
+		/// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a hash table.</returns>
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
 		}
 
 		int _rotation = UndefinedRotation;
@@ -638,6 +646,15 @@ namespace XFGloss
 			}
 
 			return true;
+		}
+
+		/// <summary>
+		/// Serves as a hash function for a <see cref="T:XFGloss.GradientStep"/> object.
+		/// </summary>
+		/// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a hash table.</returns>
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
 		}
 
 		/// <summary>
