@@ -12,12 +12,12 @@ assembly_info:
   assembly_informational_version: '{version}'
 nuget:
   disable_publish_on_pr: true
-xamarin:
-  email: tommy.baggett@ansuria.com
-  password:
-    secure: yWNDiw2U/lGI8EQ6+NmBjQ==
-  android: true
-  ios: true
+#xamarin:
+#  email: tommy.baggett@ansuria.com
+#  password:
+#    secure: yWNDiw2U/lGI8EQ6+NmBjQ==
+#  android: true
+#  ios: true
 build_script:
 - cmd: >-
     nuget restore .\XFGloss.sln

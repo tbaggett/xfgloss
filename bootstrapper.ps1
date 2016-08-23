@@ -14,7 +14,7 @@ $NUGET_EXE = Join-Path $TOOLS_DIR "nuget.exe"
 $NUGET3_EXE = Join-Path $TOOLS_DIR "nuget3.exe"
 $PACKAGES_CONFIG = Join-Path $TOOLS_DIR "packages.config"
 $CAKE_EXE = Join-Path $TOOLS_DIR "Cake/Cake.exe"
-$XC_EXE = Join-Path $TOOLS_DIR "xamarin-component.exe"
+#$XC_EXE = Join-Path $TOOLS_DIR "xamarin-component.exe"
 
 # Should we use the new Roslyn?
 $UseExperimental = "";
@@ -54,11 +54,11 @@ if (!(Test-Path $NUGET_EXE)) {
 }
 
 # Make sure xamarin-component exists where we expect it.
-if (!(Test-Path $XC_EXE)) {
-    Invoke-WebRequest -Uri https://components.xamarin.com/submit/xpkg -OutFile (Join-Path $TOOLS_DIR "xpkg.zip")    
-    Add-Type -AssemblyName System.IO.Compression.FileSystem
-    [System.IO.Compression.ZipFile]::ExtractToDirectory((Join-Path $TOOLS_DIR "xpkg.zip"), ($TOOLS_DIR))   
-}
+#if (!(Test-Path $XC_EXE)) {
+#    Invoke-WebRequest -Uri https://components.xamarin.com/submit/xpkg -OutFile (Join-Path $TOOLS_DIR "xpkg.zip")    
+#    Add-Type -AssemblyName System.IO.Compression.FileSystem
+#    [System.IO.Compression.ZipFile]::ExtractToDirectory((Join-Path $TOOLS_DIR "xpkg.zip"), ($TOOLS_DIR))   
+#}
 
 # Restore tools from NuGet.
 Push-Location
