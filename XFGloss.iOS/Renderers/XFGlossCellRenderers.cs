@@ -378,8 +378,13 @@ namespace XFGloss.iOS.Renderers
 						if (!(nativeCell.AccessoryView is EditIndicatorView))
 						{
 							nativeCell.Accessory = UITableViewCellAccessory.None;
-							nativeCell.AccessoryView = CreateEditIndicatorAccessoryView((Color)cell.GetValue(CellGloss.TintColorProperty));
-							_accessoryView = new WeakReference<UIView>(nativeCell.AccessoryView);
+
+							accView = CreateEditIndicatorAccessoryView((Color)cell.GetValue(CellGloss.TintColorProperty));
+							if (accView != null)
+							{
+								nativeCell.AccessoryView = accView;
+								_accessoryView = new WeakReference<UIView>(accView);
+							}
 						}
 						break;
 				}
@@ -409,24 +414,27 @@ namespace XFGloss.iOS.Renderers
 			EditIndicatorView view = null;
 
 			// Load our custom edit indicator image
-			using (UIImage image = UIImage.FromFile("acc_edit_indicator"))
+			using (UIImage image = UIImage.FromBundle("acc_edit_indicator"))
 			{
-				// Set custom tint color if one was passed to us
-				UIImage tintImage = null;
-				if (tintColor != Color.Default)
+				if (image != null)
 				{
-					tintImage = image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
-				}
+					// Set custom tint color if one was passed to us
+					UIImage tintImage = null;
+					if (tintColor != Color.Default)
+					{
+						tintImage = image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+					}
 
-				view = new EditIndicatorView(tintImage ?? image);
-				if (tintImage != null)
-				{
-					tintImage.Dispose();
-				}
+					view = new EditIndicatorView(tintImage ?? image);
+					if (tintImage != null)
+					{
+						tintImage.Dispose();
+					}
 
-				if (tintColor != Color.Default)
-				{
-					view.TintColor = tintColor.ToUIColor();
+					if (tintColor != Color.Default)
+					{
+						view.TintColor = tintColor.ToUIColor();
+					}
 				}
 			}
 
