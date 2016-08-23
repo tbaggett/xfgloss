@@ -76,11 +76,6 @@
     <Compile Include="Renderers\XFGlossSliderRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\acc_edit_indicator.png" />
-    <BundleResource Include="Resources\acc_edit_indicator%402x.png" />
-    <BundleResource Include="Resources\acc_edit_indicator%403x.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\XFGloss\XFGloss.csproj">
       <Project>{11CF9A53-400F-45D3-AD6E-07F03C79F658}</Project>
       <Name>XFGloss</Name>
@@ -88,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="..\XFGloss.Shared\XFGloss.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

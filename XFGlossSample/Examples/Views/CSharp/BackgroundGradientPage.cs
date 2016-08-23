@@ -180,7 +180,6 @@ namespace XFGlossSample.Examples.Views.CSharp
 				{
 					rotatingGradient.Rotation += 5;
 				}
-				//CellGloss.SetBackgroundGradient(rotatingCell, newGradient);
 			});
 
 			return updateGradient;

@@ -334,7 +334,7 @@ namespace XFGloss.iOS.Renderers
 		{
 			// AccessoryType property
 			if (propertyName == null ||
-			    propertyName == CellGloss.AccessoryTypeProperty.PropertyName)
+				propertyName == CellGloss.AccessoryTypeProperty.PropertyName)
 			{
 				var accessoryType = (CellGlossAccessoryType)cell.GetValue(CellGloss.AccessoryTypeProperty);
 				UIView accView;
@@ -377,16 +377,21 @@ namespace XFGloss.iOS.Renderers
 						break;
 
 					case CellGlossAccessoryType.EditIndicator:
+						var tintColor = (Color)cell.GetValue(CellGloss.TintColorProperty);
 						if (!(nativeCell.AccessoryView is EditIndicatorView))
 						{
 							nativeCell.Accessory = UITableViewCellAccessory.None;
 
-							accView = CreateEditIndicatorAccessoryView((Color)cell.GetValue(CellGloss.TintColorProperty));
+							accView = new EditIndicatorView(tintColor);
 							if (accView != null)
 							{
 								nativeCell.AccessoryView = accView;
 								_accessoryView = new WeakReference<UIView>(accView);
 							}
+						}
+						else
+						{
+							(nativeCell.AccessoryView as EditIndicatorView).ApplyTintColor(tintColor);
 						}
 						break;
 				}
@@ -396,73 +401,85 @@ namespace XFGloss.iOS.Renderers
 		}
 
 		/// <summary>
-		/// Marker class used to confirm if an instance is assigned to the UINativeCell.AccessoryView property
+		/// Class used to render our custom "EditingIndicator" accessory view type
 		/// </summary>
-		class EditIndicatorView : UIImageView
+		class EditIndicatorView : UIView
 		{
-			public EditIndicatorView(UIImage image) : base(image) { }
-		}
+			WeakReference<UIColor> _defaultTintColor = null;
 
-		/// <summary>
-		/// Marker class needed to retrieve bundle that our image is stored in. Required for correct operation
-		/// from the NuGet packaged dll.
-		/// </summary>
-		class BundleLocator : NSObject
-		{
-		}
-
-
-		/// <summary>
-		/// Private helper method to create an <see cref="T:XFGloss.iOS.Renderers.EditIndicatorView"/> instance to be
-		/// assigned to the accessory view if the <see cref="T:XFGloss.CellGlossAccessoryType.EditIndicator"/> value is
-		/// assigned as the accessory type.
-		/// </summary>
-		/// <returns>The edit indicator accessory view.</returns>
-		/// <param name="tintColor">Current accessory view tint color.</param>
-		EditIndicatorView CreateEditIndicatorAccessoryView(Color tintColor)
-		{
-			EditIndicatorView view = null;
-
-			// Load our custom edit indicator image
-			var bundle = Foundation.NSBundle.FromClass(new BundleLocator().Class);
-			if (bundle == null)
+			public EditIndicatorView(Color tintColor)
 			{
-				Console.WriteLine("Bundle is null");
-				return null;
+				UserInteractionEnabled = false;
+
+				BackgroundColor = UIColor.Clear;
+
+				ApplyTintColor(tintColor);
+
+				Frame = new CGRect(0, 0, 6, 32);
 			}
-			var filePath = Path.Combine(bundle.BundlePath, "acc_edit_indicator");
-			Console.WriteLine(filePath);
-			using (UIImage image = UIImage.FromFile(filePath))
+
+			public void ApplyTintColor(Color tintColor)
 			{
-				if (image == null)
+				// Assign the user's custom tint color if one is specified.
+				if (tintColor != Color.Default)
 				{
-					Console.WriteLine("Image is null");
-				}
-				if (image != null)
-				{
-					// Set custom tint color if one was passed to us
-					UIImage tintImage = null;
-					if (tintColor != Color.Default)
+					// Store whatever tint color is assigned before we overwrite it so it can be restored if needed.
+					if (_defaultTintColor == null)
 					{
-						tintImage = image.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
+						_defaultTintColor = new WeakReference<UIColor>(TintColor);
 					}
 
-					view = new EditIndicatorView(tintImage ?? image);
-					if (tintImage != null)
+					TintColor = tintColor.ToUIColor();
+				} // Handle users clearing their custom tint color by reassigning Color.Default
+				else if (_defaultTintColor != null)
+				{
+					UIColor defaultColor = null;
+					if (_defaultTintColor.TryGetTarget(out defaultColor))
 					{
-						tintImage.Dispose();
-					}
-
-					if (tintColor != Color.Default)
-					{
-						view.TintColor = tintColor.ToUIColor();
+						TintColor = defaultColor;
 					}
 				}
 			}
 
-			return view;
+			public override void Draw(CGRect rect)
+			{
+				//get graphics context
+				using (CGContext g = UIGraphics.GetCurrentContext())
+				{
+
+					//set up drawing attributes
+					g.SetLineWidth(1);
+					if (TintColor != null)
+					{
+						TintColor.SetFill();
+						TintColor.SetStroke();
+					}
+					else
+					{
+						UIColor.Black.SetFill();
+						UIColor.Black.SetStroke();
+					}
+
+					//create geometry
+					var path = new CGPath();
+
+					path.AddLines(new CGPoint[]{
+								  new CGPoint (1, 30),
+								  new CGPoint (5, 30),
+								  new CGPoint (5, 26)});
+
+					path.CloseSubpath();
+
+					//add geometry to graphics context and draw it
+					g.AddPath(path);
+					g.DrawPath(CGPathDrawingMode.FillStroke);
+				}
+
+				base.Draw(rect);
+			}
 		}
 	}
+
 	#endregion
 
 	#region iOSXFGlossSwitchCellRenderer

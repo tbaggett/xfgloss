@@ -41,7 +41,17 @@ namespace XFGlossSample.Examples.Views.CSharp
 				section = new TableSection();
 			}
 
-			section.Add(CreateBackgroundColorCells());
+			var cell = new TextCell { Text = "Red", TextColor = Color.White };
+			CellGloss.SetBackgroundColor(cell, Color.Red);
+			section.Add(cell);
+
+			cell = new TextCell { Text = "Green", TextColor = Color.White };
+			CellGloss.SetBackgroundColor(cell, Color.Green);
+			section.Add(cell);
+
+			cell = new TextCell { Text = "Blue", TextColor = Color.White };
+			CellGloss.SetBackgroundColor(cell, Color.Blue);
+			section.Add(cell);
 
 			var stack = new StackLayout();
 			if (Device.OS == TargetPlatform.iOS)
@@ -59,41 +69,6 @@ namespace XFGlossSample.Examples.Views.CSharp
 			});
 
 			Content = stack;
-		}
-
-		TextCell[] CreateBackgroundColorCells()
-		{
-			List<TextCell> result = new List<TextCell>();
-
-			Dictionary<string, Color> colors = new Dictionary<string, Color>()
-			{
-				{ "Red", Color.Red },
-				{ "Green", Color.Green },
-				{ "Blue", Color.Blue }
-			};
-
-			// Iterate through the color values, creating a new text cell for each entity
-			var colorNames = colors.Keys;
-			foreach (string colorName in colorNames)
-			{
-				var cell = new TextCell();
-				cell.Text = colorName;
-				cell.TextColor = Color.White;
-
-				// Assign our gloss properties - You can use the standard static setter...
-				CellGloss.SetBackgroundColor(cell, colors[colorName]);
-
-				// ...or instantiate an instance of the Gloss properties you want to assign values to
-				//	var gloss = new XFGloss.Views.Cell(cell);
-				//	gloss.AccessoryType = accType;
-				//	gloss.BackgroundColor = Color.Blue;
-				//	gloss.TintColor = Color.Red;
-				//	...
-
-				result.Add(cell);
-			}
-
-			return result.ToArray();
 		}
 	}
 }
