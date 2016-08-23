@@ -1,3 +1,5 @@
+(Content from https://github.com/tbaggett/xfgloss/blob/master/README.md)
+
 XFGloss: Xamarin.Forms UI Enhancements
 
 XFGloss adds new properties to the Xamarin.Forms standard UI components on the Android and
