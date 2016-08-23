@@ -409,8 +409,7 @@ namespace XFGloss.iOS.Renderers
 			EditIndicatorView view = null;
 
 			// Load our custom edit indicator image
-			//using (UIImage image = new UIImage("acc_edit_indicator.png"))
-			using (UIImage image = UIImage.FromBundle("acc_edit_indicator"))
+			using (UIImage image = UIImage.FromFile("acc_edit_indicator"))
 			{
 				// Set custom tint color if one was passed to us
 				UIImage tintImage = null;
