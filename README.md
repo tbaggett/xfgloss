@@ -563,6 +563,10 @@ The XFGloss renderer classes require their overridden versions of OnElementChang
 
  - The default XF EntryCell renderer on iOS doesn't take the accessory view into account when positioning/sizing the text entry field. I plan to submit a PR that corrects this issue.
 
+ - An Android.Content.Res.Resources+NotFoundException is thrown on Android API 16 (Jelly Bean) with a message that reads "Unable to find resource ID #0x404" when you switch between tabs multiple times in any of the example pages. I believe this is an issue with either Android API 16 or Xamarin.Forms v2.3.1.114, as the exception doesn't occur on any of the other tested Android APIs (17 through 23). However, I will investigate further if other users aren't seeing the issue with other Xamarin.Forms apps running on API 16.
+
+ - The *MaxTrackTintColor* and *MinTrackTintColor* properties do not operate as expected on Android API 21 (Lollipop). The underlying Android UI property that was introduced in API was broken. It was fixed in the API 22 release. See the documentation for the *MaxTrackTintColor* and *MinTrackTintColor* properties for more details.
+
 ---
 
 # Future Enhancements
