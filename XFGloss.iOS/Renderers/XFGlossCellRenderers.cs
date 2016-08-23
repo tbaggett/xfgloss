@@ -16,7 +16,9 @@
 
 using System;
 using System.ComponentModel;
+using System.IO;
 using CoreGraphics;
+using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -393,7 +395,6 @@ namespace XFGloss.iOS.Renderers
 			base.UpdateProperties(cell, nativeCell, propertyName);
 		}
 
-		// 
 		/// <summary>
 		/// Marker class used to confirm if an instance is assigned to the UINativeCell.AccessoryView property
 		/// </summary>
@@ -401,6 +402,15 @@ namespace XFGloss.iOS.Renderers
 		{
 			public EditIndicatorView(UIImage image) : base(image) { }
 		}
+
+		/// <summary>
+		/// Marker class needed to retrieve bundle that our image is stored in. Required for correct operation
+		/// from the NuGet packaged dll.
+		/// </summary>
+		class BundleLocator : NSObject
+		{
+		}
+
 
 		/// <summary>
 		/// Private helper method to create an <see cref="T:XFGloss.iOS.Renderers.EditIndicatorView"/> instance to be
@@ -414,7 +424,13 @@ namespace XFGloss.iOS.Renderers
 			EditIndicatorView view = null;
 
 			// Load our custom edit indicator image
-			using (UIImage image = UIImage.FromBundle("acc_edit_indicator"))
+			var bundle = Foundation.NSBundle.FromClass(new BundleLocator().Class);
+			if (bundle == null)
+			{
+				return null;
+			}
+			var filePath = Path.Combine(bundle.BundlePath, "acc_edit_indicator");
+			using (UIImage image = UIImage.FromFile(filePath))
 			{
 				if (image != null)
 				{
