@@ -6,6 +6,7 @@
        <title>XFGloss for Xamarin.Forms</title>
        <authors>Tommy Baggett</authors>
        <owners>Tommy Baggett</owners>
+       <iconUrl>https://github.com/tbaggett/xfgloss/blob/master/images/XFGlossIcon64.png</iconUrl>
        <licenseUrl>https://github.com/tbaggett/xfgloss/blob/master/LICENSE.MD</licenseUrl>
        <projectUrl>https://github.com/tbaggett/xfgloss</projectUrl>
        <requireLicenseAcceptance>false</requireLicenseAcceptance>
