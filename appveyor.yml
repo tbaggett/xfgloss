@@ -1,0 +1,44 @@
+version: 1.0.{build}
+pull_requests:
+  do_not_increment_build_number: true
+branches:
+  only:
+  - master
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfoGlobal.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+nuget:
+  disable_publish_on_pr: true
+xamarin:
+  email: tommy.baggett@ansuria.com
+  password:
+    secure: yWNDiw2U/lGI8EQ6+NmBjQ==
+  android: true
+  ios: true
+build_script:
+- cmd: >-
+    nuget restore .\XFGloss.sln
+
+    powershell .\bootstrapper.ps1 -Target Default -Verbosity diagnostic
+
+    powershell .\bootstrapper.ps1 -Target NuGetPack -Verbosity diagnostic
+artifacts:
+- path: '*.nupkg'
+  name: NuGet
+deploy:
+- provider: NuGet
+  server: https://www.myget.org/F/ansuria-ci/api/v2
+  api_key:
+    secure: 3Yr6Vu/+rqtbD7n88mS7knjwZOKRVKHqFvOX3M0QdUV3lFHWMN3flxl+Q3SRPN9R
+  skip_symbols: true
+  on:
+    branch: master
+- provider: NuGet
+  api_key:
+    secure: 9veuPHZfP9afgMdp/xx85jwZzi1TgoiKQ9K4beT5eX+4IYyTIl11LE09rTTry7gQ
+  on:
+    branch: master
+    appveyor_repo_tag: true
