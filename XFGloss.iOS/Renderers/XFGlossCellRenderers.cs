@@ -427,11 +427,17 @@ namespace XFGloss.iOS.Renderers
 			var bundle = Foundation.NSBundle.FromClass(new BundleLocator().Class);
 			if (bundle == null)
 			{
+				Console.WriteLine("Bundle is null");
 				return null;
 			}
 			var filePath = Path.Combine(bundle.BundlePath, "acc_edit_indicator");
+			Console.WriteLine(filePath);
 			using (UIImage image = UIImage.FromFile(filePath))
 			{
+				if (image == null)
+				{
+					Console.WriteLine("Image is null");
+				}
 				if (image != null)
 				{
 					// Set custom tint color if one was passed to us
