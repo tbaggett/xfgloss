@@ -3,7 +3,7 @@
    <metadata minClientVersion="2.8.1">
        <id>XFGloss</id>
        <version>$version$</version>
-       <title>Add-on properties for the standard Xamarin.Forms components</title>
+       <title>XFGloss for Xamarin.Forms</title>
        <authors>Tommy Baggett</authors>
        <owners>Tommy Baggett</owners>
        <licenseUrl>https://github.com/tbaggett/xfgloss/blob/master/LICENSE.MD</licenseUrl>
@@ -12,10 +12,10 @@
        <description>
          XFGloss adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms.
        </description>
-       <summary>Visual gloss for Xamarin.Forms</summary>
+       <summary>Visual enhancements for Xamarin.Forms</summary>
        <tags>xamarin.forms, gloss, style, styling, xamarin, pcl, xam.pcl, plugin, plugin for xamarin.forms, android, ios</tags>
        <dependencies>
-         <dependency id="Xamarin.Forms" version="2.3.1.114" />
+         <dependency id="Xamarin.Forms" version="[2.3.1.114]" />
        </dependencies>
        <releaseNotes>
        </releaseNotes>
