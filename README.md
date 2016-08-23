@@ -1,6 +1,6 @@
 # XFGloss: Xamarin.Forms UI Enhancements
 
-[![Build status](https://ci.appveyor.com/api/projects/status/i9n3j2m6vxsk4x5s/branch/master?svg=true)](https://ci.appveyor.com/project/tbaggett/xfgloss/branch/master) [![MyGet CI](https://img.shields.io/myget/ansuria-ci/v/Ansuria.XFGloss.svg)](http://myget.org/gallery/acndrewlock-ci) [![NuGet](https://img.shields.io/nuget/v/Ansuria.XFGloss.svg)](https://www.nuget.org/packages/Ansuria.XFGloss/)
+[![Build status](https://ci.appveyor.com/api/projects/status/i9n3j2m6vxsk4x5s/branch/master?svg=true)](https://ci.appveyor.com/project/tbaggett/xfgloss/branch/master) [![MyGet CI](https://img.shields.io/myget/ansuria-ci/v/Ansuria.XFGloss.svg)](http://myget.org/gallery/ansuria-ci) [![NuGet](https://img.shields.io/nuget/v/Ansuria.XFGloss.svg)](https://www.nuget.org/packages/Ansuria.XFGloss/)
 
 ![XFGloss icon](images/phoneshot.jpg)
 
