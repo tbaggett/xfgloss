@@ -108,7 +108,7 @@ namespace XFGloss.Droid.Extensions
 												   ThemeUtil.DefaultColorControlTrackActivated));
 					
 					// Clamp the track tint colors to 30% opacity - API 24 automatically does this. AppCompat doesn't.
-					if (isSwitchCompat)
+					if (isSwitchCompat && XFGloss.Droid.Library.UsingAppCompatAlpha)
 					{
 						aTintColor = new AColor(aTintColor.R, aTintColor.G, aTintColor.B, (byte)77);
 						aOnTintColor = new AColor(aOnTintColor.R, aOnTintColor.G, aOnTintColor.B, (byte)77);

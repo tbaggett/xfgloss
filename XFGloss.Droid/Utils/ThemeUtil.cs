@@ -266,6 +266,7 @@ namespace XFGloss.Droid.Utils
 		/// The default color for the control thumb.
 		/// </summary>
 		public static readonly int DefaultColorControlThumb = new Color(236, 236, 236, 255).ToArgb();
+
 		/// <summary>
 		/// The default color for the control thumb when it is in the activated state.
 		/// </summary>
@@ -274,11 +275,27 @@ namespace XFGloss.Droid.Utils
 		/// <summary>
 		/// The default color for the control track.
 		/// </summary>
-		public static readonly int DefaultColorControlTrack = new Color(216, 216, 216, 77).ToArgb();
+		public static int DefaultColorControlTrack
+		{
+			get
+			{
+				return new Color(176, 176, 176, 
+								 !XFGloss.Droid.Library.UsingAppCompat || XFGloss.Droid.Library.UsingAppCompatAlpha 
+								 ? 77 : 255).ToArgb(); 
+			}
+		}
 
 		/// <summary>
 		/// The default color for the control track when it is in the activated state.
 		/// </summary>
-		public static readonly int DefaultColorControlTrackActivated = new Color(252, 69, 125, 77).ToArgb();
+		public static int DefaultColorControlTrackActivated
+		{
+			get
+			{
+				return new Color(252, 69, 125,
+								 !XFGloss.Droid.Library.UsingAppCompat || XFGloss.Droid.Library.UsingAppCompatAlpha
+								 ? 77 : 255).ToArgb();
+			}
+		}
 	}
 }

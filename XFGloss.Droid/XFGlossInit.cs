@@ -46,6 +46,15 @@ namespace XFGloss.Droid
 		public static bool UsingSwitchCompatCell { get; set; } = true;
 
 		/// <summary>
+		/// Gets or sets a value indicating if the alpha value of colors should be forced when applied via the
+		/// AppCompat library on API levels older than API 21. This feature is disabled by default as most devices
+		/// running a pre-21 API are low powered and may have noticeably poor performance when translucent (partially
+		/// opaque) color values are applied to on screen elements.
+		/// </summary>
+		/// <value><c>true</c> if AppCompat alpha values should be forced; otherwise, <c>false</c>.</value>
+		public static bool UsingAppCompatAlpha { get; set; } = false;
+
+		/// <summary>
 		/// Initializer to be called from XFGloss Android client project to insure the XFGloss library is inclued in the
 		/// client project's build.
 		/// </summary>

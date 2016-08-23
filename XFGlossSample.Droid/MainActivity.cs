@@ -39,7 +39,14 @@ namespace XFGlossSample.Droid
 			// material design styling on older Android APIs (16+) when the AppCompat library is being used.
 			// NOTE: The SwitchGloss tinting properties WILL NOT WORK on older Android APIs if you set this
 			// property to false.
-			//XFGloss.Droid.Library.UsingSwitchCompatCell = false;
+
+			// XFGloss.Droid.Library.UsingSwitchCompatCell = false;
+
+			// Set this property to TRUE if you want translucent slider and switch control tracks to be used
+			// on APIs older than 21 when AppCompat is being used. This property is disabled by default due to
+			// older devices' performance possibly being impacted by having to render partially transparent UI elements.
+
+			// XFGloss.Droid.Library.UsingAppCompatAlpha = true;
 
 			// IMPORTANT: Initialize XFGloss AFTER calling LoadApplication on the Android platform
 			XFGloss.Droid.Library.Init(this, savedInstanceState);

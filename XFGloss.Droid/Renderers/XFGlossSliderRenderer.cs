@@ -246,11 +246,14 @@ namespace XFGloss.Droid.Renderers
 										ThemeUtil.DefaultColorControlTrack)) :
 												 maxTrackTintColor.ToAndroid();
 
-					// Clamp the track tint colors to 30% opacity - API 24 automatically does this. AppCompat doesn't.
-					aMaxTrackTintColor = new AColor(aMaxTrackTintColor.R, 
-					                                aMaxTrackTintColor.G, 
-					                                aMaxTrackTintColor.B, 
-					                                (byte)77);
+					if (!XFGloss.Droid.Library.UsingAppCompat || XFGloss.Droid.Library.UsingAppCompatAlpha)
+					{
+						// Clamp the track tint colors to 30% opacity - API 24 automatically does this. AppCompat doesn't.
+						aMaxTrackTintColor = new AColor(aMaxTrackTintColor.R,
+														aMaxTrackTintColor.G,
+														aMaxTrackTintColor.B,
+														(byte)77);
+					}
 
 					if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
 					{

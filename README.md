@@ -4,9 +4,9 @@
 
 ![XFGloss icon](images/phoneshot.jpg)
 
-**XFGloss** adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms. It uses attached bindable properties and enhanced platform-specific renderers to work its magic. More details are available ***here***.
+**XFGloss** adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms. It uses [attached properties](https://developer.xamarin.com/guides/xamarin-forms/xaml/attached-properties/) and enhanced platform-specific renderers to work its magic. More details are available [here](http://tommyb.com/open-source-projects/xfgloss).
 
-Building XFGloss requires Visual Studio 2015 with update 3 installed on the Windows platform, or Xamarin Studio 6.0 on the Mac platform. A ***nuget package*** is also available for easy inclusion into your Xamarin.Forms projects.
+Building XFGloss requires Visual Studio 2015 with update 3 installed on the Windows platform, or Xamarin Studio 6.0 on the Mac platform. A [nuget package](https://www.nuget.org/packages/Ansuria.XFGloss/) is also available for easy inclusion into your Xamarin.Forms projects.
 
 In the above screenshots, a gradient background was added to the bottom half of the XF ContentPage by adding this code to the Xaml declaration:
 
@@ -374,7 +374,7 @@ SwitchGloss.SetTintColor(switchCtrl, Color.Red);
 
 # Adding XFGloss to Your Xamarin.Forms-Based App
 
-Integrating XFGloss into your XF-based app is easy. First, add the ***XFGloss NuGet package*** to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects, like so:
+Integrating XFGloss into your XF-based app is easy. First, add the [nuget package](https://www.nuget.org/packages/Ansuria.XFGloss/) to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects, like so:
 
 **Android MainActivity.cs:**
 ```csharp
@@ -435,6 +435,7 @@ Using statement needed in C# files:
 ## Using XFGloss With the Android AppCompat Package
 XFGloss has been tested with Android APIs 16 (Jelly Bean) through 23 (Marshmallow). The Android AppCompat library is required for Android devices running APIs prior to Marshmallow. In such cases, the XFGloss features that depend on the AppCompat library will fail gracefully if the application's main activity doesn't extend the XF FormsAppCompatActivity class.
 
+### Using the SwitchCompat Cell Renderer ###
 XFGloss also provides a new SwitchCell renderer for the Android platform when using the AppCompat library. The new renderer utilizes the SwitchCompat component instead of the standard Android Switch control, resulting in a material design styled switch instead of the previous styling, as seen below.
 
 ![TintColor Example](images/android_api16_switchcompatcell.jpg)
@@ -451,6 +452,16 @@ XFGloss.Droid.Library.UsingSwitchCompatCell = false;
 
 // IMPORTANT: Initialize XFGloss AFTER calling LoadApplication on the Android platform
 XFGloss.Droid.Library.Init(this, savedInstanceState);
+```
+
+### Rendering Translucent Switch and Slider Tracks on Older Devices ###
+XFGloss can also render Android Switch and Slider track with partially transparent colors on older pre-API 21 devices. This option is disabled by default as it can negatively impact the performance of older Android devices. 
+
+You can enable the option by setting the *XFGloss.Droid.Library.UsingAppCompatAlpha* property to true. A good place to do this is in your Android app's MainActivity.cs file as seen below.
+
+**Android MainActivity.cs:**
+```csharp
+XFGloss.Droid.Library.UsingAppCompatAlpha = true;
 ```
 
 ---
@@ -564,9 +575,9 @@ I will provide a NETStandard version of the library as soon as Xamarin Studio's 
 # Credits
 XFGloss was inspired by "[Lighting Up Native Platform Features In Xamarin Forms](http://www.wintellect.com/devcenter/krome/lighting-up-native-platform-features-in-xamarin-forms-part-1)." Thanks goes out to the series' author, [Keith Rome](https://twitter.com/keith_rome), for the inspiration and starting point for XFGloss.
 
-I was encouraged to take XFGloss to the next level by the excellent [Merge Conflict podcast](http://www.mergeconflict.fm/), in particular episode 3, *[Your First Open Source Project](http://www.mergeconflict.fm/episodes/42594-merge-conflict-3-your-first-open-source-project)*. Thanks to both [Frank A. Krueger](https://twitter.com/praeclarum) and [James Montemagno](https://twitter.com/JamesMontemagno) for your timely guidance. 
+I was encouraged to take XFGloss to the next level by episode 3 *[(Your First Open Source Project)](http://www.mergeconflict.fm/episodes/42594-merge-conflict-3-your-first-open-source-project)* of the excellent [Merge Conflict](http://www.mergeconflict.fm/) podcast. Thanks to both [Frank A. Krueger](https://twitter.com/praeclarum) and [James Montemagno](https://twitter.com/JamesMontemagno) for your timely guidance. 
 
-My skills with Xamarin were once again greatly improved this year by getting recertified as a [Xamarin Certified Mobile Developer](https://university.xamarin.com/certification) after having been originally certified in 2013. Here's a special shout out to some of my favorite Xamarin University instructors, including [Glenn Stephens](https://twitter.com/glenntstephens), [Kym Phillpotts](https://twitter.com/kphillpotts) and [Judy McNeil](https://twitter.com/flyinggeekette)! They're all seasoned Xamarin developers and great instructors. Thank you all and the other XamU instructors for the great training!
+Finally, my skills with Xamarin were once again greatly improved this year by getting recertified as a [Xamarin Certified Mobile Developer](https://university.xamarin.com/certification) after having been originally certified in 2013. Here's a special shout out to some of my favorite Xamarin University instructors, including [Glenn Stephens](https://twitter.com/glenntstephens), [Kym Phillpotts](https://twitter.com/kphillpotts) and [Judy McNeil](https://twitter.com/flyinggeekette)! They're all seasoned Xamarin developers and great instructors. Thank you all and the other XamU instructors for the great training!
 
 ---
 
