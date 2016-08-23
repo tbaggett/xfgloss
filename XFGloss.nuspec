@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
    <metadata minClientVersion="2.8.1">
-       <id>XFGloss</id>
+       <id>Ansuria.XFGloss</id>
        <version>$version$</version>
        <title>XFGloss for Xamarin.Forms</title>
        <authors>Tommy Baggett</authors>
-       <owners>Tommy Baggett</owners>
-       <iconUrl>https://github.com/tbaggett/xfgloss/blob/master/images/XFGlossIcon64.png</iconUrl>
+       <owners>Ansuria Solutions LLC</owners>
+       <iconUrl>http://tommyb.com/nuspec/xfgloss/XFGlossIcon64.png</iconUrl>
        <licenseUrl>https://github.com/tbaggett/xfgloss/blob/master/LICENSE.MD</licenseUrl>
        <projectUrl>https://github.com/tbaggett/xfgloss</projectUrl>
        <requireLicenseAcceptance>false</requireLicenseAcceptance>
