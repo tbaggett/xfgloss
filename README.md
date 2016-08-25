@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/i9n3j2m6vxsk4x5s/branch/master?svg=true)](https://ci.appveyor.com/project/tbaggett/xfgloss/branch/master) [![MyGet CI](https://img.shields.io/myget/ansuria-ci/v/Ansuria.XFGloss.svg)](http://myget.org/gallery/ansuria-ci) [![NuGet](https://img.shields.io/nuget/v/Ansuria.XFGloss.svg)](https://www.nuget.org/packages/Ansuria.XFGloss/)
 
-![XFGloss icon](images/phoneshot.jpg)
+![XFGloss icon](https://github.com/tbaggett/xfgloss/raw/master/images/phoneshot.jpg)
 
 **XFGloss** adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms. It uses [attached properties](https://developer.xamarin.com/guides/xamarin-forms/xaml/attached-properties/) and enhanced platform-specific renderers to work its magic. More details are available [here](http://tommyb.com/open-source-projects/xfgloss).
 
@@ -78,7 +78,7 @@ gloss.ThumbOnTintColor = Color.Lime;
     
 #Sample App
 
-![XFGloss Property Example](images/propexample.jpg)
+![XFGloss Property Example](https://github.com/tbaggett/xfgloss/raw/master/images/propexample.jpg)
 
 The XFGloss solution provided in this repository also includes the "XFGlossSample" Xamarin.Forms-based app. It demonstrates all the XFGloss properties being applied in both Xaml and C# code.
 
@@ -93,7 +93,7 @@ Here's a brief description of the properties added/expanded by XFGloss:
 ---
 
 ###AccessoryType (iOS only)
-![AccessoryType Example](images/prop_accessory_type.jpg)
+![AccessoryType Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_accessory_type.jpg)
 
 **Type:** XFGloss.CellGlossAccessoryType enum value  
 **Added to:** EntryCell, ImageCell, TextCell and ViewCell
@@ -124,7 +124,7 @@ CellGloss.SetAccessoryType(cell, CellGlossAccessoryType.DisclosureIndicator);
 ---
 
 ###BackgroundColor
-![BackgroundColor Example](images/prop_background_color.jpg)
+![BackgroundColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_background_color.jpg)
 
 **Type:** Xamarin.Forms Color  
 **Added to:** EntryCell, ImageCell, SwitchCell, TextCell and ViewCell
@@ -148,7 +148,7 @@ CellGloss.SetBackgroundColor(cell, Color.Red);
 ---
 
 ###BackgroundGradient
-![BackgroundGradient Example](images/prop_background_gradient.jpg)
+![BackgroundGradient Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_background_gradient.jpg)
 
 **Type:** XFGloss.Gradient  
 **Added to:** ContentPage, EntryCell, ImageCell, SwitchCell, TextCell and ViewCell
@@ -207,7 +207,7 @@ CellGloss.SetBackgroundGradient(rotatingCell, rotatingGradient);
 ---
 
 ###MaxTrackTintColor
-![MaxTrackTintColor Example](images/prop_max_track_tint_color.jpg)
+![MaxTrackTintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_max_track_tint_color.jpg)
 
 **Type:** Xamarin.Forms.Color  
 **Added to:** Slider
@@ -230,7 +230,7 @@ SliderGloss.SetMaxTrackTintColor(slider, Color.Red);
 ---
 
 ###MinTrackTintColor
-![MinTrackTintColor Example](images/prop_min_track_tint_color.jpg)
+![MinTrackTintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_min_track_tint_color.jpg)
 
 **Type:** Xamarin.Forms.Color  
 **Added to:** Slider
@@ -253,7 +253,7 @@ SliderGloss.SetMinTrackTintColor(slider, Color.Red);
 ---
 
 ###OnTintColor
-![OnTintColor Example](images/prop_on_tint_color.jpg)
+![OnTintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_on_tint_color.jpg)
 
 **Type:** Xamarin.Forms Color  
 **Added to:** Switch and SwitchCell
@@ -279,7 +279,7 @@ SwitchGloss.SetOnTintColor(switchCtrl, Color.Red);
 
 ---
 ###ThumbOnTintColor
-![ThumbOnTintColor Example](images/prop_thumb_on_tint_color.jpg)
+![ThumbOnTintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_thumb_on_tint_color.jpg)
 
 **Type:** Xamarin.Forms Color  
 **Added to:** Switch and SwitchCell
@@ -306,7 +306,7 @@ SwitchGloss.SetThumbOnTintColor(switchCtrl, Color.Red);
 ---
 
 ###ThumbTintColor
-![ThumbTintColor Example](images/prop_thumb_tint_color.jpg)
+![ThumbTintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_thumb_tint_color.jpg)
 
 **Type:** Xamarin.Forms Color  
 **Added to:** Slider, Switch and SwitchCell
@@ -333,7 +333,7 @@ SwitchGloss.SetThumbTintColor(switchCtrl, Color.Red);
 ---
 
 ###TintColor
-![TintColor Example](images/prop_tint_color.jpg)
+![TintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_tint_color.jpg)
 
 **Type:** Xamarin.Forms Color  
 **Added to:** All cell classes' accessory types (iOS only), and the Switch and SwitchCell components (both platforms)
@@ -438,7 +438,7 @@ XFGloss has been tested with Android APIs 16 (Jelly Bean) through 23 (Marshmallo
 ### Using the SwitchCompat Cell Renderer ###
 XFGloss also provides a new SwitchCell renderer for the Android platform when using the AppCompat library. The new renderer utilizes the SwitchCompat component instead of the standard Android Switch control, resulting in a material design styled switch instead of the previous styling, as seen below.
 
-![TintColor Example](images/android_api16_switchcompatcell.jpg)
+![TintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/android_api16_switchcompatcell.jpg)
 
 *Default XF SwitchCell renderer running on Android Jelly Bean on the left, XFGloss SwitchCompat-based renderer on the right*
 
