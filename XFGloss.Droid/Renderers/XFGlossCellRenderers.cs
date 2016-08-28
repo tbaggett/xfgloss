@@ -25,9 +25,6 @@ using AViewGroup = Android.Views.ViewGroup;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics.Drawables;
-using System.Collections.Generic;
-using XFGloss.Droid.Utils;
-using Android.Graphics.Drawables.Shapes;
 using System;
 using Android.Views;
 
@@ -70,9 +67,9 @@ namespace XFGloss.Droid.Renderers
 					nativeCell.SetOnTouchListener(ripple);
 					nativeCell.Background = ripple;
 				}
-				// Otherwise we just darken/lighten the cell background depending on how dark the background is
 				else
 				{
+					// Otherwise we just darken/lighten the cell background depending on how dark the background is
 					nativeCell.Background = 
 						BackgroundStateListDrawable.Create(new XFGlossPaintDrawable(element as Gradient),
 														   (element as Gradient).AverageColor.ToAndroid());
@@ -232,25 +229,30 @@ namespace XFGloss.Droid.Renderers
 				var bk = nativeCell.Background;
 
 				Color bkgrndColor = (Color)cell.GetValue(CellGloss.BackgroundColorProperty);
-				AColor aBkColor = (bkgrndColor != Color.Default) ? bkgrndColor.ToAndroid() : AColor.Transparent;
-
-				// The material design ripple effect was introduced in Lollipop. Use it if we're running on that or newer
-				if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+				// We don't want to assign a background color if the default color is specified 
+				// and we're updating all properties.
+				if (propertyName != null || bkgrndColor != Color.Default)
 				{
-					var ripple = BackgroundRippleDrawable.Create(aBkColor);
-					nativeCell.SetOnTouchListener(ripple);
-					nativeCell.Background = ripple;
-				}
-				else
-				{
-					// Pre-lollipop means no ripple available
-					// See FAQ at bottom of http://android-developers.blogspot.com/2014/10/appcompat-v21-material-design-for-pre.html
-					// Q: Why are there no ripples on pre-Lollipop?
-					// A: A lot of what allows RippleDrawable to run smoothly is Android 5.0’s new RenderThread. 
-					// To optimize for performance on previous versions of Android, we've left RippleDrawable out 
-					// for now.
+					AColor aBkColor = (bkgrndColor != Color.Default) ? bkgrndColor.ToAndroid() : AColor.Transparent;
 
-					nativeCell.Background = BackgroundStateListDrawable.Create(aBkColor);
+					// The material design ripple effect was introduced in Lollipop. Use it if we're running on that or newer
+					if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+					{
+						var ripple = BackgroundRippleDrawable.Create(aBkColor);
+						nativeCell.SetOnTouchListener(ripple);
+						nativeCell.Background = ripple;
+					}
+					else
+					{
+						// Pre-lollipop means no ripple available
+						// See FAQ at bottom of http://android-developers.blogspot.com/2014/10/appcompat-v21-material-design-for-pre.html
+						// Q: Why are there no ripples on pre-Lollipop?
+						// A: A lot of what allows RippleDrawable to run smoothly is Android 5.0’s new RenderThread. 
+						// To optimize for performance on previous versions of Android, we've left RippleDrawable out 
+						// for now.
+
+						nativeCell.Background = BackgroundStateListDrawable.Create(aBkColor);
+					}
 				}
 			}
 		}

@@ -131,6 +131,9 @@ CellGloss.SetAccessoryType(cell, CellGlossAccessoryType.DisclosureIndicator);
 
 Allows a color value to be specified as a cell's background color. Possible values are either named colors or numeric color values.
 
+**KNOWN ISSUE:** The *BackgroundColor* property does not consistently operate as expected on Android API 21 (Lollipop) when it is applied to a touch enabled element. The material design ripple effect is expected when a user touches the element on API 21 and higher. The effect occurs as expected sometime but not others. In the other cases, the pre-21 highlighting of the entire element occurs instead of the ripple effect. The behavior works as expected (ripple on API 22 and higher, element highlighting on API 20 and lower) on all the other supported Android APIs (16 - 23).
+
+
 **Xaml Example:**
 ```
 <TextCell Text="Red" xfg:CellGloss.BackgroundColor="Red" />
@@ -154,6 +157,9 @@ CellGloss.SetBackgroundColor(cell, Color.Red);
 **Added to:** ContentPage, EntryCell, ImageCell, SwitchCell, TextCell and ViewCell
 
 Allows a multiple-color linear gradient to be specified as a content page or cells' background. You can specify as many colors as you like and control their distribution across the fill at any angle. Convenience properties and constructors also make it easy to create two-color horizontal or vertical fills.
+
+
+**KNOWN ISSUE:** The *BackgroundGradient* property does not consistently operate as expected on Android API 21 (Lollipop) when it is applied to a touch enabled element. The material design ripple effect is expected when a user touches the element on API 21 and higher. The effect occurs as expected sometime but not others. In the other cases, the pre-21 highlighting of the entire element occurs instead of the ripple effect. The behavior works as expected (ripple on API 22 and higher, element highlighting on API 20 and lower) on all the other supported Android APIs (16 - 23).
 
 **Xaml Example:**
 ```
@@ -564,6 +570,8 @@ The XFGloss renderer classes require their overridden versions of OnElementChang
  - The default XF EntryCell renderer on iOS doesn't take the accessory view into account when positioning/sizing the text entry field. I plan to submit a PR that corrects this issue.
 
  - An Android.Content.Res.Resources+NotFoundException is thrown on Android API 16 (Jelly Bean) with a message that reads "Unable to find resource ID #0x404" when you switch between tabs multiple times in any of the example pages. I believe this is an issue with either Android API 16 or Xamarin.Forms v2.3.1.114, as the exception doesn't occur on any of the other tested Android APIs (17 through 23). However, I will investigate further if other users aren't seeing the issue with other Xamarin.Forms apps running on API 16.
+
+ - The *BackgroundColor* and *BackgroundGradient* properties do not consistently operate as expected on Android API 21 (Lollipop) when they are applied to a touch enabled element. The material design ripple effect is expected when a user touches the element on API 21 and higher. The effect occurs as expected sometime but not others. In the other cases, the pre-21 highlighting of the entire element occurs instead of the ripple effect. The behavior works as expected (ripple on API 22 and higher, element highlighting on API 20 and lower) on all the other supported Android APIs (16 - 23).
 
  - The *MaxTrackTintColor* and *MinTrackTintColor* properties do not operate as expected on Android API 21 (Lollipop). A new tinting technique was introduced in API 21. The initial implementation was broken, but was fixed in the next release. See the documentation for the *MaxTrackTintColor* and *MinTrackTintColor* properties for more details.
 
