@@ -386,6 +386,50 @@ namespace XFGloss
 			}
 		}
 
+		/// <summary>
+		/// Returns the average color value that the gradient fill will be comprised of.
+		/// </summary>
+		/// <value>The average color.</value>
+		public Color AverageColor
+		{
+			get
+			{
+				double r = 0, g = 0, b = 0;
+				GradientStep prevStep = null;
+
+				// Iterate through each of the gradient steps. Adjust our r, g and b values based on
+				// both the amount of value shift between the current and previous step and the percentage/strength
+				// of the total gradient fill the two steps comprise.
+				foreach (GradientStep step in _steps)
+				{
+					// If this is our first iteration, all we have to do is assign the step's r/g/b values and continue
+					if (prevStep == null)
+					{
+						r = step.StepColor.R;
+						g = step.StepColor.G;
+						b = step.StepColor.B;
+
+						prevStep = step;
+						continue;
+					}
+
+					// The step strength is the range of the gradient fill between the current and previous steps
+					// divided by 2. We half the value because the current and previous steps' specified colors will be 
+					// at the beginning and end of the fill portion, but the average of the two colors will be the 
+					// dominant color value across the range.
+					// We divide the strength in half, then use that value to control how much of the current steps' 
+					// value difference is applied to our result, to effectively get the average color between the two
+					// steps.
+					var stepStrength = (step.StepPercentage - prevStep.StepPercentage) / 2;
+					r += ((step.StepColor.R - r) * stepStrength);
+					g += ((step.StepColor.G - g) * stepStrength);
+					b += ((step.StepColor.B - b) * stepStrength);
+				}
+
+				return new Color(r, g, b);
+			}	
+		}
+
 		GradientStepCollection _steps;
 		/// <summary>
 		/// Specifies the steps in the gradient fill. Each step is defined by a <see cref="T:XFGloss.GradientStep"/> 

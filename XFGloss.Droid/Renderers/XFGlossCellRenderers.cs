@@ -19,9 +19,17 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using XFGloss.Droid.Extensions;
 using XFGloss.Droid.Drawables;
+using AColor = Android.Graphics.Color;
 using AView = Android.Views.View;
 using AViewGroup = Android.Views.ViewGroup;
 using Android.Content;
+using Android.Content.Res;
+using Android.Graphics.Drawables;
+using System.Collections.Generic;
+using XFGloss.Droid.Utils;
+using Android.Graphics.Drawables.Shapes;
+using System;
+using Android.Views;
 
 [assembly: ExportCell(typeof(EntryCell), typeof(XFGloss.Droid.Renderers.XFGlossEntryCellRenderer))]
 [assembly: ExportCell(typeof(SwitchCell), typeof(XFGloss.Droid.Renderers.XFGlossSwitchCellRenderer))]
@@ -54,7 +62,21 @@ namespace XFGloss.Droid.Renderers
 			if (nativeCell != null)
 			{
 				RemoveBackgroundGradientDrawable(nativeCell);
-				nativeCell.Background = new XFGlossPaintDrawable(element as Gradient);
+				// The material design ripple effect was introduced in Lollipop. Use it if we're running on that or newer
+				if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+				{
+					var ripple = BackgroundRippleDrawable.Create(new XFGlossPaintDrawable(element as Gradient),
+															 (element as Gradient).AverageColor.ToAndroid());
+					nativeCell.SetOnTouchListener(ripple);
+					nativeCell.Background = ripple;
+				}
+				// Otherwise we just darken/lighten the cell background depending on how dark the background is
+				else
+				{
+					nativeCell.Background = 
+						BackgroundStateListDrawable.Create(new XFGlossPaintDrawable(element as Gradient),
+														   (element as Gradient).AverageColor.ToAndroid());
+				}
 			}
 		}
 
@@ -136,9 +158,22 @@ namespace XFGloss.Droid.Renderers
 		/// <param name="nativeCell">The native Android view used to display the cell contents</param>
 		XFGlossPaintDrawable GetBackgroundGradientDrawable(AView nativeCell)
 		{
-			if (nativeCell.Background is XFGlossPaintDrawable)
+			// We expect either a ripple or state list drawable depending on the version of OS we're running on
+			if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
 			{
-				return nativeCell.Background as XFGlossPaintDrawable;
+				if (nativeCell.Background is BackgroundRippleDrawable)
+				{
+					return (nativeCell.Background as BackgroundRippleDrawable).GetBackgroundDrawable() 
+						                                                      as XFGlossPaintDrawable;
+				}
+			}
+			else
+			{
+				if (nativeCell.Background is BackgroundStateListDrawable)
+				{
+					return (nativeCell.Background as BackgroundStateListDrawable).GetBackgroundDrawable() 
+						                                                         as XFGlossPaintDrawable;
+				}
 			}
 
 			return null;
@@ -194,9 +229,151 @@ namespace XFGloss.Droid.Renderers
 			// BackgroundColor property
 			if (propertyName == null || propertyName == CellGloss.BackgroundColorProperty.PropertyName)
 			{
+				var bk = nativeCell.Background;
+
 				Color bkgrndColor = (Color)cell.GetValue(CellGloss.BackgroundColorProperty);
-				nativeCell.SetBackgroundColor((bkgrndColor != Color.Default)
-											  ? bkgrndColor.ToAndroid() : Android.Graphics.Color.Transparent);
+				AColor aBkColor = (bkgrndColor != Color.Default) ? bkgrndColor.ToAndroid() : AColor.Transparent;
+
+				// The material design ripple effect was introduced in Lollipop. Use it if we're running on that or newer
+				if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+				{
+					var ripple = BackgroundRippleDrawable.Create(aBkColor);
+					nativeCell.SetOnTouchListener(ripple);
+					nativeCell.Background = ripple;
+				}
+				else
+				{
+					// Pre-lollipop means no ripple available
+					// See FAQ at bottom of http://android-developers.blogspot.com/2014/10/appcompat-v21-material-design-for-pre.html
+					// Q: Why are there no ripples on pre-Lollipop?
+					// A: A lot of what allows RippleDrawable to run smoothly is Android 5.0’s new RenderThread. 
+					// To optimize for performance on previous versions of Android, we've left RippleDrawable out 
+					// for now.
+
+					nativeCell.Background = BackgroundStateListDrawable.Create(aBkColor);
+				}
+			}
+		}
+
+		// Returns a dark or light colored ripple/shading color based on the provided background color value
+		static AColor GetEffectColor(AColor backgroundColor)
+		{
+			// Determine if we should ripple/shade with black or white - black if max color level >= 50%, white if not
+			var level = Math.Max(Math.Max(backgroundColor.R, backgroundColor.G), backgroundColor.B);
+			// Different alpha levels needed depending on a ripple or shading being used
+			var alpha = (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop) ? 128 : 64;
+
+			return (level >= 128) ? new AColor(0, 0, 0, alpha) : new AColor(255, 255, 255, alpha);
+		}
+
+		// Helper class used to create a new ripple drawable on top of the desired background color or gradient fill
+		class BackgroundRippleDrawable : RippleDrawable, AView.IOnTouchListener
+		{
+			// Static method to create a ripple with a background color as its content layer
+			public static BackgroundRippleDrawable Create(AColor backgroundColor)
+			{
+				return BackgroundRippleDrawable.Create(new ColorDrawable(backgroundColor), backgroundColor);
+			}
+
+			// Static method to create a ripple with a gradient drawable (or whatever kind is passed) as its content layer
+			public static BackgroundRippleDrawable Create(Drawable contentDrawable, AColor averageColor)
+			{
+				return new BackgroundRippleDrawable(ColorStateList.ValueOf(GetEffectColor(averageColor)), contentDrawable);
+			}
+
+			// Convenience initializer to drop the unwanted mask param
+			BackgroundRippleDrawable(ColorStateList csl, Drawable background) : base(csl, background, null)
+			{
+			}
+
+			// Helper needed for accessing an existing BackgroundGradient gradient fill layer
+			public Drawable GetBackgroundDrawable()
+			{
+				Drawable result = null;
+
+				// We should have at least 1 layer. If so, the bottom-most layer will be the provided content layer
+				if (NumberOfLayers > 0)
+				{
+					result = GetDrawable(0);
+				}
+
+				return result;
+			}
+
+			// Update the ripple's origin if we receive a touch event (doesn't matter what kind)
+			public bool OnTouch(AView v, MotionEvent e)
+			{
+				SetHotspot(e.GetX(), e.GetY());
+				return false;
+			}
+		}
+
+		// Helper class used to create a darkening/lightening tint effect on top of the desired background color or
+		// gradient fill on older (pre-Lollipop) versions of the OS
+		class BackgroundStateListDrawable : StateListDrawable
+		{
+			public static BackgroundStateListDrawable Create(AColor backgroundColor)
+			{
+				return BackgroundStateListDrawable.Create(new ColorDrawable(backgroundColor), backgroundColor);
+			}
+
+			public static BackgroundStateListDrawable Create(Drawable contentDrawable, AColor averageColor)
+			{
+				return new BackgroundStateListDrawable(contentDrawable, averageColor);
+			}
+
+			// Helper needed for accessing an existing BackgroundGradient gradient fill layer
+			public Drawable GetBackgroundDrawable()
+			{
+				Drawable result = null;
+				if (_contentDrawable != null && _contentDrawable.TryGetTarget(out result))
+				{
+					return result;
+				}
+
+				return result;
+			}
+
+			// Weak reference to the assigned background content drawable
+			WeakReference<Drawable> _contentDrawable;
+
+			BackgroundStateListDrawable(Drawable contentDrawable, AColor averageColor) : base()
+			{
+				// This is a bit tricky... since we are setting up one drawable to be displayed as the background
+				// depending on the cell's current display state, we have to composite the partially transparent
+				// tinting overlay on top of the provided content drawable into a LayerDrawable that we will assign
+				// to the states that the tinting should appear to be applied to.
+
+				// Get the needed tinting color
+				AColor effectColor = GetEffectColor(averageColor);
+				// Create a new ColorDrawable filled with the tinting color
+				var tint = new ColorDrawable(effectColor);
+				// Create a LayerDrawable that will composite the tint ColorDrawable on top of the provided content
+				// drawable.
+				var compositeContent = new LayerDrawable(new Drawable[] { contentDrawable, tint });
+
+				// Assign the composite content to all the states that may be displayed when the user taps the cell
+				AddState(new int[] { Android.Resource.Attribute.StatePressed }, compositeContent);
+				AddState(new int[] { Android.Resource.Attribute.StateFocused }, compositeContent);
+				AddState(new int[] { Android.Resource.Attribute.StateActivated }, compositeContent);
+
+				// Assign just the passed content drawable for the normal (not tapped) state
+				AddState(new int[] { }, contentDrawable);
+
+				// Keep a weak reference to the passed content drawable around so we can return it if/when it is needed
+				// later.
+				_contentDrawable = new WeakReference<Drawable>(contentDrawable);
+			}
+
+			// Clean up our weak reference if we're disposing
+			protected override void Dispose(bool disposing)
+			{
+				if (disposing)
+				{
+					_contentDrawable = null;
+				}
+
+				base.Dispose(disposing);
 			}
 		}
 	}
