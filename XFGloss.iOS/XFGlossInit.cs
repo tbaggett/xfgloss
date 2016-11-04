@@ -15,6 +15,7 @@
  */
 
 using System;
+using XFGloss.iOS.Renderers;
 
 namespace XFGloss.iOS
 {
@@ -30,6 +31,11 @@ namespace XFGloss.iOS
 		/// </summary>
 		public static void Init()
 		{
+			// Have to instantiate one of the renderers to stop the Xamarin linker removing them
+			// from release builds
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
+			XFGlossContentPageRenderer r = new XFGlossContentPageRenderer();
+#pragma warning restore CS0219 // Variable is assigned but its value is never used
 		}
 	}
 }
