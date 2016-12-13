@@ -131,10 +131,13 @@ namespace XFGloss.iOS.Renderers
 		/// </summary>
 		public override void ViewDidLayoutSubviews()
 		{
-			var layer = XFGlossGradientLayer.GetGradientLayer(NativeView);
-			if (layer != null)
+			if (NativeView != null)
 			{
-				layer.Frame = new CGRect(CGPoint.Empty, NativeView.Frame.Size);
+				var layer = XFGlossGradientLayer.GetGradientLayer(NativeView);
+				if (layer != null)
+				{
+					layer.Frame = new CGRect(CGPoint.Empty, NativeView.Frame.Size);
+				}
 			}
 
 			base.ViewDidLayoutSubviews();

@@ -152,7 +152,7 @@ namespace XFGloss.iOS.Views
 		/// <param name="view">The native view that the gradient layer is expected to be attached to</param>
 		static public XFGlossGradientLayer GetGradientLayer(UIView view)
 		{
-			if (view.Layer.Sublayers != null && view.Layer.Sublayers.Length > 0 && view.Layer.Sublayers[0] is XFGlossGradientLayer)
+			if (view?.Layer?.Sublayers != null && view.Layer.Sublayers.Length > 0 && view.Layer.Sublayers[0] is XFGlossGradientLayer)
 			{
 				return view.Layer.Sublayers[0] as XFGlossGradientLayer;
 			}
