@@ -8,7 +8,7 @@ renderers to work its magic. More details are available here.
 
 Building XFGloss requires Visual Studio 2015 with update 3 installed on the Windows
 platform, or Xamarin Studio 6.0 on the Mac platform. A nuget package is also available for
-easy inclusion into your Xamarin.Forms projects.
+easy inclusion into your Xamarin.Forms projects. See the “Adding XFGloss to Your Xamarin.Forms-Based App” section below for the needed integration steps.
 
 ==========================================================================================
 

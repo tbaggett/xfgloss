@@ -6,7 +6,7 @@
 
 **XFGloss** adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms. It uses [attached properties](https://developer.xamarin.com/guides/xamarin-forms/xaml/attached-properties/) and enhanced platform-specific renderers to work its magic. More details are available [here](http://tommyb.com/open-source-projects/xfgloss).
 
-Building XFGloss requires Visual Studio 2015 with update 3 installed on the Windows platform, or Xamarin Studio 6.0 on the Mac platform. A [nuget package](https://www.nuget.org/packages/Ansuria.XFGloss/) is also available for easy inclusion into your Xamarin.Forms projects.
+Building XFGloss requires Visual Studio 2015 with update 3 installed on the Windows platform, or Xamarin Studio 6.0 on the Mac platform. A [nuget package](https://www.nuget.org/packages/Ansuria.XFGloss/) is also available for easy inclusion into your Xamarin.Forms projects. See the [Adding XFGloss to Your Xamarin.Forms-Based App](#integration) section below for the needed integration steps.
 
 In the above screenshots, a gradient background was added to the bottom half of the XF ContentPage by adding this code to the Xaml declaration:
 
@@ -377,9 +377,9 @@ SwitchGloss.SetTintColor(switchCtrl, Color.Red);
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/TintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/TintColorPage.cs)
 
 ---
+<a name="integration"></a>
 
 # Adding XFGloss to Your Xamarin.Forms-Based App
-
 Integrating XFGloss into your XF-based app is easy. First, add the [nuget package](https://www.nuget.org/packages/Ansuria.XFGloss/) to your app's PCL and Android/iOS platform projects. Next, initialize XFGloss from each of the platform projects, like so:
 
 **Android MainActivity.cs:**
