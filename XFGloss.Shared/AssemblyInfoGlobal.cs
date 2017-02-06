@@ -23,7 +23,7 @@ using System.Reflection;
 [assembly: AssemblyDescription("Visual Gloss for Xamarin.Forms")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ansuria Solutions LLC")]
-[assembly: AssemblyCopyright("(c) 2016 Ansuria Solutions LLC and Tommy Baggett")]
+[assembly: AssemblyCopyright("(c) 2016-2017 Ansuria Solutions LLC and Tommy Baggett")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
