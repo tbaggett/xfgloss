@@ -8,6 +8,8 @@
 
 Building XFGloss requires Visual Studio 2015 with update 3 installed on the Windows platform, or Xamarin Studio 6.0 on the Mac platform. A [nuget package](https://www.nuget.org/packages/Ansuria.XFGloss/) is also available for easy inclusion into your Xamarin.Forms projects. See the [Adding XFGloss to Your Xamarin.Forms-Based App](#integration) section below for the needed integration steps.
 
+XFGloss _Init()_ must be called first in the platform specific files (AppDelegate.cs and MainActivity.cs). See the exmaple apps for details.
+
 In the above screenshots, a gradient background was added to the bottom half of the XF ContentPage by adding this code to the Xaml declaration:
 
 ```
