@@ -14,8 +14,8 @@ nuget:
   disable_publish_on_pr: true
 build_script:
     - nuget restore ./XFGloss.sln
-    - ps: ./bootstrapper.ps1 -Target Default -Verbosity diagnostic
-    - ps: ./bootstrapper.ps1 -Target NuGetPack -Verbosity diagnostic
+    - ps: ./bootstrapper.ps1 -Target Default -Verbosity warning
+    - ps: ./bootstrapper.ps1 -Target NuGetPack -Verbosity warning
 artifacts:
 - path: '*.nupkg'
   name: NuGet
