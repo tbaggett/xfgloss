@@ -17,9 +17,18 @@
 
 namespace XFGloss
 {
+	/// <summary>
+	/// Preserve attribute used to instruct Xamarin linkers to not exclude classes/methods
+	/// </summary>
 	public sealed class PreserveAttribute : System.Attribute
 	{
+		/// <summary>
+		/// Specifies that all members should be preserved when attribute is applied to a class
+		/// </summary>
 		public bool AllMembers;
+		/// <summary>
+		/// Specifies that class/method that attribute is applied to should only be preserved if a containing class is preserved.
+		/// </summary>
 		public bool Conditional;
 	}
 }
