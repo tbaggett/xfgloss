@@ -8,7 +8,10 @@ Task ("Default").Does (() =>
 {
 	NuGetRestore ("./XFGloss.sln");
 
-	DotNetBuild ("./XFGloss.sln", c => c.Configuration = "Release");
+//	DotNetBuild ("./XFGloss.sln", c => c.Configuration = "Release");
+	DotNetBuild ("./XFGloss/XFGloss.csproj", c => c.Configuration = "Release");
+	DotNetBuild ("./XFGloss/XFGloss.Droid/XFGloss.Droid.csproj", c => c.Configuration = "Release");
+	DotNetBuild ("./XFGloss/XFGloss.iOS/XFGloss.iOS.csproj", c => c.Configuration = "Release");
 });
 
 Task ("NuGetPack")
