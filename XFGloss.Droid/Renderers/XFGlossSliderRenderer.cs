@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2016 Ansuria Solutions LLC & Tommy Baggett: 
+ * Copyright (C) 2016-2017 Ansuria Solutions LLC & Tommy Baggett: 
  * http://github.com/tbaggett
  * http://twitter.com/tbaggett
  * http://tommyb.com
@@ -33,6 +33,7 @@ namespace XFGloss.Droid.Renderers
 	/// The Android platform-specific Xamarin.Forms renderer used for all <see cref="T:Xamarin.Forms.Slider"/>
 	/// derived classes.
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class XFGlossSliderRenderer : ViewRenderer<Slider, SeekBar>, SeekBar.IOnSeekBarChangeListener
 	{
 		double _max;

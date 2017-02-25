@@ -14,6 +14,7 @@ using System.Reflection;
 namespace XFGloss
 {
     /// <summary>Provides methods to register and deregister weak events. </summary>
+	[Preserve(AllMembers = true)]
     public static class WeakEvent
     {
         private static List<WeakEventRegistration> _registeredWeakEvents = null;
@@ -162,6 +163,7 @@ namespace XFGloss
             return weakEvent != null;
         }
 
+		[Preserve(AllMembers = true)]
         internal class WeakEventRegistration
         {
             private static readonly MethodInfo OnEventCalledInfo =

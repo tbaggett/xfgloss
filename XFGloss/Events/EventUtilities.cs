@@ -14,6 +14,7 @@ using System.Reflection;
 namespace XFGloss
 {
     /// <summary>Provides methods for event management. </summary>
+	[Preserve(AllMembers = true)]
     class EventUtilities
     {
         /// <summary>Registers an event on the given target object. </summary>

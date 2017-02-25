@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2016 Ansuria Solutions LLC & Tommy Baggett: 
+ * Copyright (C) 2016-2017 Ansuria Solutions LLC & Tommy Baggett: 
  * http://github.com/tbaggett
  * http://twitter.com/tbaggett
  * http://tommyb.com
@@ -30,6 +30,7 @@ namespace XFGloss.Droid.Renderers
 	/// derived classes. Also implements the <see cref="T:XFGloss.IGradientRenderer"/> interface to support the added
 	/// BackgroundGradient XFGloss property.
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class XFGlossContentPageRenderer : PageRenderer, IGradientRenderer
 	{
 		#region IGradientRenderer implementation

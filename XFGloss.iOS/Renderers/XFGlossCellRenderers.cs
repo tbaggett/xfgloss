@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2016 Ansuria Solutions LLC & Tommy Baggett: 
+ * Copyright (C) 2016-2017 Ansuria Solutions LLC & Tommy Baggett: 
  * http://github.com/tbaggett
  * http://twitter.com/tbaggett
  * http://tommyb.com
@@ -38,6 +38,7 @@ namespace XFGloss.iOS.Renderers
 	/// <summary>
 	/// The iOS platform-specific XFGlossRenderer base class used for all <see cref="T:Xamarin.Forms.Cell"/> types.
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	internal class iOSXFGlossCellRenderer : XFGlossCellRenderer<UITableViewCell>, IGradientRenderer
 	{
 		#region IGradientRenderer implementation
@@ -288,6 +289,7 @@ namespace XFGloss.iOS.Renderers
 	/// The iOS platform-specific XFGloss cell renderer class used for the <see cref="T:Xamarin.Forms.Cell"/> based
 	/// classes that support customizing the accessory view on the iOS platform.
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	internal class iOSXFGlossAccessoryCellRenderer : iOSXFGlossCellRenderer
 	{
 		WeakReference<UIView> _accessoryView;
@@ -488,6 +490,7 @@ namespace XFGloss.iOS.Renderers
 	/// The iOS platform-specific XFGloss cell renderer class used for the <see cref="T:Xamarin.Forms.SwitchCell"/>
 	/// class.
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	internal class iOSXFGlossSwitchCellRenderer : iOSXFGlossCellRenderer
 	{
 		SwitchCellGloss _properties;
@@ -567,6 +570,7 @@ namespace XFGloss.iOS.Renderers
 	/// Custom <see cref="T:Xamarin.Forms.EntryCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the iOS platform-specific implementation
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	public class XFGlossEntryCellRenderer : EntryCellRenderer
 	{
 		/// <summary>
@@ -592,6 +596,7 @@ namespace XFGloss.iOS.Renderers
 	/// Custom <see cref="T:Xamarin.Forms.SwitchCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the iOS platform-specific implementation
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	public class XFGlossSwitchCellRenderer : SwitchCellRenderer
 	{
 		/// <summary>
@@ -616,6 +621,7 @@ namespace XFGloss.iOS.Renderers
 	/// Custom <see cref="T:Xamarin.Forms.TextCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the iOS platform-specific implementation
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	public class XFGlossTextCellRenderer : TextCellRenderer
 	{
 		/// <summary>
@@ -640,6 +646,7 @@ namespace XFGloss.iOS.Renderers
 	/// Custom <see cref="T:Xamarin.Forms.ImageCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the iOS platform-specific implementation
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	public class XFGlossImageCellRenderer : ImageCellRenderer
 	{
 		/// <summary>
@@ -664,6 +671,7 @@ namespace XFGloss.iOS.Renderers
 	/// Custom <see cref="T:Xamarin.Forms.ViewCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the iOS platform-specific implementation
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	public class XFGlossViewCellRenderer : ViewCellRenderer
 	{
 		/// <summary>

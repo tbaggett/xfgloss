@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2016 Ansuria Solutions LLC & Tommy Baggett: 
+ * Copyright (C) 2016-2017 Ansuria Solutions LLC & Tommy Baggett: 
  * http://github.com/tbaggett
  * http://twitter.com/tbaggett
  * http://tommyb.com
@@ -25,6 +25,7 @@ namespace XFGloss.Droid.Renderers
 	/// The Android platform-specific Xamarin.Forms renderer used for all <see cref="T:Xamarin.Forms.Switch"/>
 	/// derived classes.
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class XFGlossSwitchRenderer : SwitchRenderer
 	{
         SwitchGloss _properties;
@@ -72,6 +73,7 @@ namespace XFGloss.Droid.Renderers
 	/// The Android platform-specific Xamarin.Forms renderer used for all <see cref="T:Xamarin.Forms.Switch"/>
 	/// derived classes when the Android AppCompat library is being used.
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class XFGlossSwitchCompatRenderer : Xamarin.Forms.Platform.Android.AppCompat.SwitchRenderer
 	{
 		SwitchGloss _properties;

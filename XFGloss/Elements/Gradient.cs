@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2016 Ansuria Solutions LLC & Tommy Baggett: 
+ * Copyright (C) 2016-2017 Ansuria Solutions LLC & Tommy Baggett: 
  * http://github.com/tbaggett
  * http://twitter.com/tbaggett
  * http://tommyb.com
@@ -30,6 +30,7 @@ namespace XFGloss
 	/// platform-specific renderers when changes need to be applied.
 	/// </summary>
 	[ContentProperty("ChildStep")]
+	[Preserve(AllMembers = true)]
 	public class Gradient : XFGlossElement<IGradientRenderer>, IEquatable<Gradient>, IDisposable
 	{
 		#region Consts
@@ -596,6 +597,7 @@ namespace XFGloss
 	/// <summary>
 	/// Class used to store each step's properties for a <see cref="T:XFGloss.Gradient"/> fill.
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	public class GradientStep : ObservableObject, IEquatable<GradientStep>
 	{
 		Color _stepColor = Color.Default;
@@ -728,6 +730,7 @@ namespace XFGloss
 	/// <summary>
 	/// ObservableCollection-based collection used to store a gradient's steps.
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	public class GradientStepCollection : ObservableCollection<GradientStep>, IEquatable<GradientStepCollection>
 	{
 		/// <summary>
@@ -824,6 +827,7 @@ namespace XFGloss
 	/// Helper class used to convert from an angle in degrees to start and end point X/Y values between 0.0 and 1.0.
 	/// Currently needed for the iOS platform renderer, may be needed for other XF-supported platforms in the future.
 	/// </summary>
+	[Preserve(AllMembers = true)]
 	public class RotationToPositionsConverter
 	{
 		/// <summary>

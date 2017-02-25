@@ -47,6 +47,7 @@
     <Compile Include="Interfaces\IGradientRenderer.cs" />
     <Compile Include="Interfaces\IXFGlossRenderer.cs" />
     <Compile Include="Renderers\XFGlossCellRenderer.cs" />
+    <Compile Include="Attributes\PreserveAttribute.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -62,6 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Attributes\" />
   </ItemGroup>
   <Import Project="..\XFGloss.Shared\XFGloss.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

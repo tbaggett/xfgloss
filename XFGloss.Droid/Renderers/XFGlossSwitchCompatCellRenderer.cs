@@ -1,5 +1,5 @@
 ﻿// /*
-//  * Copyright (C) 2016 Ansuria Solutions LLC & Tommy Baggett: 
+//  * Copyright (C) 2016-2017 Ansuria Solutions LLC & Tommy Baggett: 
 //  * http://github.com/tbaggett
 //  * http://twitter.com/tbaggett
 //  * http://tommyb.com
@@ -31,6 +31,7 @@ namespace XFGloss.Droid.Renderers
 	/// class IF the Android AppCompat library is being used and the XFGloss.Droid.Library.UsingSwitchCompatCell 
 	/// property is true when the XFGloss.Droid.Library.Init(...) method is executed by the app's main activity.
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	internal class DroidXFGlossSwitchCompatCellRenderer : DroidXFGlossCellRenderer
 	{
 		SwitchCellGloss _properties;
@@ -99,6 +100,7 @@ namespace XFGloss.Droid.Renderers
 	/// Helper class used by the <see cref="DroidXFGlossSwitchCompatCellRenderer"/> class to house the accessory view
 	/// used to display the <see cref="SwitchCompat"/> control.
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class SwitchCompatCellView : BaseCellView, CompoundButton.IOnCheckedChangeListener
 	{
 		/// <summary>
@@ -141,6 +143,7 @@ namespace XFGloss.Droid.Renderers
 	/// boolean property is set to true when the XFGloss.Droid.Library.Init(...) method is executed by the app's main
 	/// activity. 
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class XFGlossSwitchCompatCellRenderer : CellRenderer
 	{
 		const double DefaultHeight = 30;

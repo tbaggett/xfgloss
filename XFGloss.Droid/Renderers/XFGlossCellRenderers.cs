@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2016 Ansuria Solutions LLC & Tommy Baggett: 
+ * Copyright (C) 2016-2017 Ansuria Solutions LLC & Tommy Baggett: 
  * http://github.com/tbaggett
  * http://twitter.com/tbaggett
  * http://tommyb.com
@@ -39,6 +39,7 @@ namespace XFGloss.Droid.Renderers
 	/// <summary>
 	/// The Android platform-specific XFGlossRenderer base class used for all <see cref="T:Xamarin.Forms.Cell"/> types.
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	internal class DroidXFGlossCellRenderer : XFGlossCellRenderer<AView>, IGradientRenderer
 	{
 		#region IGradientRenderer implementation
@@ -269,6 +270,7 @@ namespace XFGloss.Droid.Renderers
 		}
 
 		// Helper class used to create a new ripple drawable on top of the desired background color or gradient fill
+		[Android.Runtime.Preserve(AllMembers = true)]
 		class BackgroundRippleDrawable : RippleDrawable, AView.IOnTouchListener
 		{
 			// Static method to create a ripple with a background color as its content layer
@@ -312,6 +314,7 @@ namespace XFGloss.Droid.Renderers
 
 		// Helper class used to create a darkening/lightening tint effect on top of the desired background color or
 		// gradient fill on older (pre-Lollipop) versions of the OS
+		[Android.Runtime.Preserve(AllMembers = true)]
 		class BackgroundStateListDrawable : StateListDrawable
 		{
 			public static BackgroundStateListDrawable Create(AColor backgroundColor)
@@ -384,6 +387,7 @@ namespace XFGloss.Droid.Renderers
 	/// The Android platform-specific XFGloss cell renderer class used for the <see cref="T:Xamarin.Forms.SwitchCell"/>
 	/// class.
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	internal class DroidXFGlossSwitchCellRenderer : DroidXFGlossCellRenderer
 	{
 		SwitchCellGloss _properties;
@@ -456,6 +460,7 @@ namespace XFGloss.Droid.Renderers
 	/// Custom <see cref="T:Xamarin.Forms.EntryCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the Android platform-specific implementation
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class XFGlossEntryCellRenderer : EntryCellRenderer
 	{
 		/// <summary>
@@ -485,6 +490,7 @@ namespace XFGloss.Droid.Renderers
 	/// boolean property is set to true when the XFGloss.Droid.Library.Init(...) method is executed by the app's main
 	/// activity. 
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class XFGlossSwitchCellRenderer : SwitchCellRenderer
 	{
 		/// <summary>
@@ -510,6 +516,7 @@ namespace XFGloss.Droid.Renderers
 	/// Custom <see cref="T:TextCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the Android platform-specific implementation
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class XFGlossTextCellRenderer : TextCellRenderer
 	{
 		/// <summary>
@@ -535,6 +542,7 @@ namespace XFGloss.Droid.Renderers
 	/// Custom <see cref="T:ImageCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the Android platform-specific implementation
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class XFGlossImageCellRenderer : ImageCellRenderer
 	{
 		/// <summary>
@@ -560,6 +568,7 @@ namespace XFGloss.Droid.Renderers
 	/// Custom <see cref="T:ViewCellRenderer"/>-based renderer class used to apply the custom XFGloss
 	/// properties to the Android platform-specific implementation
 	/// </summary>
+	[Android.Runtime.Preserve(AllMembers = true)]
 	public class XFGlossViewCellRenderer : ViewCellRenderer
 	{
 		/// <summary>
