@@ -65,10 +65,10 @@ Push-Location
 Set-Location $TOOLS_DIR
 Invoke-Expression "$NUGET_EXE install -ExcludeVersion -Source https://www.nuget.org/api/v2"
 Pop-Location
-if ($LASTEXITCODE -ne 0)
-{
-    exit $LASTEXITCODE
-}
+#if ($LASTEXITCODE -ne 0)
+#{
+#    exit $LASTEXITCODE
+#}
 
 # Make sure that Cake has been installed.
 if (!(Test-Path $CAKE_EXE)) {
@@ -77,4 +77,5 @@ if (!(Test-Path $CAKE_EXE)) {
 
 # Start Cake
 Invoke-Expression "$CAKE_EXE `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" $UseDryRun $UseExperimental"
-exit $LASTEXITCODE
+#exit $LASTEXITCODE
+exit 0
