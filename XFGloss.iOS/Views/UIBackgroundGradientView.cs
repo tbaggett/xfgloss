@@ -56,6 +56,25 @@ namespace XFGloss.iOS.Views
 		}
 
 		/// <summary>
+		/// Override of frame getter/setter to store frame size for use in LayoutSubviews. Apparently there is a bug
+		/// in Xamarin.iOS that causes the Frame to be empty (zeroes).
+		/// See http://stackoverflow.com/questions/37170276/xamarin-forms-gradient-background-for-button-using-custom-renderer-with-ios for details
+		/// </summary>
+		/// <value>The frame.</value>
+		public override CGRect Frame
+		{
+			get
+			{
+				return base.Frame;
+			}
+			set
+			{
+				GradientFrame = value;
+				base.Frame = value;
+			}
+		}
+
+		/// <summary>
 		/// UIView override to update our gradient layer's size to match our view's bounds whenever the bounds are 
 		/// changing
 		/// </summary>
@@ -64,7 +83,7 @@ namespace XFGloss.iOS.Views
 			var layer = XFGlossGradientLayer.GetGradientLayer(this);
 			if (layer != null)
 			{
-				layer.Frame = new CGRect(CGPoint.Empty, Frame.Size);
+				layer.Frame = new CGRect(CGPoint.Empty, GradientFrame.Size);
 			}
 
 			base.LayoutSubviews();
@@ -89,6 +108,8 @@ namespace XFGloss.iOS.Views
 			var layer = XFGlossGradientLayer.GetGradientLayer(this);
 			layer?.UpdateSteps(steps);
 		}
+
+		private CGRect GradientFrame { get; set; }
 	}
 
 	/// <summary>
