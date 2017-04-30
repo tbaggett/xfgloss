@@ -10,7 +10,7 @@ Building XFGloss requires Visual Studio 2015 with update 3 installed on the Wind
 
 In the above screenshots, a gradient background was added to the bottom half of the XF ContentPage by adding this code to the Xaml declaration:
 
-```
+``` xaml
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -76,7 +76,7 @@ gloss.ThumbOnTintColor = Color.Lime;
 
 ---
     
-#Sample App
+# Sample App
 
 ![XFGloss Property Example](https://github.com/tbaggett/xfgloss/raw/master/images/propexample.jpg)
 
@@ -92,7 +92,7 @@ Here's a brief description of the properties added/expanded by XFGloss:
 
 ---
 
-###AccessoryType (iOS only)
+### AccessoryType (iOS only)
 ![AccessoryType Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_accessory_type.jpg)
 
 **Type:** XFGloss.CellGlossAccessoryType enum value  
@@ -107,7 +107,7 @@ The iOS _DetailButton_ and _DetailDisclosureButton_ accessory types aren't curre
 The XF TableView component already provides the needed access, so I could add support for those accessory types for use with the TableView only if it is needed in the meantime. Please submit an issue if you would like the TableView-only property to be added before ListView also supports it.
 
 **Xaml Example:**
-```
+```xaml
 <TextCell Text="DisclosureIndicator" xfg:CellGloss.AccessoryType="DisclosureIndicator" />
 ```
 
@@ -123,7 +123,7 @@ CellGloss.SetAccessoryType(cell, CellGlossAccessoryType.DisclosureIndicator);
 
 ---
 
-###BackgroundColor
+### BackgroundColor
 ![BackgroundColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_background_color.jpg)
 
 **Type:** Xamarin.Forms Color  
@@ -135,7 +135,7 @@ Allows a color value to be specified as a cell's background color. Possible valu
 
 
 **Xaml Example:**
-```
+```xaml
 <TextCell Text="Red" xfg:CellGloss.BackgroundColor="Red" />
 ```
 **C# Example:**
@@ -150,7 +150,7 @@ CellGloss.SetBackgroundColor(cell, Color.Red);
 
 ---
 
-###BackgroundGradient
+### BackgroundGradient
 ![BackgroundGradient Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_background_gradient.jpg)
 
 **Type:** XFGloss.Gradient  
@@ -162,7 +162,7 @@ Allows a multiple-color linear gradient to be specified as a content page or cel
 **KNOWN ISSUE:** The *BackgroundGradient* property does not consistently operate as expected on Android API 21 (Lollipop) when it is applied to a touch enabled element. The material design ripple effect is expected when a user touches the element on API 21 and higher. The effect occurs as expected sometime but not others. In the other cases, the pre-21 highlighting of the entire element occurs instead of the ripple effect. The behavior works as expected (ripple on API 22 and higher, element highlighting on API 20 and lower) on all the other supported Android APIs (16 - 23).
 
 **Xaml Example:**
-```
+```xaml
 <TextCell Text="Red" TextColor="White">
     <xfg:CellGloss.BackgroundGradient>
         <xfg:Gradient StartColor="Red" EndColor="Maroon" IsRotationTopToBottom="true" />
@@ -212,7 +212,7 @@ CellGloss.SetBackgroundGradient(rotatingCell, rotatingGradient);
 
 ---
 
-###MaxTrackTintColor
+### MaxTrackTintColor
 ![MaxTrackTintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_max_track_tint_color.jpg)
 
 **Type:** Xamarin.Forms.Color  
@@ -223,7 +223,7 @@ Allows a color value to be specified for a Slider's right side of the track, beg
 **KNOWN ISSUE:** Modifying this property has no effect on an Android device running API 21 (Lollipop). Android's native support for this property is broken in that API level. This property works as expected on Android devices running all other API levels between 16 (Jelly Bean) and 23 (Marshmallow).
 
 **Xaml Example:**
-```
+```xaml
 <Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.MaxTrackTintColor="Red" /> 
 ```
 **C# Example:**
@@ -235,7 +235,7 @@ SliderGloss.SetMaxTrackTintColor(slider, Color.Red);
 
 ---
 
-###MinTrackTintColor
+### MinTrackTintColor
 ![MinTrackTintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_min_track_tint_color.jpg)
 
 **Type:** Xamarin.Forms.Color  
@@ -246,7 +246,7 @@ Allows a color value to be specified for a Slider's left side of the track, up t
 **KNOWN ISSUE:** Modifying this property causes both the left and right sides of the track's colors to be changed on Android devices running API 21 (Lollipop). Android's native support for this property was incorrectly implemented in that API level. This property works as expected on Android devices running all other API levels between 16 (Jelly Bean) and 23 (Marshmallow).
 
 **Xaml Example:**
-```
+```xaml
 <Slider Minimum="0" Maximum="100" Value="25" xfg:SliderGloss.MinTrackTintColor="Red" /> 
 ```
 **C# Example:**
@@ -258,7 +258,7 @@ SliderGloss.SetMinTrackTintColor(slider, Color.Red);
 
 ---
 
-###OnTintColor
+### OnTintColor
 ![OnTintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_on_tint_color.jpg)
 
 **Type:** Xamarin.Forms Color  
@@ -267,7 +267,7 @@ SliderGloss.SetMinTrackTintColor(slider, Color.Red);
 Allows a color value to be specified as the Switch control's track color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
-```
+```xaml
 <SwitchCell Text="Red" xfg:SwitchCellGloss.OnTintColor="Red" />
 
 <Switch xfg:SwitchGloss.OnTintColor="Red" />
@@ -284,7 +284,7 @@ SwitchGloss.SetOnTintColor(switchCtrl, Color.Red);
 **Sample App Code Excerpts:** [Xaml](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/Xaml/OnTintColorPage.xaml), [C#](https://github.com/tbaggett/xfgloss/blob/master/XFGlossSample/Examples/Views/CSharp/OnTintColorPage.cs)
 
 ---
-###ThumbOnTintColor
+### ThumbOnTintColor
 ![ThumbOnTintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_thumb_on_tint_color.jpg)
 
 **Type:** Xamarin.Forms Color  
@@ -293,7 +293,7 @@ SwitchGloss.SetOnTintColor(switchCtrl, Color.Red);
 Allows a color value to be specified as the Switch control's thumb color when it is in the &quot;on&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
-```
+```xaml
 <SwitchCell Text="Red" xfg:SwitchCellGloss.ThumbOnTintColor="Red" />
 
 <Switch xfg:SwitchGloss.ThumbOnTintColor="Red" />
@@ -311,7 +311,7 @@ SwitchGloss.SetThumbOnTintColor(switchCtrl, Color.Red);
 
 ---
 
-###ThumbTintColor
+### ThumbTintColor
 ![ThumbTintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_thumb_tint_color.jpg)
 
 **Type:** Xamarin.Forms Color  
@@ -320,7 +320,7 @@ SwitchGloss.SetThumbOnTintColor(switchCtrl, Color.Red);
 Allows a color value to be specified as the Slider control's thumb color as well as the Switch control's thumb color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
-```
+```xaml
 <SwitchCell Text="Red" xfg:SwitchCellGloss.ThumbTintColor="Red" />
 
 <Switch xfg:SwitchGloss.ThumbTintColor="Red" />
@@ -338,7 +338,7 @@ SwitchGloss.SetThumbTintColor(switchCtrl, Color.Red);
 
 ---
 
-###TintColor
+### TintColor
 ![TintColor Example](https://github.com/tbaggett/xfgloss/raw/master/images/prop_tint_color.jpg)
 
 **Type:** Xamarin.Forms Color  
@@ -347,7 +347,7 @@ SwitchGloss.SetThumbTintColor(switchCtrl, Color.Red);
 Allows a color value to be specified as the Switch control's track color when it is in the &quot;off&quot; position for the Switch and SwitchCell classes, and for the accessory view on iOS. Possible values are either named colors or numeric color values.
 
 **Xaml Example:**
-```
+```xaml
 <TextCell Text="Red" xfg:CellGloss.TintColor="Red" xfg:CellGloss.AccessoryType="Checkmark" />
 
 <SwitchCell Text="Red" xfg:CellGloss.TintColor="Red" />
@@ -565,7 +565,7 @@ The XFGloss renderer classes require their overridden versions of OnElementChang
 
 ---
 
-#Known Issues
+# Known Issues
 
  - The default XF EntryCell renderer on iOS doesn't take the accessory view into account when positioning/sizing the text entry field. I plan to submit a PR that corrects this issue.
 
