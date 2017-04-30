@@ -16,8 +16,7 @@ In the above screenshots, a gradient background was added to the bottom half of 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
              x:Class="XFGlossSample.Views.AboutPage"
-             Title="XFGloss Sample App" Padding="10"
-             >
+             Title="XFGloss Sample App" Padding="10">
     
     <xfg:ContentPageGloss.BackgroundGradient>
         <xfg:Gradient Rotation="150">
