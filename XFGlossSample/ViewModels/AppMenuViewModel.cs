@@ -57,7 +57,7 @@ namespace XFGlossSample.ViewModels
 			};
 
 			// Add iOS only entry if we're running on iOS
-			if (Device.OS == TargetPlatform.iOS)
+            if (Device.RuntimePlatform == Device.iOS)
 			{
 				menuItems[0].Insert(0, new AppMenuItem("AccessoryType (iOS only)", "AccessoryType"));
 			}

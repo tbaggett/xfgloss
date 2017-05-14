@@ -32,7 +32,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			(https://forums.xamarin.com/discussion/18037/tablesection-w-out-header)
 			*/
 			TableSection section;
-			if (Device.OS == TargetPlatform.Android)
+			if (Device.RuntimePlatform == Device.Android)
 			{
 				section = new TableSection("Cell BackgroundColor values set in C#:");
 			}
@@ -54,14 +54,14 @@ namespace XFGlossSample.Examples.Views.CSharp
 			section.Add(cell);
 
 			var stack = new StackLayout();
-			if (Device.OS == TargetPlatform.iOS)
+			if (Device.RuntimePlatform == Device.iOS)
 			{
 				stack.Children.Add(new Label { Text = "Cell BackgroundColor values set in C#:", Margin = new Thickness(10) });
 			}
 			stack.Children.Add(new TableView
 			{
 				Intent = TableIntent.Data,
-				HeightRequest = Device.OnPlatform<double>(132, 190, 0),
+				HeightRequest = DeviceExtensions.OnPlatform<double>(132, 190, 0),
 				Root = new TableRoot
 				{
 					section
@@ -70,5 +70,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 
 			Content = stack;
 		}
+
+
 	}
 }

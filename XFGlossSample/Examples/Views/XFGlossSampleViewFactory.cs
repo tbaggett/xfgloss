@@ -74,7 +74,7 @@ namespace XFGlossSample.Examples.Views
 						TabbedPage examplePage = new TabbedPage();
 
 						// Assign icons (iOS only) and titles to be used by each of the tabs to the navigation pages
-						if (Device.OS == TargetPlatform.iOS)
+                        if (Device.RuntimePlatform == Device.iOS)
 						{
 							examplePage.Children.Add(new NavigationPage(infoPage) { Title = "Info", Icon = "infocircle.png" });
 							examplePage.Children.Add(new NavigationPage(xamlPage) { Title = "Xaml", Icon = "xamlcode.png" });

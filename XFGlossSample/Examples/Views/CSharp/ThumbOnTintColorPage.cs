@@ -33,7 +33,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			(https://forums.xamarin.com/discussion/18037/tablesection-w-out-header)
 			*/
 			TableSection section;
-			if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform == Device.Android)
 			{
 				section = new TableSection("SwitchCell ThumbOnTintColor values set in C#:");
 			}
@@ -47,7 +47,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 
 
 			var stack = new StackLayout();
-			if (Device.OS == TargetPlatform.iOS)
+			if (Device.RuntimePlatform == Device.iOS)
 			{
 				stack.Children.Add(new Label { Text = "SwitchCell ThumbOnTintColor values set in C#:", Margin = new Thickness(10) });
 			}
