@@ -12,9 +12,9 @@ assembly_info:
   assembly_informational_version: '{version}'
 install:
 - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/install-android-sdk.ps1?v=2'))
-- ps: $sdks25 = Get-AndroidSDKs |? { $_.name -like '*SDK*Platform*25*' } 
+- ps: $sdks25 = Get-AndroidSDKs |? { $_.name -like '*SDK*Platform*23*' } 
 - ps: Install-AndroidSDK -sdks $sdks25
-- ps: $sdks23 = Get-AndroidSDKs |? { $_.name -like '*SDK*Platform*23*' } 
+- ps: $sdks23 = Get-AndroidSDKs |? { $_.name -like '*SDK*Platform*24*' } 
 - ps: Install-AndroidSDK -sdks $sdks23
 - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/fix-xamarin-4-2-2-11.ps1'))
 nuget:
