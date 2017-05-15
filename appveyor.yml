@@ -13,7 +13,7 @@ assembly_info:
 install:
 - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/install-android-sdk.ps1?v=2'))
 - ps: $sdks = Get-AndroidSDKs |? { $_.name -like 'sdk platform*API 23*' -or $_.name -like 'Google APIs, Android API 23' } 
-- ps: Install-AndroidSDK -sdks $sdks
+- ps: Install-AndroidSDK --no-ui -sdks $sdks
 - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/fix-xamarin-4-2-2-11.ps1'))
 nuget:
   disable_publish_on_pr: true
