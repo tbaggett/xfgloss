@@ -16,7 +16,7 @@
        <summary>Visual enhancements for Xamarin.Forms</summary>
        <tags>xamarin.forms, gloss, style, styling, xamarin, pcl, xam.pcl, plugin, plugin for xamarin.forms, android, ios</tags>
        <dependencies>
-         <dependency id="Xamarin.Forms" version="2.3.1.114" />
+         <dependency id="Xamarin.Forms" version="2.3.4.231" />
        </dependencies>
        <releaseNotes>
        </releaseNotes>

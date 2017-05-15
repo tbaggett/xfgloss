@@ -132,13 +132,14 @@ namespace XFGloss
             RegisteredWeakEvents.Add(new WeakEventRegistration(null, eventInfo, handler));
         }
 
-        /// <summary>Removes a weak event registration from the given source object.</summary>
-        /// <typeparam name="TEventSource">The type of the source object.</typeparam>
-        /// <param name="source">The source object to register the event from. </param>
-        /// <param name="eventName">The event name to remove the registration from.</param>
-        /// <param name="handler">The handler to remove.</param>
-        /// <returns>True if the event registration could be found and was removed. </returns>
-        public static bool DeregisterEvent<TEventSource, TEventArgs>(TEventSource source, string eventName, EventHandler<TEventArgs> handler)
+		/// <summary>Removes a weak event registration from the given source object.</summary>
+		/// <typeparam name="TEventSource">The type of the source object.</typeparam>
+		/// <typeparam name="TEventArgs">The type of the event arguments.</typeparam>
+		/// <param name="source">The source object to register the event from. </param>
+		/// <param name="eventName">The event name to remove the registration from.</param>
+		/// <param name="handler">The handler to remove.</param>
+		/// <returns>True if the event registration could be found and was removed. </returns>
+		public static bool DeregisterEvent<TEventSource, TEventArgs>(TEventSource source, string eventName, EventHandler<TEventArgs> handler)
         {
             var eventInfo = typeof(TEventSource).GetRuntimeEvent(eventName);
             return DeregisterEvent(source, handler, eventInfo);

@@ -29,7 +29,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			base.OnBindingContextChanged();
 
 			var stack = new StackLayout();
-			if (Device.OS == TargetPlatform.iOS)
+			if (Device.RuntimePlatform == Device.iOS)
 			{
 				stack.Children.Add(
 					new StackLayout
@@ -75,7 +75,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			(https://forums.xamarin.com/discussion/18037/tablesection-w-out-header)
 			*/
 			TableSection section;
-			if (Device.OS == TargetPlatform.Android)
+			if (Device.RuntimePlatform == Device.Android)
 			{
 				section = new TableSection("SwitchCell TintColor values set in C#:");
 			}
@@ -91,7 +91,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 				new TableView()
 				{
 					Intent = TableIntent.Data,
-					HeightRequest = Device.OnPlatform<double>(132, 190, 0),
+					HeightRequest = DeviceExtensions.OnPlatform<double>(132, 190, 0),
 					Root = new TableRoot()
 					{
 						section
@@ -109,7 +109,7 @@ namespace XFGlossSample.Examples.Views.CSharp
 			stack.Children.Add(CreateTintColorSwitch("Green", Color.Green));
 			stack.Children.Add(CreateTintColorSwitch("Blue", Color.Blue));
 
-			if (Device.OS == TargetPlatform.iOS)
+			if (Device.RuntimePlatform == Device.iOS)
 			{
 				var scrollView = new ScrollView();
 				scrollView.Content = stack;
