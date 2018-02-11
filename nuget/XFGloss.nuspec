@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+   <metadata minClientVersion="2.8.1">
+       <id>Ansuria.XFGloss</id>
+       <version>$version$</version>
+       <title>XFGloss for Xamarin.Forms</title>
+       <authors>Tommy Baggett</authors>
+       <owners>Ansuria Solutions LLC</owners>
+       <iconUrl>http://tommyb.com/nuspec/xfgloss/XFGlossIcon64.png</iconUrl>
+       <licenseUrl>https://github.com/tbaggett/xfgloss/blob/master/LICENSE.MD</licenseUrl>
+       <projectUrl>https://github.com/tbaggett/xfgloss</projectUrl>
+       <requireLicenseAcceptance>false</requireLicenseAcceptance>
+       <description>
+         XFGloss adds new properties to the Xamarin.Forms standard UI components on the Android and iOS platforms.
+       </description>
+       <summary>Visual enhancements for Xamarin.Forms</summary>
+       <tags>xamarin.forms, gloss, style, styling, xamarin, pcl, xam.pcl, plugin, plugin for xamarin.forms, android, ios</tags>
+       <dependencies>
+         <group targetFramework="net">
+         </group>
+         <group targetFramework="win">
+         </group>
+         <group targetFramework="wp">
+         </group>
+         <group targetFramework="wpa">
+         </group>
+         <group targetFramework="netstandard1.0">
+           <dependency id="NETStandard.Library" version="2.0" />
+           <dependency id="Xamarin.Forms" version="2.5.0.122203" />
+         </group>
+         <group targetFramework="MonoAndroid10">
+           <dependency id="Xamarin.Forms" version="2.5.0.122203" />
+         </group>
+         <group targetFramework="Xamarin.iOS10">
+           <dependency id="Xamarin.Forms" version="2.5.0.122203" />
+         </group>
+         <group targetFramework="Xamarin.Mac20">
+         </group>
+         <group targetFramework="portable-net45+win+wpa81+wp80">
+         </group>
+         <group targetFramework="uap">
+         </group>
+         <group targetFramework="dotnet">
+         </group>
+         <group targetFramework="xamarintvos">
+         </group>
+         <group targetFramework="xamarinwatchos">
+         </group>
+       </dependencies>
+       <releaseNotes>
+       </releaseNotes>
+   </metadata>
+   <files>
+     <file src="nuget/readme.txt" target="readme.txt" />
+     <!--Core-->
+     <file src="XFGloss/bin/netstandard2.0/Release/XFGloss.*" target="lib/netstandard1.0" />
+    
+     <!--Xamarin.Android-->
+     <file src="XFGloss.Droid/bin/Release/XFGloss.Droid.*" target="lib/MonoAndroid10" />
+     <file src="XFGloss/bin/netstandard2.0/Release/*" target="lib/MonoAndroid10" />
+
+     <!--Xamarin.iOS-->
+     <file src="XFGloss.iOS/bin/Release/*" target="lib/Xamarin.iOS10" />
+     <file src="XFGloss.iOS/bin/netstandard2.0/Release/*" target="lib/Xamarin.iOS10" />
+   </files>
+</package>

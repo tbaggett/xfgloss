@@ -1,28 +1,27 @@
-version: 1.0.6.{build}
-pull_requests:
-  do_not_increment_build_number: true
-branches:
-  only:
-  - master
+version: 1.1.0.{build}-beta
+image: Visual Studio 2017
+configuration: Release
+environment:
+  CAKE_SETTINGS_SKIPVERIFICATION: true
+  ANDROID_HOME: 'C:\Program Files (x86)\Android\android-sdk\'
 assembly_info:
   patch: true
   file: '**\AssemblyInfoGlobal.*'
   assembly_version: '{version}'
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
-install:
-- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/fix-xamarin-4-2-2-11.ps1'))
+pull_requests:
+  do_not_increment_build_number: true
+branches:
+  only:
+  - master
 nuget:
   disable_publish_on_pr: true
 build_script:
 - cmd: >-
-    nuget restore .\XFGloss.sln
-
-    powershell .\bootstrapper.ps1 -Target Default -Verbosity diagnostic
-
-    powershell .\bootstrapper.ps1 -Target NuGetPack -Verbosity diagnostic
+    powershell .\build.ps1 -Target Default -Verbosity diagnostic
 artifacts:
-- path: '*.nupkg'
+- path: ./Build/nuget/*.nupkg
   name: NuGet
 deploy:
 - provider: NuGet
