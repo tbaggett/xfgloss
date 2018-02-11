@@ -7,16 +7,16 @@ var ANDROID_HOME = EnvironmentVariable ("ANDROID_HOME") ?? Argument ("android_ho
 
 Task("Libraries").Does(()=>
 {
-	NuGetRestore (".src/XFGloss.sln");
-	MSBuild (".src/XFGloss/XFGloss.csproj", c => {
+	NuGetRestore ("src/XFGloss.sln");
+	MSBuild ("src/XFGloss/XFGloss.csproj", c => {
 		c.Configuration = "Release";
 		c.MSBuildPlatform = Cake.Common.Tools.MSBuild.MSBuildPlatform.x86;
 	});
-	MSBuild (".src/XFGloss.Droid/XFGloss.Droid.csproj", c => {
+	MSBuild ("src/XFGloss.Droid/XFGloss.Droid.csproj", c => {
 		c.Configuration = "Release";
 		c.MSBuildPlatform = Cake.Common.Tools.MSBuild.MSBuildPlatform.x86;
 	});
-	MSBuild (".src/XFGloss.iOS/XFGloss.iOS.csproj", c => {
+	MSBuild ("src/XFGloss.iOS/XFGloss.iOS.csproj", c => {
 		c.Configuration = "Release";
 		c.MSBuildPlatform = Cake.Common.Tools.MSBuild.MSBuildPlatform.x86;
 	});
