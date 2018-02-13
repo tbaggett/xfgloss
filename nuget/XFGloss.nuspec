@@ -56,9 +56,9 @@
      <file src="src/XFGloss/bin/Release/netstandard2.0/*" target="lib/netstandard2.0" />
     
      <!--Xamarin.Android-->
-     <file src="src/XFGloss.Droid/bin/Release/*" target="lib/MonoAndroid10" />
+     <file src="src/XFGloss.Droid/bin/Release/*.*" target="lib/MonoAndroid10" />
 
      <!--Xamarin.iOS-->
-     <file src="src/XFGloss.iOS/bin/Release/*" target="lib/Xamarin.iOS10" />
+     <file src="src/XFGloss.iOS/bin/Release/*.*" target="lib/Xamarin.iOS10" />
    </files>
 </package>
