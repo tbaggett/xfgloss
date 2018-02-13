@@ -53,16 +53,12 @@
    <files>
      <file src="nuget/readme.txt" target="readme.txt" />
      <!--Core-->
-     <file src="src/XFGloss/bin/Release/netstandard2.0/XFGloss.deps.json" target="lib/netstandard2.0/" />
-     <file src="src/XFGloss/bin/Release/netstandard2.0/XFGloss.dll" target="lib/netstandard2.0/" />
-     <file src="src/XFGloss/bin/Release/netstandard2.0/XFGloss.pdb" target="lib/netstandard2.0/" />
+     <file src="src/XFGloss/bin/Release/netstandard2.0/XFGloss.*" target="lib/netstandard2.0" />
     
      <!--Xamarin.Android-->
-     <file src="src/XFGloss.Droid/bin/Release/XFGloss.Droid.dll" target="lib/MonoAndroid10/" />
-     <file src="src/XFGloss.Droid/bin/Release/XFGloss.Droid.xml" target="lib/MonoAndroid10/" />
+     <file src="src/XFGloss.Droid/bin/Release/XFGloss.Droid.*" target="lib/MonoAndroid10" />
 
      <!--Xamarin.iOS-->
-     <file src="src/XFGloss.iOS/bin/Release/XFGloss.iOS.dll" target="lib/Xamarin.iOS10/" />
-     <file src="src/XFGloss.iOS/bin/Release/XFGloss.iOS.xml" target="lib/Xamarin.iOS10/" />
+     <file src="src/XFGloss.iOS/bin/Release/XFGloss.iOS.*" target="lib/Xamarin.iOS10" />
    </files>
 </package>
