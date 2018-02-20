@@ -579,8 +579,6 @@ The XFGloss renderer classes require their overridden versions of OnElementChang
 # Future Enhancements
 I plan to add support for other properties that aren't offered by the Xamarin.Forms components as my schedule allows. PRs, especially those that add support for other XF-supported platforms, are always welcomed!
 
-I will provide a NETStandard version of the library as soon as Xamarin Studio's stable channel release on the Mac supports building the project. If you need a NETStandard version now, please see the NETStandard branch for code that will build in VS 2015 Update 3 with the DotNetCore VS 2015 Tools Preview 2.0 or newer installed.
-
 ---
 
 # Credits
@@ -595,7 +593,7 @@ Finally, my skills with Xamarin were once again greatly improved this year by ge
 # License
 The MIT License (MIT)
 
-Copyright (c) 2016 Ansuria Solutions LLC & Tommy Baggett
+Copyright (c) 2016-2018 Ansuria Solutions LLC & Tommy Baggett
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

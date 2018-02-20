@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2016 Ansuria Solutions LLC & Tommy Baggett: 
+Copyright (c) 2016-2018 Ansuria Solutions LLC & Tommy Baggett: 
  * http://github.com/tbaggett
  * http://twitter.com/tbaggett
  * http://tommyb.com
