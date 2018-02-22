@@ -129,19 +129,28 @@ namespace XFGloss.Droid
 			var assembly = AppDomain.CurrentDomain.GetAssemblies().
 				             	SingleOrDefault(a => a.FullName.StartsWith("Xamarin.Forms.Core", 
 							                                               StringComparison.InvariantCultureIgnoreCase));
-			var registrarType = assembly?.GetType("Xamarin.Forms.Registrar");
-			var registrarMi = registrarType?.GetMethod("get_Registered", BindingFlags.NonPublic | BindingFlags.Static);
-			var registrar = registrarMi?.Invoke(null, null);
-			var registerMi = registrar?.GetType().GetMethod("Register");
+			var registrarType = assembly?.GetType("Xamarin.Forms.Internals.Registrar") ?? assembly?.GetType("Xamarin.Forms.Registrar");
 
-			// We should have a MethodInfo instance pointing to the Registrar's Register method now. Throw an exception
-			// if we don't.
+            var registrarMi = registrarType?.GetMethod("get_Registered", BindingFlags.NonPublic | BindingFlags.Static);
+			var registrar = registrarMi?.Invoke(null, null);
+			var registerMi = registrar?.GetType()?.GetMethod("Register");
+
+
 			if (registerMi == null)
 			{
-				throw new InvalidOperationException("XFGloss.Droid.Library.Init(...) failed to register the needed " +
-													"AppCompat version of the XFGloss custom renderers. Please report " +
-				                                    "an issue at https://github.com/tbaggett/xfgloss.");
-			}
+                // Attempt to get the "Register" method via the "Registered" property instead of the "get_Registered" getter
+                var registrarProperty = registrarType?.GetProperty("Registered", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public);
+                registrar = registrarProperty?.GetValue(registrarType, null);
+                registerMi = registrar?.GetType()?.GetRuntimeMethod("Register", new[] { typeof(Type), typeof(Type) });
+
+                // Throw exception if the Register method still wasn't located
+                if (registerMi == null)
+                {
+                    throw new InvalidOperationException("XFGloss.Droid.Library.Init(...) failed to register the needed " +
+                                                        "AppCompat version of the XFGloss custom renderers. Please report " +
+                                                        "an issue at https://github.com/tbaggett/xfgloss.");
+                }
+            }
 
 			// Replace the regular XFGloss renderers with the AppCompat versions
 			registerMi.Invoke(registrar, new object[] { typeof(Xamarin.Forms.Switch), 
@@ -153,6 +162,6 @@ namespace XFGloss.Droid
 				registerMi.Invoke(registrar, new object[] { typeof(Xamarin.Forms.SwitchCell),
 													typeof(XFGloss.Droid.Renderers.XFGlossSwitchCompatCellRenderer) });
 			}
-		}
+        }
 	}
 }
