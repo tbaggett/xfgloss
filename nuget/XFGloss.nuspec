@@ -33,7 +33,7 @@
    <files>
      <file src="nuget\readme.txt" target="readme.txt" />
      <!--Core-->
-     <file src="src\XFGloss\bin\Release\netstandard2.0\XFGloss.*" target="lib\netstandard2.0" />
+     <file src="src\XFGloss\bin\Release\netstandard2.0\XFGloss.*" target="lib\netstandard1.0" />
     
      <!--Xamarin.Android-->
      <file src="src\XFGloss.Droid\bin\Release\XFGloss.Droid.*" target="lib\MonoAndroid10" />
