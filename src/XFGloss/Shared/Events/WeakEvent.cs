@@ -133,6 +133,7 @@ namespace XFGloss
         }
 
         /// <summary>Removes a weak event registration from the given source object.</summary>
+        /// <typeparam name="TEventArgs">The type of the event args.</typeparam>
         /// <typeparam name="TEventSource">The type of the source object.</typeparam>
         /// <param name="source">The source object to register the event from. </param>
         /// <param name="eventName">The event name to remove the registration from.</param>
